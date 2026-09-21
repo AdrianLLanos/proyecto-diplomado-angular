@@ -1,0 +1,9 @@
+node_modules/
+frontend/dist/
+frontend/.angular/
+backend/.env
+backend/uploads/*
+!backend/uploads/.gitkeep
+*.log
+backend/test-results/
+backend/playwright-report/

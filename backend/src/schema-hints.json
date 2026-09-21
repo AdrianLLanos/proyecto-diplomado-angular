@@ -1,0 +1,210 @@
+{
+  "usuarios": {
+    "genero": {
+      "options": [
+        "male",
+        "female"
+      ]
+    },
+    "grupo_sanguineo": {
+      "options": [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-"
+      ]
+    },
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "restablecimientos_contrasena": {},
+  "configuracion_aplicacion": {
+    "es_demostracion": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "configuraciones_smtp": {
+    "tipo_smtp": {
+      "options": [
+        "default",
+        "tls",
+        "ssl"
+      ]
+    },
+    "estado": {
+      "options": [
+        "1",
+        "0"
+      ]
+    }
+  },
+  "empresas": {},
+  "configuraciones": {},
+  "monedas": {},
+  "impuestos": {},
+  "usuarios_empresas": {},
+  "detalles_medicos": {},
+  "departamentos_hospitalarios": {
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "antecedentes_pacientes": {},
+  "horarios_medicos": {
+    "dia_semana": {
+      "options": [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ]
+    },
+    "tipo_turno": {
+      "options": [
+        "Sequential",
+        "Timestamp"
+      ]
+    },
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "citas_pacientes": {},
+  "informes_laboratorio": {},
+  "plantillas_informes_laboratorio": {},
+  "recetas": {},
+  "seguros": {
+    "estado": {
+      "options": [
+        "1",
+        "0"
+      ]
+    }
+  },
+  "cuentas_contables": {
+    "tipo": {
+      "options": [
+        "Debit",
+        "Credit"
+      ]
+    },
+    "estado": {
+      "options": [
+        "1",
+        "0"
+      ]
+    }
+  },
+  "proveedores_sms": {
+    "pasarela": {
+      "options": [
+        "twilio",
+        "nexmo",
+        "plivo",
+        "clickatell"
+      ]
+    },
+    "estado": {
+      "options": [
+        "1",
+        "0"
+      ]
+    }
+  },
+  "pagos": {
+    "tipo_cuenta": {
+      "options": [
+        "Credit",
+        "Debit"
+      ]
+    }
+  },
+  "plantillas_sms": {},
+  "facturas": {},
+  "detalles_facturas": {
+    "tipo_cuenta": {
+      "options": [
+        "Debit",
+        "Credit"
+      ]
+    }
+  },
+  "campanas_sms": {
+    "estado": {
+      "options": [
+        "Pending",
+        "Processing",
+        "Completed",
+        "Failed"
+      ]
+    }
+  },
+  "lotes_tareas": {},
+  "tareas": {},
+  "tareas_fallidas": {},
+  "registros_campanas_sms": {
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "plantillas_correo": {},
+  "campanas_correo": {
+    "estado": {
+      "options": [
+        "Pending",
+        "Processing",
+        "Completed",
+        "Failed"
+      ]
+    }
+  },
+  "registros_campanas_correo": {
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "paginas_publicas": {
+    "estado": {
+      "options": [
+        "0",
+        "1"
+      ]
+    }
+  },
+  "mensajes_contacto": {},
+  "actualizaciones": {
+    "estado": {
+      "options": [
+        "0",
+        "1",
+        "2"
+      ]
+    }
+  }
+}

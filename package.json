@@ -1,0 +1,27 @@
+{
+    "name":  "clinica-angular",
+    "version":  "2.0.0",
+    "private":  true,
+    "workspaces":  [
+                       "frontend",
+                       "backend"
+                   ],
+    "engines":  {
+                    "node":  "\u003e=22.12.0"
+                },
+    "scripts":  {
+                    "dev":  "concurrently -k -n API,ANGULAR -c cyan,magenta \"npm run dev -w backend\" \"npm start -w frontend\"",
+                    "build":  "npm run build -w frontend",
+                    "start":  "npm start -w backend",
+                    "test":  "npm test -w backend",
+                    "check:db":  "npm run check:db -w backend",
+                    "setup:env":  "node backend/scripts/setup-env.js",
+                    "worker":  "npm run worker -w backend",
+                    "test:e2e":  "npm run test:e2e -w backend",
+                    "db:migrate":  "node backend/scripts/migrate.js",
+                    "db:migrate:status":  "node backend/scripts/migrate.js --status"
+                },
+    "devDependencies":  {
+                            "concurrently":  "^9.2.1"
+                        }
+}

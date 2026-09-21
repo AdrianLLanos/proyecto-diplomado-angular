@@ -1,0 +1,32 @@
+import {test,expect} from '@playwright/test';
+test('solicitud, QR, carga CERPAX y consulta en escritorio y móvil',async({page,browser,request})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ const login=await request.post('/api/login',{data:{correo:'admin@example.test',contrasena:'Testing-only-123!'}});expect(login.ok()).toBeTruthy();const {token}=await login.json();
+ const headers={Authorization:'Bearer '+token};
+ async function create(key,data){const r=await request.post('/api/records/'+key,{headers,data});expect(r.status(),await r.text()).toBe(201);return(await r.json()).id;}
+ const dep=await create('departamentos',{nombre:'Radiología e2e',estado:'1'});
+ const doctor=await create('medicos',{nombre:'Odontólogo CERPAX',correo:'cerpax-doctor@example.test',contrasena:'Testing-only-123!',estado:'1',departamento_hospitalario_id:dep});
+ const patient=await create('pacientes',{nombre:'Paciente CERPAX',correo:'cerpax-patient@example.test',estado:'1'});
+ await page.goto('/login');await page.evaluate(t=>sessionStorage.setItem('clinica-token',t),token);await page.goto('/radiografias');
+ await page.getByRole('button',{name:'Asignar pacientes',exact:true}).click();
+ await page.getByLabel('Paciente a asignar',{exact:true}).click();await page.getByRole('option',{name:'Paciente CERPAX',exact:true}).click();
+ await page.getByLabel('Odontólogo autorizado',{exact:true}).click();await page.getByRole('option',{name:'Odontólogo CERPAX',exact:true}).click();
+ await page.getByRole('button',{name:'Asignar',exact:true}).click();await expect(page.locator('.info-banner')).toContainText('Paciente asignado');
+ await page.getByRole('button',{name:'Solicitudes',exact:true}).click();
+ await page.getByLabel('Paciente',{exact:true}).click();await page.getByRole('option',{name:'Paciente CERPAX',exact:true}).click();
+ await page.getByLabel('Odontólogo responsable',{exact:true}).click();await page.getByRole('option',{name:'Odontólogo CERPAX',exact:true}).click();
+ await page.getByLabel('Tipo de estudio').fill('Panorámica de prueba');await page.getByRole('button',{name:'Crear solicitud',exact:true}).click();await expect(page.locator('.radio-record').filter({hasText:'Paciente CERPAX'})).toBeVisible();
+ await page.getByRole('button',{name:'Enlace / QR',exact:true}).first().click();await page.getByRole('button',{name:'Generar enlace y QR',exact:true}).click();
+ const link=page.getByRole('link',{name:'Abrir página de carga'});await expect(link).toBeVisible();const url=await link.getAttribute('href');await expect(page.getByAltText('QR para cargar la radiografía')).toBeVisible();
+ const external=await browser.newContext({baseURL:'http://127.0.0.1:3002',viewport:{width:390,height:844}});const tab=await external.newPage();tab.on('pageerror',e=>errors.push(e.message));
+ await tab.goto('/carga-radiografia'+new URL(url).hash);await expect(tab.locator('h1')).toHaveText('Entrega de radiografía');await expect(tab.locator('body')).not.toContainText('Paciente CERPAX');
+ await tab.getByLabel('Archivo de radiografía').setInputFiles({name:'radiografia.pdf',mimeType:'application/pdf',buffer:Buffer.from('%PDF-1.4\narchivo de prueba\n%%EOF')});await tab.getByRole('button',{name:'Enviar radiografía'}).click();await expect(tab.getByRole('heading',{name:'Archivo recibido'})).toBeVisible();
+ await tab.screenshot({path:'test-results/cerpax-movil.png',fullPage:true});await external.close();
+ await page.getByRole('button',{name:'Actualizar',exact:true}).click();await expect(page.locator('.radio-record').filter({hasText:'Paciente CERPAX'})).toContainText('Completada');
+ const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Descargar',exact:true}).first().click();expect((await downloadPromise).suggestedFilename()).toBe('radiografia.pdf');
+ await page.getByRole('button',{name:'Trazabilidad',exact:true}).click();await expect(page.locator('body')).toContainText('Radiografía cargada');await expect(page.locator('body')).toContainText('Archivo descargado');
+ await page.screenshot({path:'test-results/radiografia-auditoria.png',fullPage:true});
+ const doctorLogin=await request.post('/api/login',{data:{correo:'cerpax-doctor@example.test',contrasena:'Testing-only-123!'}});const doctorToken=(await doctorLogin.json()).token;
+ await page.evaluate(t=>sessionStorage.setItem('clinica-token',t),doctorToken);await page.goto('/radiografias');await page.getByRole('button',{name:/Notificaciones/}).click();await expect(page.locator('body')).toContainText('Radiografía recibida');await page.getByRole('button',{name:'Marcar leída'}).click();await expect(page.getByRole('button',{name:'Marcar leída'})).toHaveCount(0);
+ expect(errors).toEqual([]);
+});
