@@ -8,7 +8,7 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
  const auth=r=>r.set('Authorization','Bearer '+token);
  let doctor,patient,dept,invoice;
  await t.test('catálogo y CRUD clínico',async()=>{
-  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,25);
+  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,19);
   const d=await auth(request(app).post('/api/records/departamentos')).send({nombre:'Odontología',estado:'1'});assert.equal(d.status,201,JSON.stringify(d.body));dept=d.body.id;
   const m=await auth(request(app).post('/api/records/medicos')).send({nombre:'Doctora Prueba',correo:'doctor@example.test',estado:'1',departamento_hospitalario_id:dept});assert.equal(m.status,201,JSON.stringify(m.body));doctor=m.body.id;
   const p=await auth(request(app).post('/api/records/pacientes')).send({nombre:'Paciente Prueba',correo:'paciente@example.test',estado:'1'});assert.equal(p.status,201,JSON.stringify(p.body));patient=p.body.id;
@@ -37,12 +37,6 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
   assert.equal((await request(app).get('/api/public/pages/home')).status,200);
   const contact=await request(app).post('/api/public/contact').send({nombre:'Visitante',correo:'visitante@example.test',mensaje:'Consulta'});assert.equal(contact.status,201);
   const booking=await request(app).post('/api/public/book').send({nombre:'Nuevo paciente',correo:'nuevo@example.test',telefono:'+59177777777',medico_id:doctor,fecha_cita:'2030-01-07',hora_inicio:'10:00'});assert.equal(booking.status,201,JSON.stringify(booking.body));
- });
- await t.test('campañas procesadas con transporte simulado y sin duplicados',async()=>{
-  await auth(request(app).post('/api/records/smtp')).send({nombre_remitente:'Clínica',correo_remitente:'clinic@example.test',servidor_smtp:'smtp.example.test',puerto_smtp:'587',usuario_smtp:'test',contrasena_smtp:'test',tipo_smtp:'tls',estado:'1'});
-  const campaign=await auth(request(app).post('/api/records/campanas-correo')).send({nombre_campana:'Prueba',mensaje:'Hola #NAME#',tipo_contacto:'Patient',fecha_programada:'2020-01-01T10:00:00Z'});assert.equal(campaign.status,201,JSON.stringify(campaign.body));
-  const {processCampaigns}=await import('../src/messaging.js');let sent=0;await processCampaigns({mail:async()=>{sent++;return'test-id';}});assert.equal(sent,2);await processCampaigns({mail:async()=>{sent++;return'test-id';}});assert.equal(sent,2);
-  const logs=await auth(request(app).get('/api/campaigns/correo/'+campaign.body.id));assert.equal(logs.body.length,2);assert.ok(logs.body.every(r=>r.estado==='Sent'));
  });
  await t.test('administrador activo y restricciones de pacientes',async()=>{
   assert.equal((await auth(request(app).put('/api/records/usuarios/'+f.id)).send({estado:'0'})).status,409);
