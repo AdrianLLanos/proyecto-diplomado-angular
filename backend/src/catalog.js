@@ -20,10 +20,8 @@ export const modules = [
   ['campanas-correo','campanas_correo','Campañas de correo','campaign','Comunicación'],
   ['plantillas-sms','plantillas_sms','Plantillas SMS','sms','Comunicación'],
   ['campanas-sms','campanas_sms','Campañas SMS','send','Comunicación'],
-  ['proveedores-sms','proveedores_sms','Proveedores SMS','settings_phone','Configuración'],
   ['smtp','configuraciones_smtp','Servidor de correo','outgoing_mail','Configuración'],
   ['usuarios','usuarios','Usuarios','manage_accounts','Configuración'],
-  ['empresas','empresas','Empresas','business','Configuración'],
   ['ajustes','configuraciones','Ajustes de empresa','tune','Configuración'],
   ['aplicacion','configuracion_aplicacion','Aplicación','settings','Configuración'],
 ].map(([key,table,label,icon,group,role])=>({key,table,label,icon,group,role}));

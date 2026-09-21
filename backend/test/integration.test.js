@@ -8,7 +8,7 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
  const auth=r=>r.set('Authorization','Bearer '+token);
  let doctor,patient,dept,invoice;
  await t.test('catálogo y CRUD clínico',async()=>{
-  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,27);
+  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,25);
   const d=await auth(request(app).post('/api/records/departamentos')).send({nombre:'Odontología',estado:'1'});assert.equal(d.status,201,JSON.stringify(d.body));dept=d.body.id;
   const m=await auth(request(app).post('/api/records/medicos')).send({nombre:'Doctora Prueba',correo:'doctor@example.test',estado:'1',departamento_hospitalario_id:dept});assert.equal(m.status,201,JSON.stringify(m.body));doctor=m.body.id;
   const p=await auth(request(app).post('/api/records/pacientes')).send({nombre:'Paciente Prueba',correo:'paciente@example.test',estado:'1'});assert.equal(p.status,201,JSON.stringify(p.body));patient=p.body.id;
