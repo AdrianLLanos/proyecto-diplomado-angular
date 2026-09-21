@@ -1,0 +1,8 @@
+[build]
+  base = "."
+  command = "npm run build"
+  publish = "frontend/dist/clinica/browser"
+  functions = "frontend/netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
