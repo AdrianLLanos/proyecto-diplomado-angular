@@ -1,8 +1,14 @@
 import {Component,inject,signal,DestroyRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {MAT_DIALOG_DATA,MatDialog} from '@angular/material/dialog';
 import {Api,errorText} from './api';
 import {MATERIAL} from './material';
+
+@Component({standalone:true,imports:[...MATERIAL],template:`<div class="action-dialog"><div class="action-dialog-icon"><mat-icon>{{data.icon}}</mat-icon></div><h2 mat-dialog-title>{{data.title}}</h2><mat-dialog-content><p>{{data.message}}</p><small>{{data.detail}}</small></mat-dialog-content><mat-dialog-actions align="end"><button mat-button [mat-dialog-close]="false">Volver</button><button mat-flat-button class="danger-action" [mat-dialog-close]="true">{{data.confirm}}</button></mat-dialog-actions></div>`})
+export class ActionConfirmDialog {
+ data=inject<{icon:string;title:string;message:string;detail:string;confirm:string}>(MAT_DIALOG_DATA);
+}
 
 @Component({standalone:true,imports:[CommonModule,FormsModule,...MATERIAL],template:`
 <div class="page-heading"><div><p class="eyebrow">SAN MARTÍN · CERPAX</p><h1>Radiografías</h1><p>Solicitudes, carga externa y consulta de estudios autorizados.</p></div><button mat-stroked-button (click)="load()">Actualizar</button></div>
@@ -27,7 +33,7 @@ import {MATERIAL} from './material';
 @if(tab==='historial'&&api.can('radiografias','audit')){<section class="panel radio-panel"><h2>Trazabilidad</h2><div class="radio-form"><mat-form-field appearance="outline"><mat-label>Paciente del historial</mat-label><mat-select [(ngModel)]="auditPatient"><mat-option value="">Todos</mat-option>@for(p of people();track p.id){<mat-option [value]="p.id">{{p.label}}</mat-option>}</mat-select></mat-form-field><mat-form-field appearance="outline"><mat-label>Desde</mat-label><input matInput type="date" [(ngModel)]="from"></mat-form-field><mat-form-field appearance="outline"><mat-label>Hasta</mat-label><input matInput type="date" [(ngModel)]="to"></mat-form-field><button mat-stroked-button (click)="auditPage=0;history()">Filtrar historial</button></div>@for(e of events();track e.id){<article class="radio-record"><div><strong>{{e.evento}}</strong><p>{{e.paciente}} · {{e.usuario||e.actor}} · Solicitud {{e.solicitud_id||'—'}}</p><small>{{e.creado_en|date:'dd/MM/yyyy HH:mm:ss'}}</small></div></article>}@empty{<p>No hay eventos.</p>}<button mat-button [disabled]="auditPage===0" (click)="auditPage=auditPage-1;history()">Anterior</button><button mat-button [disabled]="events().length<50" (click)="auditPage=auditPage+1;history()">Siguiente</button></section>}
 `})
 export class Radiography {
- api=inject(Api);destroy=inject(DestroyRef);error=signal('');message=signal('');busy=signal(false);rows=signal<any[]>([]);people=signal<any[]>([]);doctors=signal<any[]>([]);assigned=signal<any[]>([]);events=signal<any[]>([]);notices=signal<any[]>([]);accessLink=signal<any>(null);
+ api=inject(Api);dialog=inject(MatDialog);destroy=inject(DestroyRef);error=signal('');message=signal('');busy=signal(false);rows=signal<any[]>([]);people=signal<any[]>([]);doctors=signal<any[]>([]);assigned=signal<any[]>([]);events=signal<any[]>([]);notices=signal<any[]>([]);accessLink=signal<any>(null);
  tab='solicitudes';page=0;state='';filterPatient='';search='';auditPatient='';from='';to='';auditPage=0;hours=24;selected:any=null;draft:any={paciente_id:'',odontologo_id:'',tipo:'',indicaciones:''};assignment:any={paciente_id:'',odontologo_id:''};
  constructor(){this.load();this.patients();this.api.get<any>('/lookups/medicos').subscribe({next:r=>this.doctors.set(r.rows),error:e=>this.error.set(errorText(e))});this.notifications();const timer=setInterval(()=>this.notifications(),30000);this.destroy.onDestroy(()=>clearInterval(timer));}
  isAdmin(){const u=this.api.session()?.user;return !!u&&(u.bypass||u.roles.includes('Super Admin'));}
@@ -37,12 +43,13 @@ export class Radiography {
  send(path:string,body:any,done:()=>void){this.busy.set(true);this.error.set('');this.api.post(path,body).subscribe({next:()=>{this.busy.set(false);done();},error:e=>{this.busy.set(false);this.error.set(errorText(e));}});}
  create(){this.send('/radiographs',this.draft,()=>{this.message.set('Solicitud creada. Ya puedes generar el enlace para CERPAX.');this.draft.tipo='';this.draft.indicaciones='';this.load();});}
  generate(){this.busy.set(true);this.api.post<any>('/radiographs/'+this.selected.id+'/access',{horas:this.hours}).subscribe({next:r=>{this.accessLink.set(r);this.busy.set(false);},error:e=>{this.error.set(errorText(e));this.busy.set(false);}});}
- action(s:any,action:string){if(!window.confirm(action==='cancel'?'¿Cancelar esta solicitud?':'¿Revocar todos los enlaces vigentes de esta solicitud?'))return;this.send('/radiographs/'+s.id+'/'+action,{},()=>{this.selected=null;this.accessLink.set(null);this.message.set('Solicitud actualizada.');this.load();});}
+ action(s:any,action:string){const cancelling=action==='cancel';this.confirm({icon:cancelling?'cancel':'link_off',title:cancelling?'¿Cancelar solicitud?':'¿Revocar enlace temporal?',message:cancelling?'La solicitud de radiografía quedará cancelada.':'El enlace o QR actual dejará de funcionar de inmediato.',detail:cancelling?'No podrás generar un nuevo acceso para esta solicitud.':'Podrás generar un nuevo enlace cuando lo necesites.',confirm:cancelling?'Cancelar solicitud':'Revocar enlace'},()=>this.send('/radiographs/'+s.id+'/'+action,{},()=>{this.selected=null;this.accessLink.set(null);this.message.set('Solicitud actualizada.');this.load();}));}
  async copy(url:string){try{await navigator.clipboard.writeText(url);this.message.set('Enlace copiado.');}catch{this.message.set('Selecciona el enlace visible y cópialo.');}}
  file(s:any,download:boolean){const popup=download?null:window.open('about:blank','_blank');this.api.blob('/radiographs/'+s.id+'/file',{download:download?'1':'0'}).subscribe({next:b=>{const url=URL.createObjectURL(b);if(popup)popup.location.href=url;else{const a=document.createElement('a');a.href=url;a.download=s.archivo_nombre||'radiografia';a.click();}setTimeout(()=>URL.revokeObjectURL(url),60000);},error:e=>{popup?.close();this.error.set(errorText(e));}});}
  assignments(){this.api.get<any[]>('/patient-assignments').subscribe({next:r=>this.assigned.set(r),error:e=>this.error.set(errorText(e))});}
  assign(){this.send('/patient-assignments',this.assignment,()=>{this.assignments();this.message.set('Paciente asignado.');});}
- unassign(a:any){if(!window.confirm('¿Retirar el acceso de este odontólogo al paciente?'))return;this.api.delete('/patient-assignments/'+a.paciente_id+'/'+a.odontologo_id).subscribe({next:()=>this.assignments(),error:e=>this.error.set(errorText(e))});}
+ unassign(a:any){this.confirm({icon:'person_remove',title:'¿Retirar acceso al paciente?',message:`${a.odontologo} ya no podrá ver ni solicitar radiografías para ${a.paciente}.`,detail:'Las solicitudes ya registradas se conservan para trazabilidad.',confirm:'Retirar acceso'},()=>this.api.delete('/patient-assignments/'+a.paciente_id+'/'+a.odontologo_id).subscribe({next:()=>{this.assignments();this.message.set('Acceso retirado.');},error:e=>this.error.set(errorText(e))}));}
+ confirm(data:{icon:string;title:string;message:string;detail:string;confirm:string},accepted:()=>void){this.dialog.open(ActionConfirmDialog,{data,width:'430px',maxWidth:'92vw',autoFocus:false,restoreFocus:true}).afterClosed().subscribe(result=>{if(result)accepted();});}
  history(){this.api.get<any[]>('/radiography-audit',{paciente:this.auditPatient,desde:this.from,hasta:this.to,page:this.auditPage}).subscribe({next:r=>{this.events.set(r);this.error.set('');},error:e=>this.error.set(errorText(e))});}
  notifications(){this.api.get<any[]>('/radiography-notifications').subscribe({next:r=>this.notices.set(r),error:e=>this.error.set(errorText(e))});}
  mark(n:any){this.send('/radiography-notifications/'+n.id+'/read',{},()=>this.notifications());}
