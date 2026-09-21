@@ -22,7 +22,7 @@ export function createApp(){
   app.use(express.json({limit:'2mb'}));
   app.use('/api',(req,res,next)=>{
     const origin=req.headers.origin;
-    if(origin){let allowed=false;try{const u=new URL(origin);allowed=u.host===req.get('host')||(!config.production&&['http://127.0.0.1:4200','http://localhost:4200'].includes(origin));}catch{}if(!allowed)return res.status(403).json({message:'Origen no permitido'});}
+    if(origin){let allowed=false;try{const u=new URL(origin);allowed=u.host===req.get('host')||config.allowedOrigins.includes(u.origin)||(!config.production&&['http://127.0.0.1:4200','http://localhost:4200'].includes(origin));}catch{}if(!allowed)return res.status(403).json({message:'Origen no permitido'});res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
     res.setHeader('Cache-Control','no-store');next();
   });
   app.get('/api/health',(req,res)=>res.json({ok:true}));
