@@ -5,7 +5,9 @@
       "framework": "angular"
     },
     "backend": {
-      "root": "backend"
+      "root": "backend",
+      "framework": "express",
+      "entrypoint": "src/app.js"
     }
   },
   "rewrites": [

@@ -67,3 +67,5 @@ export function createApp(){
     res.status(status).json({message:messages[error.code]||(status<500?error.message:'No se pudo completar la consulta. Comprueba la conexión de la API con Supabase.')});
   });return app;
 }
+
+export default createApp();
