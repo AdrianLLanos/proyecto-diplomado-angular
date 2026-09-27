@@ -12,8 +12,14 @@ npm run db:migrate:status
 Esta opción sustituye la ejecución manual de los pasos 01 y 02. No combina automáticamente una instalación SQL manual previa con el historial nuevo: si ya creaste las tablas manualmente, conserva esa instalación y no vuelvas a ejecutar los scripts iniciales. No borra ni reemplaza tablas existentes.
 
 El administrador sigue creándose con `database/03-administrador.sql`: reemplaza tu correo y contraseña antes de ejecutarlo en Supabase. Ese archivo se excluye de las migraciones automáticas. Para futuros cambios agrega archivos `04-descripcion.sql`, `05-descripcion.sql`, etc.; no edites los ya aplicados. Los nuevos archivos no deben contener `BEGIN`/`COMMIT`: el ejecutor administra la transacción.
-
 # Clínica Dental · Angular + Node.js
+
+## Despliegue público
+
+- Frontend: https://proyecto-diplomado-angular-frontend.vercel.app
+- Salud de la API: https://proyecto-diplomado-angular-frontend.vercel.app/api/v1/salud
+
+La API y el frontend comparten el mismo dominio. Las variables de producción se configuran en Vercel; `backend/.env` se mantiene fuera del repositorio.
 
 Aplicación independiente del proyecto PHP. La interfaz usa Angular 21 y Angular Material; la API usa Node.js, Express y PostgreSQL. No requiere Laravel, Artisan, Composer ni una copia de su base de datos.
 
