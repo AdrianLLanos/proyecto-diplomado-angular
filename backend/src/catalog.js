@@ -1,5 +1,5 @@
 export const modules = [
-  ['medicos','usuarios','Médicos','medical_services','Clínica','Doctor'],
+  ['medicos','usuarios','Odontólogos','medical_services','Clínica','Doctor'],
   ['pacientes','usuarios','Pacientes','groups','Clínica','Patient'],
   ['departamentos','departamentos_hospitalarios','Departamentos','domain','Clínica'],
   ['horarios','horarios_medicos','Horarios médicos','schedule','Clínica'],
