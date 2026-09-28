@@ -13,6 +13,7 @@ const doctors=[
  ['Dra. Valeria Quiroga','valeria.quiroga.demo@example.test','Ortodoncia'],
  ['Dr. Marco Salinas','marco.salinas.demo@example.test','Odontología general'],
 ];
+const demoAdmin=['Administrador de demostración','admin.demo@example.test','76500000',null,null];
 const monday=()=>{const d=new Date();d.setUTCHours(0,0,0,0);d.setUTCDate(d.getUTCDate()+((8-d.getUTCDay())%7||7));return d.toISOString().slice(0,10);};
 async function user(client,[nombre,correo,telefono,fecha_nacimiento,genero],role){
  const found=await client.query('SELECT id FROM usuarios WHERE correo=$1',[correo]);
@@ -28,6 +29,7 @@ try {
  const client=await pool.connect();
  try {
   await client.query('BEGIN');await client.query('SELECT pg_advisory_xact_lock(551026)');
+  await user(client,demoAdmin,'Super Admin');
   const dept=await client.query("SELECT id FROM departamentos_hospitalarios WHERE empresa_id=$1 AND nombre='Odontología Demo' AND eliminado_en IS NULL",[companyId]);
   const departmentId=dept.rowCount?dept.rows[0].id:(await client.query("INSERT INTO departamentos_hospitalarios(empresa_id,nombre,descripcion,estado,creado_en) VALUES($1,'Odontología Demo','Datos de demostración','1',now()) RETURNING id",[companyId])).rows[0].id;
   const doctorIds=[];

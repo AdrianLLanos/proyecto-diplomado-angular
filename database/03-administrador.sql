@@ -3,8 +3,8 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
 DO $$
 DECLARE
-  correo_admin TEXT := 'alejandrollanoszenteno@gmail.com';
-  clave_admin TEXT := 'alejandro2907*.';
+  correo_admin TEXT := 'TU_CORREO';
+  clave_admin TEXT := 'TU_CONTRASENA';
   nombre_admin TEXT := 'Administrador';
   nuevo_id BIGINT;
 BEGIN
