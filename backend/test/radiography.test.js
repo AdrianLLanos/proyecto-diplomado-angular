@@ -20,12 +20,20 @@ test('CERPAX: ciclo completo, autorización, expiración y trazabilidad',async t
   let id,externalToken;
   const generate=async(sid=id)=>{const r=await auth('post','/radiographs/'+sid+'/access',tokenA).send({horas:1});assert.equal(r.status,201,JSON.stringify(r.body));assert.match(r.body.qr,/^data:image\/png;base64,/);return new URL(r.body.url).hash.slice(1);};
   const upload=(token,bytes=Buffer.from('%PDF-1.4\narchivo sintético\n%%EOF'),name='estudio.pdf')=>request(app).post('/api/external/radiographs/upload').field('token',token).attach('file',bytes,name);
+  await t.test('el odontólogo registra y desactiva sus propios pacientes',async()=>{
+   const created=await auth('post','/records/pacientes',tokenA).send({nombre:'Paciente del odontólogo',correo:'nuevo-paciente@example.test',estado:'1'});assert.equal(created.status,201,JSON.stringify(created.body));
+   const patientId=created.body.id;
+   assert.equal((await auth('get','/records/pacientes/'+patientId,tokenA)).status,200);
+   const disabled=await auth('put','/records/pacientes/'+patientId,tokenA).send({estado:'0'});assert.equal(disabled.status,200,JSON.stringify(disabled.body));
+   assert.equal((await auth('get','/records/pacientes/'+patientId,tokenA)).body.estado,'0');
+   assert.equal((await auth('delete','/records/pacientes/'+patientId,tokenA)).status,403);
+  });
   await t.test('pacientes ocultos hasta asignación y control entre empresas',async()=>{
-   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,0);
+   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,1);
    assert.equal((await auth('get','/records/pacientes/'+patient,tokenA)).status,404);
    assert.equal((await auth('post','/patient-assignments',tokenB).send({paciente_id:patient,odontologo_id:other})).status,403);
    assert.equal((await auth('post','/patient-assignments').send({paciente_id:patient,odontologo_id:doctor})).status,201);
-   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,1);
+   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,2);
    assert.equal((await auth('get','/records/pacientes',tokenB)).body.total,0);
    assert.equal((await auth('get','/radiographs',tokenA).set('X-Company-ID','999')).status,403);
   });

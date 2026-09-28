@@ -9,16 +9,16 @@ test('migraciones: instalación, repetición, checksum y rollback',async()=>{
  const options={log(){}};
  try {
   const migrations=await loadMigrations(new URL('../../database/',import.meta.url));
-  assert.equal(migrations.length,3);
+  assert.equal(migrations.length,4);
   await migrate(pool,migrations,{...options,status:true});
   assert.equal((await db.query("SELECT to_regclass('usuarios') AS name")).rows[0].name,null);
-  assert.equal(await migrate(pool,migrations,options),3);
+  assert.equal(await migrate(pool,migrations,options),4);
   assert.equal(await migrate(pool,migrations,options),0);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM empresas')).rows[0].n,1);
   assert.equal((await db.query('SELECT count(*)::int AS n FROM roles')).rows[0].n,6);
   await assert.rejects(migrate(pool,[{...migrations[0],checksum:'alterado'}],options),/cambió/);
   await assert.rejects(migrate(pool,[{name:'04-fallo.sql',checksum:'test',sql:'CREATE TABLE temporal_prueba(id INT); SELECT * FROM no_existe;'}],options));
   assert.equal((await db.query("SELECT to_regclass('temporal_prueba') AS name")).rows[0].name,null);
-  assert.equal((await db.query('SELECT count(*)::int AS n FROM migraciones_node')).rows[0].n,3);
+  assert.equal((await db.query('SELECT count(*)::int AS n FROM migraciones_node')).rows[0].n,4);
  } finally {await db.close();}
 });
