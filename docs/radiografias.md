@@ -7,6 +7,18 @@
 3. En **Solicitudes**, seleccionar paciente, odontólogo responsable (administrador), tipo e indicaciones. Crear la solicitud.
 4. Pulsar **Enlace / QR**, elegir vigencia de 1 a 72 horas y generar. Cada enlace nuevo invalida los anteriores. También se puede revocar o cancelar una solicitud pendiente.
 5. Abrir el enlace en una ventana privada como CERPAX. Subir un PDF, PNG, JPEG o WebP de hasta 50 MB. El acceso permite una sola carga y no muestra el nombre ni el expediente del paciente.
+
+## Almacenamiento privado
+
+Las radiografías nuevas se cargan directamente al bucket privado `Radiografias` mediante una URL firmada de un solo uso. Configura en `backend/.env` y en las variables de entorno del backend desplegado:
+
+```env
+SUPABASE_URL=https://TU_PROYECTO.supabase.co
+SUPABASE_SECRET_KEY=tu_clave_secreta_de_supabase
+SUPABASE_STORAGE_BUCKET=Radiografias
+```
+
+La clave secreta permanece solo en el backend. El bucket debe ser privado, aceptar `application/pdf`, `image/png`, `image/jpeg` y `image/webp`, y tener un límite de 50 MB. La consulta interna crea una URL firmada de 60 segundos después de comprobar el rol y la asignación del odontólogo.
 6. Como odontólogo autorizado, abrir la solicitud completada y visualizar/descargar. Ver la confirmación en **Notificaciones** (actualización cada 30 segundos mientras está abierto el módulo). El administrador puede filtrar **Trazabilidad** por paciente y fecha.
 
 Para probar permisos reales: configurar `LOCAL_ACCESS=false` y `ENFORCE_ROLES=true`, reiniciar Node y utilizar cuentas separadas. El acceso local administrativo permanece habilitado si así estaba configurado; no es una prueba de seguridad por roles. Los odontólogos existentes pierden acceso a pacientes no asignados hasta que el administrador los vincule; no se conceden accesos masivos automáticamente.

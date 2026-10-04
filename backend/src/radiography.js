@@ -9,6 +9,7 @@ import {fail,validId} from './validation.js';
 import {get} from './repository.js';
 import {detectType} from './files.js';
 import {dateOnly} from './clinical.js';
+import {radiographyStorage} from './storage.js';
 
 const admin=req=>req.user.bypass||req.user.roles.includes('Super Admin');
 const hash=token=>crypto.createHash('sha256').update(token).digest('hex');
@@ -20,8 +21,17 @@ async function authorized(req,id,client=pool,lock=false){
  if(!rows[0])fail('Solicitud no encontrada o no autorizada',404);return rows[0];
 }
 async function access(client,token,lock=false){
- const {rows}=await client.query(`SELECT a.id AS acceso_id,s.*,a.vence_en FROM accesos_radiografias a JOIN solicitudes_radiografias s ON s.id=a.solicitud_id WHERE a.token_hash=$1 AND a.vence_en>now() AND a.revocado_en IS NULL AND a.usado_en IS NULL AND s.estado='Pendiente' ${lock?'FOR UPDATE OF s,a':''}`,[tokenHash(token)]);
+ const {rows}=await client.query(`SELECT a.id AS acceso_id,a.vence_en,a.storage_path,s.* FROM accesos_radiografias a JOIN solicitudes_radiografias s ON s.id=a.solicitud_id WHERE a.token_hash=$1 AND a.vence_en>now() AND a.revocado_en IS NULL AND a.usado_en IS NULL AND s.estado='Pendiente' ${lock?'FOR UPDATE OF s,a':''}`,[tokenHash(token)]);
  if(!rows[0])fail('El enlace venció, fue revocado o ya fue utilizado',410);return rows[0];
+}
+const allowedTypes=['application/pdf','image/png','image/jpeg','image/webp'];
+function uploadMetadata(body){
+ const nombre=text(body?.nombre,'Nombre del archivo',255).replace(/[\\/\r\n]/g,'_');
+ const tipo=body?.tipo;if(!allowedTypes.includes(tipo))fail('Formato no permitido: utiliza PDF, PNG, JPEG o WebP');
+ const tamano=Number(body?.tamano);if(!Number.isInteger(tamano)||tamano<1||tamano>50*1024*1024)fail('El archivo debe tener un tamaño entre 1 byte y 50 MB');
+ const ext={'application/pdf':/\.pdf$/i,'image/png':/\.png$/i,'image/jpeg':/\.jpe?g$/i,'image/webp':/\.webp$/i};
+ if(!ext[tipo].test(nombre))fail('La extensión no coincide con el tipo de archivo');
+ return {nombre,tipo,tamano};
 }
 export function registerExternalRadiography(app){
  const limit=rateLimit({windowMs:60000,limit:30,message:{message:'Demasiados intentos. Espera un minuto.'}});
@@ -29,6 +39,37 @@ export function registerExternalRadiography(app){
  app.post('/api/external/radiographs/access',limit,async(req,res)=>{
   const s=await access(pool,req.body?.token);
   res.json({id:s.id,tipo:s.tipo,vence_en:s.vence_en}); // No se exponen datos del paciente.
+ });
+ app.post('/api/external/radiographs/upload-url',limit,async(req,res)=>{
+  const meta=uploadMetadata(req.body), token=req.body?.token;
+  const path=await transaction(async client=>{
+   const s=await access(client,token,true);
+   const objectPath=`solicitudes/${s.id}/${crypto.randomUUID()}-${meta.nombre}`;
+   await client.query('UPDATE accesos_radiografias SET storage_path=$1 WHERE id=$2',[objectPath,s.acceso_id]);
+   return objectPath;
+  });
+  const {data,error}=await radiographyStorage().createSignedUploadUrl(path);
+  if(error)fail('No se pudo preparar el almacenamiento de la radiografía',503);
+  res.json({signedUrl:data.signedUrl,path:data.path});
+ });
+ app.post('/api/external/radiographs/upload-complete',limit,async(req,res)=>{
+  const meta=uploadMetadata(req.body), token=req.body?.token, path=String(req.body?.path||'');
+  const folder=path.split('/').slice(0,-1).join('/'), filename=path.split('/').pop();
+  const {data:list,error}=await radiographyStorage().list(folder,{search:filename});
+  const object=list?.find(item=>item.name===filename);
+  if(error||!object||Number(object.metadata?.size)!==meta.tamano)fail('No se pudo verificar el archivo cargado',422);
+  await transaction(async client=>{
+   const s=await access(client,token,true);
+   if(s.storage_path!==path)fail('La carga no corresponde al enlace actual',409);
+   await client.query('INSERT INTO radiografias(solicitud_id,nombre,tipo,tamano,storage_path) VALUES($1,$2,$3,$4,$5)',[s.id,meta.nombre,meta.tipo,meta.tamano,path]);
+   await client.query("UPDATE solicitudes_radiografias SET estado='Completada',completado_en=now() WHERE id=$1",[s.id]);
+   await client.query('UPDATE accesos_radiografias SET usado_en=now() WHERE id=$1',[s.acceso_id]);
+   await audit(client,s,null,'Radiografía cargada en almacenamiento privado');
+   await client.query('SAVEPOINT notificacion');
+   try {await client.query('INSERT INTO notificaciones_radiografias(solicitud_id,usuario_id) VALUES($1,$2)',[s.id,s.odontologo_id]);await client.query('RELEASE SAVEPOINT notificacion');}
+   catch {await client.query('ROLLBACK TO SAVEPOINT notificacion');await audit(client,s,null,'Falló la notificación; archivo conservado');}
+  });
+  res.status(201).json({ok:true,message:'Radiografía recibida. La solicitud quedó completada.'});
  });
  app.post('/api/external/radiographs/upload',limit,upload.single('file'),async(req,res)=>{
   if(!req.file?.size)fail('Selecciona un archivo PDF, PNG, JPEG o WebP');
@@ -90,6 +131,11 @@ export function registerRadiography(app){
  });
  app.get('/api/radiographs/:id/file',read,async(req,res)=>{
   const file=await transaction(async client=>{const s=await authorized(req,req.params.id,client,true);const {rows}=await client.query('SELECT * FROM radiografias WHERE solicitud_id=$1',[s.id]);if(!rows[0])fail('La solicitud todavía no tiene archivo',404);await audit(client,s,req.user,req.query.download==='1'?'Archivo descargado':'Archivo consultado');return rows[0];});
+  if(file.storage_path){
+   const {data,error}=await radiographyStorage().createSignedUrl(file.storage_path,60,{download:req.query.download==='1'?file.nombre:false});
+   if(error)fail('No se pudo abrir el archivo almacenado',503);
+   return res.set('Cache-Control','no-store').redirect(data.signedUrl);
+  }
   res.type(file.tipo).set('Content-Disposition',`${req.query.download==='1'?'attachment':'inline'}; filename*=UTF-8''${encodeURIComponent(file.nombre)}`).set('Cache-Control','no-store').send(Buffer.from(file.contenido));
  });
  app.get('/api/radiography-audit',requirePermission('radiografias','audit'),async(req,res)=>{

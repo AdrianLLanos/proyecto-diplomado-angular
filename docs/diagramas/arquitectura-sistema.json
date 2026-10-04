@@ -20,6 +20,6 @@
   "cards": [
     {"dot":"cyan","title":"Presentación","items":["Dos perfiles internos; CERPAX carga mediante acceso temporal.","El enlace o QR se comparte manualmente."]},
     {"dot":"emerald","title":"Reglas de negocio","items":["Pacientes, solicitudes, permisos, estado y trazabilidad.","La API valida archivos y vigencia del acceso."]},
-    {"dot":"violet","title":"Persistencia actual","items":["Radiografías privadas almacenadas como BYTEA.","El navegador accede a los datos a través de la API."]}
+    {"dot":"violet","title":"Persistencia actual","items":["Radiografías nuevas en Supabase Storage privado.","El navegador usa URL firmada; la API autoriza la consulta."]}
   ]
 }

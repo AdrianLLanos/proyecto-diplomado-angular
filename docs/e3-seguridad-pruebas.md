@@ -12,7 +12,7 @@ Las contraseñas se almacenan con hash bcrypt y factor de costo 12. La clave de 
 
 La API valida los cuerpos de las solicitudes y devuelve `400` para solicitudes incompletas y `422` para datos que no cumplen el formato o las reglas. Las rutas de API no almacenan respuestas en caché, limitan el tamaño JSON y el inicio de sesión está limitado a diez intentos por minuto. Helmet define cabeceras HTTP de protección y el despliegue se consume por HTTPS.
 
-El flujo radiográfico usa tokens temporales aleatorios de un solo uso, conserva solamente su hash SHA-256 y rechaza accesos vencidos, revocados o usados. La carga acepta PDF, PNG, JPEG y WebP de hasta 50 MB; se verifica tipo, firma y tamaño. Los archivos y las solicitudes siguen necesitando una sesión y una autorización válida para su consulta interna.
+El flujo radiográfico usa tokens temporales aleatorios de un solo uso, conserva solamente su hash SHA-256 y rechaza accesos vencidos, revocados o usados. La carga usa una URL firmada temporal de Supabase Storage para PDF, PNG, JPEG y WebP de hasta 50 MB; el backend verifica el tipo, tamaño y objeto cargado antes de completar la solicitud. Los archivos y las solicitudes siguen necesitando una sesión y una autorización válida para su consulta interna.
 
 ## 2.8 Pruebas
 

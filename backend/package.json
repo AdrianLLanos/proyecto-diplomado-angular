@@ -13,11 +13,12 @@
         "test:e2e": "playwright test",
         "db:migrate": "node scripts/migrate.js",
         "db:migrate:status": "node scripts/migrate.js --status",
-        "db:seed:demo": "node scripts/seed-demo.js"
-        ,"db:seed:e3-users": "node scripts/seed-e3-users.js"
-        ,"db:reset:operational": "node scripts/reset-operational-data.js"
+        "db:seed:demo": "node scripts/seed-demo.js",
+        "db:seed:e3-users": "node scripts/seed-e3-users.js",
+        "db:reset:operational": "node scripts/reset-operational-data.js"
     },
     "dependencies": {
+        "@supabase/supabase-js": "^2.117.2",
         "bcryptjs": "^3.0.2",
         "dotenv": "^17.2.3",
         "exceljs": "^4.4.0",

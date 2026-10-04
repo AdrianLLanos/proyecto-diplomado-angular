@@ -14,5 +14,8 @@ export const config = {
   allowedOrigins: (process.env.ALLOWED_ORIGINS || '').split(',').map(value=>value.trim()).filter(Boolean),
   publicCompanyId: Number(process.env.PUBLIC_COMPANY_ID || 1),
   jwtSecret: process.env.JWT_SECRET,
+  supabaseUrl: process.env.SUPABASE_URL,
+  supabaseSecretKey: process.env.SUPABASE_SECRET_KEY,
+  storageBucket: process.env.SUPABASE_STORAGE_BUCKET || 'Radiografias',
 };
 if (!/^[a-z_][a-z0-9_]*$/.test(config.schema)) throw new Error('DB_SCHEMA inválido');
