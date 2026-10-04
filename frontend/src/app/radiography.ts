@@ -11,7 +11,7 @@ export class ActionConfirmDialog {
  data=inject<{icon:string;title:string;message:string;detail:string;confirm:string}>(MAT_DIALOG_DATA);
 }
 
-@Component({standalone:true,imports:[CommonModule,...MATERIAL],template:`<h2 mat-dialog-title>Acceso CERPAX listo</h2><mat-dialog-content><p>Comparte este QR o enlace solo con CERPAX. Vence: {{data.vence_en|date:'dd/MM/yyyy HH:mm'}}.</p><div class="radio-link"><img [src]="data.qr" alt="QR para cargar la radiografía" width="280" height="280"><div><a [href]="data.url" target="_blank" rel="noreferrer">Abrir página de carga</a><p class="radio-url">{{data.url}}</p><button mat-stroked-button (click)="copy()">Copiar enlace</button></div></div></mat-dialog-content><mat-dialog-actions align="end"><button mat-flat-button mat-dialog-close>Listo</button></mat-dialog-actions>`})
+@Component({standalone:true,imports:[CommonModule,...MATERIAL],template:`<h2 mat-dialog-title>Acceso CERPAX listo</h2><mat-dialog-content><p>Comparte este QR o enlace solo con CERPAX. Vence: {{data.vence_en|date:'dd/MM/yyyy HH:mm'}}.</p><div class="radio-link"><img [src]="data.qr" alt="QR para cargar la radiografía" width="280" height="280"><div><a mat-flat-button color="primary" [href]="data.url" target="_blank" rel="noreferrer">Abrir carga de radiografía</a><p>El enlace abre una página segura para seleccionar y subir el archivo.</p><button mat-stroked-button (click)="copy()">Copiar enlace</button></div></div></mat-dialog-content><mat-dialog-actions align="end"><button mat-flat-button mat-dialog-close>Listo</button></mat-dialog-actions>`})
 export class AccessLinkDialog {
  data=inject<{url:string;qr:string;vence_en:string}>(MAT_DIALOG_DATA);
  async copy(){await navigator.clipboard.writeText(this.data.url);}
