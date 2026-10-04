@@ -1,0 +1,63 @@
+{
+  "diagram_type": "uml-use-case",
+  "validation": "Custom semantic and browser checks passed: 3 actors, 9 use cases, 10 associations; labels fit.",
+  "archify_validation": "Not applicable: installed Archify schemas do not support UML use-case notation. Custom SVG adaptation.",
+  "browser_evidence": "Supplementary Playwright inspection; not an Archify visual-check receipt.",
+  "measurements": [
+    {
+      "width": 1440,
+      "height": 900,
+      "scrollWidth": 1440,
+      "scrollHeight": 900
+    },
+    {
+      "width": 1600,
+      "height": 1000,
+      "scrollWidth": 1600,
+      "scrollHeight": 1000
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "scrollWidth": 1920,
+      "scrollHeight": 1080
+    },
+    {
+      "width": 2048,
+      "height": 1320,
+      "scrollWidth": 2048,
+      "scrollHeight": 1320
+    }
+  ],
+  "visual_review": "passed",
+  "artifacts": {
+    "casos-de-uso.json": {
+      "bytes": 2385,
+      "sha256": "01dfbb803e40fed7b8c52c509963b6675cf27b8716f0f9e3c3270c6379ba3c2e"
+    },
+    "casos-de-uso.html": {
+      "bytes": 7705,
+      "sha256": "7238f14bba373c94a8354e822b5ac562c4cf7c019b89f0214662a9bd06cd832a"
+    },
+    "casos-de-uso.svg": {
+      "bytes": 6562,
+      "sha256": "49bb9e1a18fcc2884dd1efa4cefa6ead8998109710652720b4c58a01c703b77e"
+    },
+    "casos-de-uso.pdf": {
+      "bytes": 65101,
+      "sha256": "5a0a8c2aa7cdb50e68a93a8134c7b0c14cde6a9509db05eb870ba7959d73755e"
+    },
+    "casos-de-uso.png": {
+      "bytes": 128570,
+      "sha256": "893aa306af024ca5ae2f0fe591980f9a35af2a0d9efcdc5bffa65ff8b1c9bab4"
+    }
+  },
+  "visual_review_notes": "Color PNG inspected: labels legible, no association crossings or text collisions; actors outside boundary. White page with blue, teal and purple UML symbols.",
+  "correction_rounds": 0,
+  "pdf": {
+    "pages": 1,
+    "width_points": 612,
+    "height_points": 792,
+    "paper": "US Letter portrait"
+  }
+}

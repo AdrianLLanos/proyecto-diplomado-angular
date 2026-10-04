@@ -127,7 +127,7 @@ export async function remove(key,id,companyId){
   const all=await schema();return transaction(async client=>{
     const existing=await get(key,id,companyId,client);
     if(key.startsWith('campanas-')&&existing.estado==='Processing')fail('No puedes eliminar una campaña en proceso',409);
-    if(m.table==='usuarios'){
+    if(m.table==='usuarios'&&key!=='pacientes'){
       await preserveAdministrator(client,id);
       const dependencies=await client.query('SELECT (SELECT count(*) FROM citas_pacientes WHERE usuario_id=$1 OR medico_id=$1)+(SELECT count(*) FROM facturas WHERE usuario_id=$1)+(SELECT count(*) FROM recetas WHERE usuario_id=$1 OR medico_id=$1) AS n',[id]);
       if(Number(dependencies.rows[0].n))fail('El usuario tiene registros clínicos o facturas. Desactívalo en lugar de eliminarlo.',409);

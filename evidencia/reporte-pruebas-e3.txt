@@ -1,0 +1,20 @@
+Reporte de pruebas automatizadas E3
+Fecha de ejecucion: 2026-10-04
+Comando reproducible: npm run test:report
+
+Resultado: APROBADO
+Archivos ejecutados en serie: 5
+Pruebas aprobadas: 24
+Pruebas fallidas: 0
+
+- test/validation.test.js: 5 aprobadas, 0 fallidas.
+- test/http.test.js: 4 aprobadas, 0 fallidas.
+  Incluye salud con consulta a PostgreSQL, salud v1, rechazo CORS y login incompleto.
+- test/integration.test.js: 7 aprobadas, 0 fallidas.
+  Incluye autenticacion, CRUD, 401 sin token y 403 por empresa no autorizada.
+- test/migrations.test.js: 1 aprobada, 0 fallidas.
+  Incluye instalacion, repeticion, checksum y rollback de migraciones.
+- test/radiography.test.js: 7 aprobadas, 0 fallidas.
+  Incluye solicitud radiografica, 401 sin token, 403 por rol, 410 por enlace vencido y 422 por archivo invalido.
+
+Las pruebas usan PGlite en memoria y no se conectan a Supabase ni modifican la base de produccion.

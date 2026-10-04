@@ -13,7 +13,8 @@
                     "dev":  "concurrently -k -n API,ANGULAR -c cyan,magenta \"npm run dev -w backend\" \"npm start -w frontend\"",
                     "build":  "npm run build -w frontend",
                     "start":  "npm start -w backend",
-                    "test":  "npm test -w backend",
+        "test":  "npm test -w backend",
+        "test:report": "npm run test:report -w backend",
                     "check:db":  "npm run check:db -w backend",
                     "setup:env":  "node backend/scripts/setup-env.js",
                     "worker":  "npm run worker -w backend",
@@ -21,6 +22,8 @@
                     "db:migrate":  "node backend/scripts/migrate.js",
                     "db:migrate:status":  "node backend/scripts/migrate.js --status",
                     "db:seed:demo":  "npm run db:seed:demo -w backend"
+                    ,"db:seed:e3-users": "node backend/scripts/seed-e3-users.js"
+                    ,"db:reset:operational": "node backend/scripts/reset-operational-data.js"
                 },
     "devDependencies":  {
                             "concurrently":  "^9.2.1"

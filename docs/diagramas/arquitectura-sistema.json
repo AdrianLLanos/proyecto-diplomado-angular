@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {"title": "Arquitectura del sistema web · Clínica San Martín", "quality_profile": "showcase"},
+  "components": [
+    {"id":"personal","type":"external","label":"Personal de la clínica","sublabel":"Administrador · Odontólogo","pos":[40,160],"size":[230,80]},
+    {"id":"cerpax","type":"external","label":"CERPAX","sublabel":"Participante externo","pos":[40,490],"size":[230,80]},
+    {"id":"portal","type":"frontend","label":"Aplicación web","sublabel":"Angular · navegador","pos":[460,160],"size":[230,80]},
+    {"id":"carga","type":"frontend","label":"Página de carga","sublabel":"Angular · acceso temporal","pos":[460,490],"size":[230,80]},
+    {"id":"api","type":"backend","label":"API del sistema","sublabel":"Node.js · Express","pos":[890,160],"size":[230,80]},
+    {"id":"datos","type":"database","label":"PostgreSQL","sublabel":"Registros y archivos privados","pos":[890,490],"size":[230,80]}
+  ],
+  "connections": [
+    {"id":"uso-interno","from":"personal","to":"portal","label":"HTTPS"},
+    {"id":"uso-externo","from":"cerpax","to":"carga","label":"Enlace / QR"},
+    {"id":"peticiones","from":"portal","to":"api","label":"API REST · JWT"},
+    {"id":"subida","from":"carga","to":"api","label":"Archivo + token"},
+    {"id":"persistencia","from":"api","to":"datos","label":"SQL · transacciones","labelAt":[1005,365]}
+  ],
+  "cards": [
+    {"dot":"cyan","title":"Presentación","items":["Dos perfiles internos; CERPAX carga mediante acceso temporal.","El enlace o QR se comparte manualmente."]},
+    {"dot":"emerald","title":"Reglas de negocio","items":["Pacientes, solicitudes, permisos, estado y trazabilidad.","La API valida archivos y vigencia del acceso."]},
+    {"dot":"violet","title":"Persistencia actual","items":["Radiografías privadas almacenadas como BYTEA.","El navegador accede a los datos a través de la API."]}
+  ]
+}

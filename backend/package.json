@@ -7,12 +7,15 @@
         "dev": "node --watch src/index.js",
         "start": "node src/index.js",
         "test": "node --test test/*.test.js",
+        "test:report": "node --test test/validation.test.js > ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/http.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/integration.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/migrations.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/radiography.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1",
         "check:db": "node scripts/check-db.js",
         "worker": "node src/worker.js",
         "test:e2e": "playwright test",
         "db:migrate": "node scripts/migrate.js",
         "db:migrate:status": "node scripts/migrate.js --status",
         "db:seed:demo": "node scripts/seed-demo.js"
+        ,"db:seed:e3-users": "node scripts/seed-e3-users.js"
+        ,"db:reset:operational": "node scripts/reset-operational-data.js"
     },
     "dependencies": {
         "bcryptjs": "^3.0.2",

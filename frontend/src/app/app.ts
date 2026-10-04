@@ -16,7 +16,7 @@ import {Api,Module,Session,errorText} from './api';
       <div class="sidebar-foot"><span class="status-dot"></span>Espacio de la clínica</div>
     </mat-sidenav>
     <mat-sidenav-content>
-      <header class="topbar"><div class="topbar-left"><button mat-icon-button (click)="nav.toggle()" aria-label="Abrir menú"><mat-icon>menu</mat-icon></button><span>Panel de administración</span><mat-select class="company-select" aria-label="Empresa activa" [value]="currentCompany" (selectionChange)="switchCompany($event.value)">@for(c of companies();track c.id){<mat-option [value]="''+c.id">{{c.nombre}}</mat-option>}</mat-select></div><div class="profile"><div class="avatar">{{api.session()?.user?.nombre?.charAt(0)||'C'}}</div><div><strong>{{api.session()?.user?.nombre||'Clínica Dental'}}</strong><small>{{api.session()?.localAccess?'Acceso local':'Administrador'}}</small></div>@if(!api.session()?.localAccess){<button mat-icon-button (click)="logout()" aria-label="Cerrar sesión"><mat-icon>logout</mat-icon></button>}</div></header>
+      <header class="topbar"><div class="topbar-left"><button mat-icon-button (click)="nav.toggle()" aria-label="Abrir menú"><mat-icon>menu</mat-icon></button><span>Panel de administración</span><mat-select class="company-select" aria-label="Empresa activa" [value]="currentCompany" (selectionChange)="switchCompany($event.value)">@for(c of companies();track c.id){<mat-option [value]="''+c.id">{{c.nombre}}</mat-option>}</mat-select></div><div class="profile"><div class="avatar">{{api.session()?.user?.nombre?.charAt(0)||'C'}}</div><div><strong>{{api.session()?.user?.nombre||'Clínica Dental'}}</strong><small>{{roleLabel()}}</small></div>@if(!api.session()?.localAccess){<button mat-icon-button (click)="logout()" aria-label="Cerrar sesión"><mat-icon>logout</mat-icon></button>}</div></header>
       <main>@if(error()){<div class="error-banner">{{error()}} <button mat-button (click)="initialize()">Reintentar</button></div>}<router-outlet/></main>
     </mat-sidenav-content>
   </mat-sidenav-container>}
@@ -28,6 +28,7 @@ export class App {
   isPublic(){return this.router.url==='/'||/^\/(sitio|login|restablecer|recuperar|carga-radiografia)/.test(this.router.url);}
   constructor(){this.router.events.subscribe(e=>{if(e instanceof NavigationEnd&&!this.isPublic()&&!this.api.session())this.initialize();});}
   switchCompany(id:string){sessionStorage.setItem('clinica-company',String(id));window.location.reload();}
+  roleLabel(){if(this.api.session()?.localAccess)return 'Acceso local';const roles=this.api.session()?.user.roles||[];if(roles.includes('Doctor'))return 'Odontólogo';if(roles.includes('Super Admin'))return 'Administrador';return roles[0]||'Usuario';}
   initialize(){this.error.set('');this.api.get<Session>('/session').subscribe({next:s=>{this.api.session.set(s);this.currentCompany=String(s.companyId);this.api.get<any[]>('/companies').subscribe({next:c=>this.companies.set(c),error:e=>this.error.set(errorText(e))});this.api.catalog$.subscribe({next:m=>this.modules.set(m),error:e=>this.error.set(errorText(e))});},error:e=>{if(e.status!==401)this.error.set(errorText(e));}});}
   logout(){this.api.post('/logout',{}).subscribe({next:()=>{sessionStorage.clear();this.api.session.set(null);this.router.navigateByUrl('/login');},error:e=>this.error.set(errorText(e))});}
 }

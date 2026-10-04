@@ -1,9 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import request from 'supertest';
-import {createApp} from '../src/app.js';
+import {fixture} from './fixture.js';
+const f=await fixture();
+const {createApp}=await import('../src/app.js');
 const app=createApp();
-test('health responde sin credenciales ni información de conexión',async()=>{
+test.after(async()=>f.pool.end());
+test('health consulta la base sin exponer información de conexión',async()=>{
   const response=await request(app).get('/api/health');assert.equal(response.status,200);assert.deepEqual(response.body,{ok:true});assert.equal(response.headers['x-powered-by'],undefined);
 });
 test('salud v1 responde sin credenciales',async()=>{

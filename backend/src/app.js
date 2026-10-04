@@ -25,7 +25,9 @@ export function createApp(){
     if(origin){let allowed=false;try{const u=new URL(origin);allowed=u.host===req.get('host')||config.allowedOrigins.includes(u.origin)||(!config.production&&['http://127.0.0.1:4200','http://localhost:4200'].includes(origin));}catch{}if(!allowed)return res.status(403).json({message:'Origen no permitido'});res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
     res.setHeader('Cache-Control','no-store');next();
   });
-  const health=(req,res)=>res.json({ok:true});
+  // La salud representa la disponibilidad de la aplicación y su dependencia principal.
+  // Si PostgreSQL no responde, Express deriva el error al manejador y devuelve 500.
+  const health=async(req,res)=>{await pool.query('SELECT 1');res.json({ok:true});};
   app.get('/api/health',health);
   app.get('/api/v1/salud',health);
   app.post('/api/login',rateLimit({windowMs:60000,limit:10,standardHeaders:true,legacyHeaders:false,message:{message:"Demasiados intentos. Espera un minuto y vuelve a intentar."}}),login);

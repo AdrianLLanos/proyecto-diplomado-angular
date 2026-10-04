@@ -26,14 +26,14 @@ test('CERPAX: ciclo completo, autorización, expiración y trazabilidad',async t
    assert.equal((await auth('get','/records/pacientes/'+patientId,tokenA)).status,200);
    const disabled=await auth('put','/records/pacientes/'+patientId,tokenA).send({estado:'0'});assert.equal(disabled.status,200,JSON.stringify(disabled.body));
    assert.equal((await auth('get','/records/pacientes/'+patientId,tokenA)).body.estado,'0');
-   assert.equal((await auth('delete','/records/pacientes/'+patientId,tokenA)).status,403);
+   assert.equal((await auth('delete','/records/pacientes/'+patientId,tokenA)).status,200);
   });
   await t.test('pacientes ocultos hasta asignación y control entre empresas',async()=>{
-   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,1);
+   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,0);
    assert.equal((await auth('get','/records/pacientes/'+patient,tokenA)).status,404);
    assert.equal((await auth('post','/patient-assignments',tokenB).send({paciente_id:patient,odontologo_id:other})).status,403);
    assert.equal((await auth('post','/patient-assignments').send({paciente_id:patient,odontologo_id:doctor})).status,201);
-   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,2);
+   assert.equal((await auth('get','/records/pacientes',tokenA)).body.total,1);
    assert.equal((await auth('get','/records/pacientes',tokenB)).body.total,0);
    assert.equal((await auth('get','/radiographs',tokenA).set('X-Company-ID','999')).status,403);
   });

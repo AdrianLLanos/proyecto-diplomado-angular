@@ -1,0 +1,115 @@
+{
+  "diagram_type": "uml-use-case",
+  "system": "Sistema web de gestión de pacientes y radiografías dentales",
+  "actors": [
+    {
+      "id": "administrador",
+      "name": "Administrador",
+      "role": "interno"
+    },
+    {
+      "id": "odontologo",
+      "name": "Odontólogo",
+      "role": "interno"
+    },
+    {
+      "id": "cerpax",
+      "name": "CERPAX",
+      "role": "externo"
+    }
+  ],
+  "use_cases": [
+    {
+      "id": "cuentas",
+      "label": "Gestionar cuentas autorizadas",
+      "requirement": "RF-01"
+    },
+    {
+      "id": "trazabilidad",
+      "label": "Consultar trazabilidad",
+      "requirement": "RF-07"
+    },
+    {
+      "id": "sesion",
+      "label": "Iniciar sesión",
+      "requirement": "Autenticación: precondición de los casos de uso internos y entrega E2"
+    },
+    {
+      "id": "pacientes",
+      "label": "Registrar y consultar pacientes",
+      "requirement": "RF-02"
+    },
+    {
+      "id": "solicitud",
+      "label": "Crear solicitud de radiografía",
+      "requirement": "RF-03"
+    },
+    {
+      "id": "acceso",
+      "label": "Generar enlace temporal o código QR",
+      "requirement": "RF-04"
+    },
+    {
+      "id": "consulta",
+      "label": "Consultar radiografía",
+      "requirement": "RF-06"
+    },
+    {
+      "id": "estado",
+      "label": "Consultar estado de solicitud",
+      "requirement": "RF-08"
+    },
+    {
+      "id": "carga",
+      "label": "Cargar radiografía mediante acceso temporal",
+      "requirement": "RF-05"
+    }
+  ],
+  "associations": [
+    {
+      "from": "administrador",
+      "to": "cuentas"
+    },
+    {
+      "from": "administrador",
+      "to": "trazabilidad"
+    },
+    {
+      "from": "administrador",
+      "to": "sesion"
+    },
+    {
+      "from": "odontologo",
+      "to": "sesion"
+    },
+    {
+      "from": "odontologo",
+      "to": "pacientes"
+    },
+    {
+      "from": "odontologo",
+      "to": "solicitud"
+    },
+    {
+      "from": "odontologo",
+      "to": "acceso"
+    },
+    {
+      "from": "odontologo",
+      "to": "consulta"
+    },
+    {
+      "from": "odontologo",
+      "to": "estado"
+    },
+    {
+      "from": "cerpax",
+      "to": "carga"
+    }
+  ],
+  "access_constraint": "CERPAX carga la radiografía mediante acceso temporal.",
+  "sources": [
+    "Recomendaciones_E1_T2.txt, apartados 1 y 6",
+    "Perfil-Diplomado.tex, RF-01 a RF-08 y actores/perfiles"
+  ]
+}

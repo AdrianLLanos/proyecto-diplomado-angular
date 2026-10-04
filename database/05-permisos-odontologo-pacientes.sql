@@ -4,5 +4,5 @@ SELECT r.id,p.id
 FROM roles r
 CROSS JOIN permisos p
 WHERE r.nombre='Doctor'
-  AND p.nombre IN ('pacientes.create','pacientes.update')
+  AND p.nombre IN ('pacientes.create','pacientes.update','pacientes.delete')
 ON CONFLICT DO NOTHING;
