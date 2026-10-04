@@ -25,7 +25,7 @@ async function access(client,token,lock=false){
 }
 export function registerExternalRadiography(app){
  const limit=rateLimit({windowMs:60000,limit:30,message:{message:'Demasiados intentos. Espera un minuto.'}});
- const upload=multer({storage:multer.memoryStorage(),limits:{fileSize:10485760,files:1,fields:1,fieldSize:256}});
+ const upload=multer({storage:multer.memoryStorage(),limits:{fileSize:50*1024*1024,files:1,fields:1,fieldSize:256}});
  app.post('/api/external/radiographs/access',limit,async(req,res)=>{
   const s=await access(pool,req.body?.token);
   res.json({id:s.id,tipo:s.tipo,vence_en:s.vence_en}); // No se exponen datos del paciente.

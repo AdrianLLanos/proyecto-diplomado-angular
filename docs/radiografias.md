@@ -6,7 +6,7 @@
 2. Crear el odontólogo desde Médicos y el paciente desde Pacientes. Como administrador, abrir **Radiografías / CERPAX → Asignar pacientes** y vincularlos. Los pacientes creados por un odontólogo quedan asignados a ese profesional automáticamente.
 3. En **Solicitudes**, seleccionar paciente, odontólogo responsable (administrador), tipo e indicaciones. Crear la solicitud.
 4. Pulsar **Enlace / QR**, elegir vigencia de 1 a 72 horas y generar. Cada enlace nuevo invalida los anteriores. También se puede revocar o cancelar una solicitud pendiente.
-5. Abrir el enlace en una ventana privada como CERPAX. Subir un PDF, PNG, JPEG o WebP de hasta 10 MB. El acceso permite una sola carga y no muestra el nombre ni el expediente del paciente.
+5. Abrir el enlace en una ventana privada como CERPAX. Subir un PDF, PNG, JPEG o WebP de hasta 50 MB. El acceso permite una sola carga y no muestra el nombre ni el expediente del paciente.
 6. Como odontólogo autorizado, abrir la solicitud completada y visualizar/descargar. Ver la confirmación en **Notificaciones** (actualización cada 30 segundos mientras está abierto el módulo). El administrador puede filtrar **Trazabilidad** por paciente y fecha.
 
 Para probar permisos reales: configurar `LOCAL_ACCESS=false` y `ENFORCE_ROLES=true`, reiniciar Node y utilizar cuentas separadas. El acceso local administrativo permanece habilitado si así estaba configurado; no es una prueba de seguridad por roles. Los odontólogos existentes pierden acceso a pacientes no asignados hasta que el administrador los vincule; no se conceden accesos masivos automáticamente.

@@ -66,7 +66,7 @@ El selector del encabezado cambia entre las empresas vinculadas al usuario. La A
 - Facturas con conceptos, descuentos, IVA, pagos y saldo. Cuentas, pagos, seguros, monedas, impuestos y reportes por período.
 - Configuración general, localización, valores predeterminados, páginas públicas, contacto, usuarios, roles, perfil y contraseñas.
 - Plantillas, campañas de correo/SMS, proveedores, programación, seguimiento por destinatario y reintentos.
-- Adjuntos PDF, PNG, JPEG y WebP, con límite de 10 MB. Los archivos clínicos se descargan mediante la API autenticada. Solo las imágenes publicadas expresamente se sirven sin sesión.
+- Adjuntos PDF, PNG, JPEG y WebP, con límite de 50 MB. Los archivos clínicos se descargan mediante la API autenticada. Solo las imágenes publicadas expresamente se sirven sin sesión.
 
 En los documentos, **Imprimir / guardar PDF** utiliza la impresión del navegador. Las plantillas y el editor de recetas permiten ingresar contenido estructurado sin editar JSON.
 

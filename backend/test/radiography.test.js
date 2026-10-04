@@ -52,7 +52,7 @@ test('CERPAX: ciclo completo, autorización, expiración y trazabilidad',async t
    assert.equal((await upload(externalToken)).status,410);externalToken=await generate();
    assert.equal((await upload(externalToken,Buffer.from('<script>alert(1)</script>'),'malicioso.pdf')).status,422);
    assert.equal((await upload(externalToken,Buffer.from('%PDF-1.4\n%%EOF'),'malicioso.exe')).status,422);
-   assert.equal((await upload(externalToken,Buffer.alloc(10485761),'grande.pdf')).status,413);
+   assert.equal((await upload(externalToken,Buffer.alloc(50*1024*1024+1),'grande.pdf')).status,413);
   });
   await t.test('carga única, confirmación y archivo protegido',async()=>{
    const r=await upload(externalToken);assert.equal(r.status,201,JSON.stringify(r.body));assert.equal((await upload(externalToken)).status,410);

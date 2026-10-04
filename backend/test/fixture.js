@@ -6,6 +6,8 @@ export async function fixture(){
  const db=new PGlite();await db.exec(fs.readFileSync(new URL('../../database/01-esquema.sql',import.meta.url),'utf8'));await db.exec(fs.readFileSync(new URL('../../database/02-datos-iniciales.sql',import.meta.url),'utf8'));
  await db.exec(fs.readFileSync(new URL('../../database/04-radiografias.sql',import.meta.url),'utf8'));
  await db.exec(fs.readFileSync(new URL('../../database/05-permisos-odontologo-pacientes.sql',import.meta.url),'utf8'));
+ await db.exec(fs.readFileSync(new URL('../../database/06-limite-archivos-50mb.sql',import.meta.url),'utf8'));
+ await db.exec(fs.readFileSync(new URL('../../database/07-permiso-eliminar-pacientes-odontologo.sql',import.meta.url),'utf8'));
  let tail=Promise.resolve();
  const query=async(sql,params=[])=>{const r=await db.query(sql,params);return {rows:r.rows,rowCount:Math.max(r.affectedRows||0,r.rows.length)};};
  const pool={query,connect:async()=>{const previous=tail;let release;tail=new Promise(r=>release=r);await previous;return{query,release};},end:()=>db.close()};
