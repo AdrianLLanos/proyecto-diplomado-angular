@@ -1,7 +1,8 @@
 import {Component,inject,signal,DestroyRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule,NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA,MatDialog} from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {Api,errorText} from './api';
 import {MATERIAL} from './material';
 
@@ -15,7 +16,7 @@ export class ActionConfirmDialog {
 @if(error()){<p class="error-banner" role="alert">{{error()}}</p>}@if(message()){<p class="info-banner" role="status">{{message()}}</p>}
 <nav class="radio-tabs" aria-label="Secciones de radiografías"><button mat-button (click)="tab='solicitudes'">Solicitudes</button><button mat-button (click)="tab='avisos';notifications()">Notificaciones ({{unread()}})</button>@if(isAdmin()){<button mat-button (click)="tab='asignaciones';assignments()">Asignar pacientes</button>}@if(api.can('radiografias','audit')){<button mat-button (click)="tab='historial';history()">Trazabilidad</button>}</nav>
 @if(tab==='solicitudes'){
- @if(api.can('radiografias','create')){<section class="panel radio-panel"><h2>Nueva solicitud</h2><form (ngSubmit)="create()" class="radio-form">
+ @if(api.can('radiografias','create')){<section class="panel radio-panel"><h2>Nueva solicitud</h2><form #requestForm="ngForm" (ngSubmit)="create(requestForm)" class="radio-form">
  <mat-form-field appearance="outline"><mat-label>Buscar paciente</mat-label><input matInput name="buscar" [(ngModel)]="search" (ngModelChange)="patients()"></mat-form-field>
  <mat-form-field appearance="outline"><mat-label>Paciente</mat-label><mat-select name="paciente" [(ngModel)]="draft.paciente_id" (selectionChange)="patientSelected()" required>@for(p of people();track p.id){<mat-option [value]="p.id">{{p.label}}</mat-option>}</mat-select></mat-form-field>
  @if(isAdmin()){<mat-form-field appearance="outline"><mat-label>Odontólogo responsable</mat-label><mat-select name="doctor" [(ngModel)]="draft.odontologo_id" required>@for(d of doctors();track d.id){<mat-option [value]="d.id">{{d.label}}</mat-option>}</mat-select></mat-form-field>}
@@ -33,7 +34,7 @@ export class ActionConfirmDialog {
 @if(tab==='historial'&&api.can('radiografias','audit')){<section class="panel radio-panel"><h2>Trazabilidad</h2><div class="radio-form"><mat-form-field appearance="outline"><mat-label>Paciente del historial</mat-label><mat-select [(ngModel)]="auditPatient"><mat-option value="">Todos</mat-option>@for(p of people();track p.id){<mat-option [value]="p.id">{{p.label}}</mat-option>}</mat-select></mat-form-field><mat-form-field appearance="outline"><mat-label>Desde</mat-label><input matInput type="date" [(ngModel)]="from"></mat-form-field><mat-form-field appearance="outline"><mat-label>Hasta</mat-label><input matInput type="date" [(ngModel)]="to"></mat-form-field><button mat-stroked-button (click)="auditPage=0;history()">Filtrar historial</button></div>@for(e of events();track e.id){<article class="radio-record"><div><strong>{{e.evento}}</strong><p>{{e.paciente}} · {{e.usuario||e.actor}} · Solicitud {{e.solicitud_id||'—'}}</p><small>{{e.creado_en|date:'dd/MM/yyyy HH:mm:ss'}}</small></div></article>}@empty{<p>No hay eventos.</p>}<button mat-button [disabled]="auditPage===0" (click)="auditPage=auditPage-1;history()">Anterior</button><button mat-button [disabled]="events().length<50" (click)="auditPage=auditPage+1;history()">Siguiente</button></section>}
 `})
 export class Radiography {
- api=inject(Api);dialog=inject(MatDialog);destroy=inject(DestroyRef);error=signal('');message=signal('');busy=signal(false);rows=signal<any[]>([]);people=signal<any[]>([]);doctors=signal<any[]>([]);assigned=signal<any[]>([]);events=signal<any[]>([]);notices=signal<any[]>([]);accessLink=signal<any>(null);
+ api=inject(Api);dialog=inject(MatDialog);snack=inject(MatSnackBar);destroy=inject(DestroyRef);error=signal('');message=signal('');busy=signal(false);rows=signal<any[]>([]);people=signal<any[]>([]);doctors=signal<any[]>([]);assigned=signal<any[]>([]);events=signal<any[]>([]);notices=signal<any[]>([]);accessLink=signal<any>(null);
  tab='solicitudes';page=0;state='';filterPatient='';search='';auditPatient='';from='';to='';auditPage=0;hours=24;selected:any=null;draft:any={paciente_id:'',odontologo_id:'',tipo:'',indicaciones:''};assignment:any={paciente_id:'',odontologo_id:''};
  constructor(){this.load();this.patients();this.api.get<any>('/lookups/medicos').subscribe({next:r=>this.doctors.set(r.rows),error:e=>this.error.set(errorText(e))});if(this.isAdmin())this.assignments();this.notifications();const timer=setInterval(()=>this.notifications(),30000);this.destroy.onDestroy(()=>clearInterval(timer));}
  isAdmin(){const u=this.api.session()?.user;return !!u&&(u.bypass||u.roles.includes('Super Admin'));}
@@ -42,7 +43,7 @@ export class Radiography {
  patients(){this.api.get<any>('/lookups/pacientes',{search:this.search}).subscribe({next:r=>this.people.set(r.rows),error:e=>this.error.set(errorText(e))});}
  patientSelected(){const assignment=this.assigned().find(a=>String(a.paciente_id)===String(this.draft.paciente_id));if(assignment){this.draft.odontologo_id=assignment.odontologo_id;this.error.set('');this.message.set(`Odontólogo responsable seleccionado: ${assignment.odontologo}.`);return;}this.draft.odontologo_id='';this.message.set('Este paciente todavía no tiene un odontólogo asignado. Asígnalo antes de crear la solicitud.');}
  send(path:string,body:any,done:()=>void){this.busy.set(true);this.error.set('');this.api.post(path,body).subscribe({next:()=>{this.busy.set(false);done();},error:e=>{this.busy.set(false);this.error.set(errorText(e));}});}
- create(){this.send('/radiographs',this.draft,()=>{this.message.set('Solicitud creada. Ya puedes generar el enlace para CERPAX.');this.draft.tipo='';this.draft.indicaciones='';this.load();});}
+ create(form:NgForm){this.send('/radiographs',this.draft,()=>{this.snack.open('Solicitud creada. Ya puedes generar el enlace para CERPAX.','Cerrar',{duration:4000});this.draft={paciente_id:'',odontologo_id:'',tipo:'',indicaciones:''};form.resetForm(this.draft);this.load();});}
  generate(){this.busy.set(true);this.api.post<any>('/radiographs/'+this.selected.id+'/access',{horas:this.hours}).subscribe({next:r=>{this.accessLink.set(r);this.busy.set(false);},error:e=>{this.error.set(errorText(e));this.busy.set(false);}});}
  action(s:any,action:string){const cancelling=action==='cancel';this.confirm({icon:cancelling?'cancel':'link_off',title:cancelling?'¿Cancelar solicitud?':'¿Revocar enlace temporal?',message:cancelling?'La solicitud de radiografía quedará cancelada.':'El enlace o QR actual dejará de funcionar de inmediato.',detail:cancelling?'No podrás generar un nuevo acceso para esta solicitud.':'Podrás generar un nuevo enlace cuando lo necesites.',confirm:cancelling?'Cancelar solicitud':'Revocar enlace'},()=>this.send('/radiographs/'+s.id+'/'+action,{},()=>{this.selected=null;this.accessLink.set(null);this.message.set('Solicitud actualizada.');this.load();}));}
  async copy(url:string){try{await navigator.clipboard.writeText(url);this.message.set('Enlace copiado.');}catch{this.message.set('Selecciona el enlace visible y cópialo.');}}
