@@ -1,0 +1,31 @@
+{
+  "diagram_type": "architecture",
+  "output": "C:/clinica-angular/docs/diagramas/arquitectura.html",
+  "specification_sha256": "9b94fb7a5df28478b279903bcb66becfc79c282efe2cb777189a435954350fe3",
+  "artifact_sha256": "7552ad1b2d3b0a7995f59451eee67e970414265dbf47a28bb6d21e3c9c5317f5",
+  "validation": "9/9 showcase, 0 errors, 0 warnings",
+  "browser_evidence": "passed",
+  "visual_review": "passed",
+  "correction_rounds": 0,
+  "png": {
+    "path": "C:/clinica-angular/docs/diagramas/arquitectura-actualizada.png",
+    "width": 1920,
+    "height": 1080,
+    "source": "Canonical Archify PNG export, fitted proportionally"
+  },
+  "observations": [
+    "Light and dark themes inspected",
+    "No crossings or overlapping labels",
+    "PNG export inspected after download"
+  ],
+  "repository_evidence": [
+    "vercel.json",
+    "frontend/src/app/api.ts",
+    "frontend/src/app/external-radiography.ts",
+    "backend/src/auth.js",
+    "backend/src/db.js",
+    "backend/src/storage.js",
+    "backend/src/radiography.js",
+    "backend/src/public.js"
+  ]
+}

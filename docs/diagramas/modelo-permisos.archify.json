@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Modelo de datos · Roles y permisos",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1390,
+      850
+    ]
+  },
+  "components": [
+    {
+      "id": "rol",
+      "type": "database",
+      "label": "roles",
+      "sublabel": "PK id · UQ nombre",
+      "pos": [
+        50,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "vinculo-rol",
+      "type": "database",
+      "label": "roles_modelos",
+      "sublabel": "PK rol_id + tipo_modelo + modelo_id",
+      "pos": [
+        545,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "cuenta",
+      "type": "database",
+      "label": "usuarios",
+      "sublabel": "PK id · UQ correo",
+      "pos": [
+        1000,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "vinculo-permiso",
+      "type": "database",
+      "label": "permisos_roles",
+      "sublabel": "PK permiso_id + rol_id",
+      "pos": [
+        50,
+        650
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "permiso",
+      "type": "database",
+      "label": "permisos",
+      "sublabel": "PK id · UQ nombre",
+      "pos": [
+        545,
+        650
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "excepcion",
+      "type": "database",
+      "label": "permisos_modelos",
+      "sublabel": "PK permiso_id + tipo_modelo + modelo_id",
+      "pos": [
+        1000,
+        650
+      ],
+      "size": [
+        300,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "rol-modelos",
+      "from": "rol",
+      "to": "vinculo-rol",
+      "label": "1 : 0..N"
+    },
+    {
+      "id": "cuenta-roles",
+      "from": "cuenta",
+      "to": "vinculo-rol",
+      "label": "1 : 0..N"
+    },
+    {
+      "id": "rol-permisos",
+      "from": "rol",
+      "to": "vinculo-permiso",
+      "label": "1 : 0..N",
+      "labelAt": [
+        200,
+        415
+      ]
+    },
+    {
+      "id": "permiso-roles",
+      "from": "permiso",
+      "to": "vinculo-permiso",
+      "label": "1 : 0..N"
+    },
+    {
+      "id": "cuenta-excepciones",
+      "from": "cuenta",
+      "to": "excepcion",
+      "label": "1 : 0..N",
+      "labelAt": [
+        1150,
+        415
+      ]
+    },
+    {
+      "id": "permiso-excepciones",
+      "from": "permiso",
+      "to": "excepcion",
+      "label": "1 : 0..N"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "Lectura del modelo",
+      "items": [
+        "Las tres tablas intermedias materializan asociaciones N:M. modelo_id referencia usuarios.id.",
+        "El registro del paciente no implica acceso al panel. CERPAX utiliza un enlace temporal, sin una cuenta interna."
+      ]
+    }
+  ]
+}

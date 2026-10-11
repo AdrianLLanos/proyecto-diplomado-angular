@@ -14,7 +14,6 @@ bootstrapApplication(App,{providers:[provideHttpClient(withInterceptors([authInt
   {path:'carga-radiografia',loadComponent:()=>import('./app/external-radiography').then(m=>m.ExternalRadiography)},
   {path:'dashboard',loadComponent:()=>import('./app/dashboard').then(m=>m.Dashboard)},
   {path:'modulos/:key',loadComponent:()=>import('./app/records').then(m=>m.Records)},
-  {path:'reportes',loadComponent:()=>import('./app/reports').then(m=>m.Reports)},
   {path:'login',loadComponent:()=>import('./app/login').then(m=>m.Login)},
   {path:'perfil',loadComponent:()=>import('./app/profile').then(m=>m.Profile)},
   {path:'configuracion',loadComponent:()=>import('./app/settings').then(m=>m.Settings)},

@@ -1,0 +1,30 @@
+% Requiere en el preámbulo: booktabs, tabularx y array.
+\begin{table}[htbp]
+  \centering
+  \caption{Diccionario de datos de la entidad \texttt{solicitudes\_radiografias}}
+  \label{tab:diccionario-solicitudes}
+  \small
+  \renewcommand{\arraystretch}{1.25}
+  \setlength{\tabcolsep}{4pt}
+  \begin{tabularx}{\textwidth}{
+    >{\raggedright\arraybackslash}p{0.23\textwidth}
+    >{\raggedright\arraybackslash}p{0.20\textwidth}
+    >{\centering\arraybackslash}p{0.07\textwidth}
+    >{\raggedright\arraybackslash}X}
+    \toprule
+    \textbf{Campo} & \textbf{Tipo} & \textbf{Nulo} & \textbf{Descripción y reglas} \\
+    \midrule
+    \texttt{id} & BIGINT & No & Identificador único de la solicitud. Clave primaria (PK). \\
+    \texttt{empresa\_id} & BIGINT & No & Clínica a la que pertenece la solicitud. Clave foránea (FK) hacia \texttt{empresas.id}. \\
+    \texttt{paciente\_id} & BIGINT & No & Paciente para quien se solicita la radiografía. FK hacia \texttt{usuarios.id}. \\
+    \texttt{odontologo\_id} & BIGINT & No & Odontólogo responsable de la solicitud. FK hacia \texttt{usuarios.id}. \\
+    \texttt{tipo} & VARCHAR(150) & No & Tipo de estudio radiográfico solicitado. Admite hasta 150 caracteres. \\
+    \texttt{indicaciones} & VARCHAR(2000) & No & Instrucciones para realizar el estudio. Admite hasta 2000 caracteres y puede contener una cadena vacía. \\
+    \texttt{estado} & TEXT & No & La restricción CHECK permite únicamente \textit{Pendiente}, \textit{Completada} o \textit{Cancelada}. \\
+    \texttt{creado\_en} & TIMESTAMPTZ & No & Fecha y hora de creación, con información de zona horaria. \\
+    \texttt{completado\_en} & TIMESTAMPTZ & Sí & Fecha y hora de finalización. Puede permanecer nulo mientras la solicitud no se haya completado. \\
+    \bottomrule
+  \end{tabularx}
+  \vspace{3pt}
+  {\footnotesize\textit{Fuente: Elaboración propia a partir del esquema de la base de datos del sistema.}}
+\end{table}

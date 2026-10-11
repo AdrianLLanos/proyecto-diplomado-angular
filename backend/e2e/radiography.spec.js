@@ -4,8 +4,7 @@ test('solicitud, QR, carga CERPAX y consulta en escritorio y móvil',async({page
  const login=await request.post('/api/login',{data:{correo:'admin@example.test',contrasena:'Testing-only-123!'}});expect(login.ok()).toBeTruthy();const {token}=await login.json();
  const headers={Authorization:'Bearer '+token};
  async function create(key,data){const r=await request.post('/api/records/'+key,{headers,data});expect(r.status(),await r.text()).toBe(201);return(await r.json()).id;}
- const dep=await create('departamentos',{nombre:'Radiología e2e',estado:'1'});
- const doctor=await create('medicos',{nombre:'Odontólogo CERPAX',correo:'cerpax-doctor@example.test',contrasena:'Testing-only-123!',estado:'1',departamento_hospitalario_id:dep});
+ const doctor=await create('medicos',{nombre:'Odontólogo CERPAX',correo:'cerpax-doctor@example.test',contrasena:'Testing-only-123!',estado:'1'});
  const patient=await create('pacientes',{nombre:'Paciente CERPAX',correo:'cerpax-patient@example.test',estado:'1'});
  await page.goto('/login');await page.evaluate(t=>sessionStorage.setItem('clinica-token',t),token);await page.goto('/radiografias');
  await page.getByRole('button',{name:'Asignar pacientes',exact:true}).click();

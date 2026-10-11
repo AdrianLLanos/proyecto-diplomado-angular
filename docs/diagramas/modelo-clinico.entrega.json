@@ -1,0 +1,24 @@
+﻿{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\clinica-angular\\docs\\diagramas\\modelo-clinico.archify.json",
+  "output": "C:\\clinica-angular\\docs\\diagramas\\modelo-clinico.html",
+  "specification": {
+    "sha256": "ea5f4cc889a5ec97db616cff188e1618bab6692c42ae57ddadc1d5a6ed4399a6",
+    "bytes": 3641
+  },
+  "artifact": {
+    "sha256": "4099f9c0419a0faf2d46006e7289492211e0d7cafc803b1d998361fff96191fb",
+    "bytes": 805130
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

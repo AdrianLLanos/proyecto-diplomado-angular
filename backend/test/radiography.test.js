@@ -12,9 +12,8 @@ test('CERPAX: ciclo completo, autorización, expiración y trazabilidad',async t
   const adminToken=await login('admin@example.test');
   const auth=(method,path,token=adminToken)=>request(app)[method]('/api'+path).set('Authorization','Bearer '+token);
   const create=async(key,data)=>{const r=await auth('post','/records/'+key).send(data);assert.equal(r.status,201,JSON.stringify(r.body));return r.body.id;};
-  const d=await create('departamentos',{nombre:'Prueba',estado:'1'});
-  const doctor=await create('medicos',{nombre:'Odontólogo A',correo:'a@example.test',contrasena:'Testing-only-123!',estado:'1',departamento_hospitalario_id:d});
-  const other=await create('medicos',{nombre:'Odontólogo B',correo:'b@example.test',contrasena:'Testing-only-123!',estado:'1',departamento_hospitalario_id:d});
+  const doctor=await create('medicos',{nombre:'Odontólogo A',correo:'a@example.test',contrasena:'Testing-only-123!',estado:'1'});
+  const other=await create('medicos',{nombre:'Odontólogo B',correo:'b@example.test',contrasena:'Testing-only-123!',estado:'1'});
   const patient=await create('pacientes',{nombre:'Paciente sintético',correo:'p@example.test',estado:'1'});
   const tokenA=await login('a@example.test'),tokenB=await login('b@example.test');
   let id,externalToken;

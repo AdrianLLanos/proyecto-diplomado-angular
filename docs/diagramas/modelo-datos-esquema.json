@@ -1,0 +1,1742 @@
+{
+  "source": "PostgreSQL: metadatos, sin registros de pacientes",
+  "tables": [
+    "usuarios",
+    "empresas",
+    "detalles_medicos",
+    "antecedentes_pacientes",
+    "horarios_medicos",
+    "citas_pacientes",
+    "recetas",
+    "pacientes_odontologos",
+    "solicitudes_radiografias",
+    "accesos_radiografias",
+    "radiografias",
+    "eventos_radiografias",
+    "notificaciones_radiografias",
+    "roles",
+    "permisos",
+    "roles_modelos",
+    "permisos_roles",
+    "permisos_modelos",
+    "usuarios_empresas"
+  ],
+  "columns": [
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "solicitud_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "token_hash",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "vence_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "revocado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "usado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "column_name": "storage_path",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "alergia_alimentaria",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "enfermedad_cardiaca",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "hipertension",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "diabetes",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "cirugias",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "accidentes",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "otros",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "antecedentes_familiares",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "medicacion_actual",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "embarazo",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "lactancia",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "seguro_salud",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "column_name": "archivo",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "medico_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "numero_turno",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "hora_inicio",
+      "data_type": "time without time zone",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "hora_fin",
+      "data_type": "time without time zone",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "fecha_cita",
+      "data_type": "date",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "motivo_consulta",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "citas_pacientes",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "YES",
+      "column_default": "'1'::bigint",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "departamento_hospitalario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "especialidad",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "cargo",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "biografia",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "detalles_medicos",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "dominio",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "habilitado",
+      "data_type": "boolean",
+      "is_nullable": "NO",
+      "column_default": "true",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "empresas",
+      "column_name": "eliminado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "solicitud_id",
+      "data_type": "bigint",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "paciente_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "actor",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "evento",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "dia_semana",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "hora_inicio",
+      "data_type": "time without time zone",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "hora_fin",
+      "data_type": "time without time zone",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "duracion_media_cita",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "5",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "tipo_turno",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'Sequential'::character varying",
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "estado",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "horarios_medicos",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "column_name": "solicitud_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "column_name": "leido_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "column_name": "paciente_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "column_name": "odontologo_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos",
+      "column_name": "nombre",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "permisos",
+      "column_name": "nombre_visible",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "permisos",
+      "column_name": "nombre_guardia",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'web'::character varying",
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "permisos_modelos",
+      "column_name": "permiso_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos_modelos",
+      "column_name": "tipo_modelo",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'User'::text",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos_modelos",
+      "column_name": "modelo_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos_roles",
+      "column_name": "permiso_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "permisos_roles",
+      "column_name": "rol_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "solicitud_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "nombre",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "tipo",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "tamano",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "contenido",
+      "data_type": "bytea",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "sha256",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "radiografias",
+      "column_name": "storage_path",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "medico_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "peso",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "estatura",
+      "data_type": "double precision",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "presion_arterial",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "sintoma_principal",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "informacion_medicamentos",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "informacion_diagnosticos",
+      "data_type": "jsonb",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "nota",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "fecha_receta",
+      "data_type": "date",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "recetas",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles",
+      "column_name": "nombre",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "roles",
+      "column_name": "nombre_guardia",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'web'::character varying",
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "roles",
+      "column_name": "es_predeterminado",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'0'::character varying",
+      "character_maximum_length": 1
+    },
+    {
+      "table_name": "roles",
+      "column_name": "destino_rol",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'1'::character varying",
+      "character_maximum_length": 1
+    },
+    {
+      "table_name": "roles",
+      "column_name": "precio",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "roles",
+      "column_name": "vigencia",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "roles",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles_modelos",
+      "column_name": "rol_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles_modelos",
+      "column_name": "tipo_modelo",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'User'::text",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "roles_modelos",
+      "column_name": "modelo_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "paciente_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "odontologo_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "tipo",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 150
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "indicaciones",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "''::character varying",
+      "character_maximum_length": 2000
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "estado",
+      "data_type": "text",
+      "is_nullable": "NO",
+      "column_default": "'Pendiente'::text",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "NO",
+      "column_default": "now()",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "column_name": "completado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "nombre",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "correo",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "correo_verificado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "contrasena",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "telefono",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "direccion",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "foto",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "configuracion_regional",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "fecha_nacimiento",
+      "data_type": "date",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "genero",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "grupo_sanguineo",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "estado",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": "'0'::character varying",
+      "character_maximum_length": 255
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "token_recordatorio",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 100
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "creado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "actualizado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "eliminado_en",
+      "data_type": "timestamp with time zone",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios",
+      "column_name": "version_sesion",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "0",
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "column_name": "usuario_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "column_name": "empresa_id",
+      "data_type": "bigint",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": null
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "column_name": "tipo_usuario",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 255
+    }
+  ],
+  "constraints": [
+    {
+      "table_name": "accesos_radiografias",
+      "name": "accesos_radiografias_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "name": "accesos_radiografias_solicitud_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (solicitud_id) REFERENCES solicitudes_radiografias(id)"
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "name": "accesos_radiografias_token_hash_key",
+      "type": "u",
+      "definition": "UNIQUE (token_hash)"
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "name": "antecedentes_pacientes_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "citas_pacientes",
+      "name": "citas_pacientes_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "detalles_medicos",
+      "name": "detalles_medicos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "empresas",
+      "name": "empresas_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "name": "eventos_radiografias_empresa_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (empresa_id) REFERENCES empresas(id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "name": "eventos_radiografias_paciente_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (paciente_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "name": "eventos_radiografias_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "name": "eventos_radiografias_solicitud_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (solicitud_id) REFERENCES solicitudes_radiografias(id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "name": "eventos_radiografias_usuario_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "horarios_medicos",
+      "name": "horarios_medicos_dia_semana_check",
+      "type": "c",
+      "definition": "CHECK (((dia_semana)::text = ANY ((ARRAY['Sunday'::character varying, 'Monday'::character varying, 'Tuesday'::character varying, 'Wednesday'::character varying, 'Thursday'::character varying, 'Friday'::character varying, 'Saturday'::character varying])::text[])))"
+    },
+    {
+      "table_name": "horarios_medicos",
+      "name": "horarios_medicos_estado_check",
+      "type": "c",
+      "definition": "CHECK (((estado)::text = ANY ((ARRAY['0'::character varying, '1'::character varying])::text[])))"
+    },
+    {
+      "table_name": "horarios_medicos",
+      "name": "horarios_medicos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "horarios_medicos",
+      "name": "horarios_medicos_tipo_turno_check",
+      "type": "c",
+      "definition": "CHECK (((tipo_turno)::text = ANY ((ARRAY['Sequential'::character varying, 'Timestamp'::character varying])::text[])))"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "name": "notificaciones_radiografias_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "name": "notificaciones_radiografias_solicitud_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (solicitud_id) REFERENCES solicitudes_radiografias(id)"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "name": "notificaciones_radiografias_solicitud_id_usuario_id_key",
+      "type": "u",
+      "definition": "UNIQUE (solicitud_id, usuario_id)"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "name": "notificaciones_radiografias_usuario_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "name": "pacientes_odontologos_empresa_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (empresa_id) REFERENCES empresas(id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "name": "pacientes_odontologos_odontologo_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (odontologo_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "name": "pacientes_odontologos_paciente_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (paciente_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "name": "pacientes_odontologos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (empresa_id, paciente_id, odontologo_id)"
+    },
+    {
+      "table_name": "permisos",
+      "name": "permisos_nombre_key",
+      "type": "u",
+      "definition": "UNIQUE (nombre)"
+    },
+    {
+      "table_name": "permisos",
+      "name": "permisos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "permisos_modelos",
+      "name": "permisos_modelos_modelo_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (modelo_id) REFERENCES usuarios(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "permisos_modelos",
+      "name": "permisos_modelos_permiso_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (permiso_id) REFERENCES permisos(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "permisos_modelos",
+      "name": "permisos_modelos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (permiso_id, tipo_modelo, modelo_id)"
+    },
+    {
+      "table_name": "permisos_roles",
+      "name": "permisos_roles_permiso_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (permiso_id) REFERENCES permisos(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "permisos_roles",
+      "name": "permisos_roles_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (permiso_id, rol_id)"
+    },
+    {
+      "table_name": "permisos_roles",
+      "name": "permisos_roles_rol_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "radiografias",
+      "name": "radiografias_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "radiografias",
+      "name": "radiografias_solicitud_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (solicitud_id) REFERENCES solicitudes_radiografias(id)"
+    },
+    {
+      "table_name": "radiografias",
+      "name": "radiografias_solicitud_id_key",
+      "type": "u",
+      "definition": "UNIQUE (solicitud_id)"
+    },
+    {
+      "table_name": "radiografias",
+      "name": "radiografias_tamano_check",
+      "type": "c",
+      "definition": "CHECK (((tamano > 0) AND (tamano <= 52428800)))"
+    },
+    {
+      "table_name": "radiografias",
+      "name": "radiografias_tipo_check",
+      "type": "c",
+      "definition": "CHECK ((tipo = ANY (ARRAY['application/pdf'::text, 'image/png'::text, 'image/jpeg'::text, 'image/webp'::text])))"
+    },
+    {
+      "table_name": "recetas",
+      "name": "recetas_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_nombre_key",
+      "type": "u",
+      "definition": "UNIQUE (nombre)"
+    },
+    {
+      "table_name": "roles",
+      "name": "roles_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "roles_modelos",
+      "name": "roles_modelos_modelo_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (modelo_id) REFERENCES usuarios(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "roles_modelos",
+      "name": "roles_modelos_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (rol_id, tipo_modelo, modelo_id)"
+    },
+    {
+      "table_name": "roles_modelos",
+      "name": "roles_modelos_rol_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (rol_id) REFERENCES roles(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "name": "solicitudes_radiografias_empresa_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (empresa_id) REFERENCES empresas(id)"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "name": "solicitudes_radiografias_estado_check",
+      "type": "c",
+      "definition": "CHECK ((estado = ANY (ARRAY['Pendiente'::text, 'Completada'::text, 'Cancelada'::text])))"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "name": "solicitudes_radiografias_odontologo_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (odontologo_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "name": "solicitudes_radiografias_paciente_id_fkey",
+      "type": "f",
+      "definition": "FOREIGN KEY (paciente_id) REFERENCES usuarios(id)"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "name": "solicitudes_radiografias_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "usuarios",
+      "name": "usuarios_correo_key",
+      "type": "u",
+      "definition": "UNIQUE (correo)"
+    },
+    {
+      "table_name": "usuarios",
+      "name": "usuarios_estado_check",
+      "type": "c",
+      "definition": "CHECK (((estado)::text = ANY ((ARRAY['0'::character varying, '1'::character varying])::text[])))"
+    },
+    {
+      "table_name": "usuarios",
+      "name": "usuarios_genero_check",
+      "type": "c",
+      "definition": "CHECK (((genero)::text = ANY ((ARRAY['male'::character varying, 'female'::character varying])::text[])))"
+    },
+    {
+      "table_name": "usuarios",
+      "name": "usuarios_grupo_sanguineo_check",
+      "type": "c",
+      "definition": "CHECK (((grupo_sanguineo)::text = ANY ((ARRAY['A+'::character varying, 'A-'::character varying, 'B+'::character varying, 'B-'::character varying, 'AB+'::character varying, 'AB-'::character varying, 'O+'::character varying, 'O-'::character varying])::text[])))"
+    },
+    {
+      "table_name": "usuarios",
+      "name": "usuarios_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "name": "usuarios_empresas_pkey",
+      "type": "p",
+      "definition": "PRIMARY KEY (usuario_id, empresa_id, tipo_usuario)"
+    }
+  ],
+  "indexes": [
+    {
+      "table_name": "accesos_radiografias",
+      "indexname": "accesos_radiografias_pkey",
+      "indexdef": "CREATE UNIQUE INDEX accesos_radiografias_pkey ON public.accesos_radiografias USING btree (id)"
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "indexname": "accesos_radiografias_token_hash_key",
+      "indexdef": "CREATE UNIQUE INDEX accesos_radiografias_token_hash_key ON public.accesos_radiografias USING btree (token_hash)"
+    },
+    {
+      "table_name": "accesos_radiografias",
+      "indexname": "idx_accesos_solicitud",
+      "indexdef": "CREATE INDEX idx_accesos_solicitud ON public.accesos_radiografias USING btree (solicitud_id)"
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "indexname": "antecedentes_pacientes_pkey",
+      "indexdef": "CREATE UNIQUE INDEX antecedentes_pacientes_pkey ON public.antecedentes_pacientes USING btree (id)"
+    },
+    {
+      "table_name": "antecedentes_pacientes",
+      "indexname": "un_antecedente_usuario",
+      "indexdef": "CREATE UNIQUE INDEX un_antecedente_usuario ON public.antecedentes_pacientes USING btree (usuario_id)"
+    },
+    {
+      "table_name": "citas_pacientes",
+      "indexname": "citas_agenda",
+      "indexdef": "CREATE INDEX citas_agenda ON public.citas_pacientes USING btree (medico_id, fecha_cita, hora_inicio)"
+    },
+    {
+      "table_name": "citas_pacientes",
+      "indexname": "citas_pacientes_pkey",
+      "indexdef": "CREATE UNIQUE INDEX citas_pacientes_pkey ON public.citas_pacientes USING btree (id)"
+    },
+    {
+      "table_name": "citas_pacientes",
+      "indexname": "idx_citas_pacientes_empresa",
+      "indexdef": "CREATE INDEX idx_citas_pacientes_empresa ON public.citas_pacientes USING btree (empresa_id)"
+    },
+    {
+      "table_name": "detalles_medicos",
+      "indexname": "detalles_medicos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX detalles_medicos_pkey ON public.detalles_medicos USING btree (id)"
+    },
+    {
+      "table_name": "detalles_medicos",
+      "indexname": "un_medico_usuario",
+      "indexdef": "CREATE UNIQUE INDEX un_medico_usuario ON public.detalles_medicos USING btree (usuario_id)"
+    },
+    {
+      "table_name": "empresas",
+      "indexname": "empresas_pkey",
+      "indexdef": "CREATE UNIQUE INDEX empresas_pkey ON public.empresas USING btree (id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "indexname": "eventos_radiografias_pkey",
+      "indexdef": "CREATE UNIQUE INDEX eventos_radiografias_pkey ON public.eventos_radiografias USING btree (id)"
+    },
+    {
+      "table_name": "eventos_radiografias",
+      "indexname": "idx_eventos_empresa_fecha",
+      "indexdef": "CREATE INDEX idx_eventos_empresa_fecha ON public.eventos_radiografias USING btree (empresa_id, creado_en DESC)"
+    },
+    {
+      "table_name": "horarios_medicos",
+      "indexname": "horarios_medicos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX horarios_medicos_pkey ON public.horarios_medicos USING btree (id)"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "indexname": "notificaciones_radiografias_pkey",
+      "indexdef": "CREATE UNIQUE INDEX notificaciones_radiografias_pkey ON public.notificaciones_radiografias USING btree (id)"
+    },
+    {
+      "table_name": "notificaciones_radiografias",
+      "indexname": "notificaciones_radiografias_solicitud_id_usuario_id_key",
+      "indexdef": "CREATE UNIQUE INDEX notificaciones_radiografias_solicitud_id_usuario_id_key ON public.notificaciones_radiografias USING btree (solicitud_id, usuario_id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "indexname": "idx_asignaciones_odontologo",
+      "indexdef": "CREATE INDEX idx_asignaciones_odontologo ON public.pacientes_odontologos USING btree (empresa_id, odontologo_id, paciente_id)"
+    },
+    {
+      "table_name": "pacientes_odontologos",
+      "indexname": "pacientes_odontologos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX pacientes_odontologos_pkey ON public.pacientes_odontologos USING btree (empresa_id, paciente_id, odontologo_id)"
+    },
+    {
+      "table_name": "permisos",
+      "indexname": "permisos_nombre_key",
+      "indexdef": "CREATE UNIQUE INDEX permisos_nombre_key ON public.permisos USING btree (nombre)"
+    },
+    {
+      "table_name": "permisos",
+      "indexname": "permisos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX permisos_pkey ON public.permisos USING btree (id)"
+    },
+    {
+      "table_name": "permisos_modelos",
+      "indexname": "permisos_modelos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX permisos_modelos_pkey ON public.permisos_modelos USING btree (permiso_id, tipo_modelo, modelo_id)"
+    },
+    {
+      "table_name": "permisos_roles",
+      "indexname": "permisos_roles_pkey",
+      "indexdef": "CREATE UNIQUE INDEX permisos_roles_pkey ON public.permisos_roles USING btree (permiso_id, rol_id)"
+    },
+    {
+      "table_name": "radiografias",
+      "indexname": "idx_radiografias_storage_path",
+      "indexdef": "CREATE UNIQUE INDEX idx_radiografias_storage_path ON public.radiografias USING btree (storage_path) WHERE (storage_path IS NOT NULL)"
+    },
+    {
+      "table_name": "radiografias",
+      "indexname": "radiografias_pkey",
+      "indexdef": "CREATE UNIQUE INDEX radiografias_pkey ON public.radiografias USING btree (id)"
+    },
+    {
+      "table_name": "radiografias",
+      "indexname": "radiografias_solicitud_id_key",
+      "indexdef": "CREATE UNIQUE INDEX radiografias_solicitud_id_key ON public.radiografias USING btree (solicitud_id)"
+    },
+    {
+      "table_name": "recetas",
+      "indexname": "recetas_pkey",
+      "indexdef": "CREATE UNIQUE INDEX recetas_pkey ON public.recetas USING btree (id)"
+    },
+    {
+      "table_name": "roles",
+      "indexname": "roles_nombre_key",
+      "indexdef": "CREATE UNIQUE INDEX roles_nombre_key ON public.roles USING btree (nombre)"
+    },
+    {
+      "table_name": "roles",
+      "indexname": "roles_pkey",
+      "indexdef": "CREATE UNIQUE INDEX roles_pkey ON public.roles USING btree (id)"
+    },
+    {
+      "table_name": "roles_modelos",
+      "indexname": "roles_modelos_pkey",
+      "indexdef": "CREATE UNIQUE INDEX roles_modelos_pkey ON public.roles_modelos USING btree (rol_id, tipo_modelo, modelo_id)"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "indexname": "idx_solicitudes_empresa_paciente",
+      "indexdef": "CREATE INDEX idx_solicitudes_empresa_paciente ON public.solicitudes_radiografias USING btree (empresa_id, paciente_id, creado_en DESC)"
+    },
+    {
+      "table_name": "solicitudes_radiografias",
+      "indexname": "solicitudes_radiografias_pkey",
+      "indexdef": "CREATE UNIQUE INDEX solicitudes_radiografias_pkey ON public.solicitudes_radiografias USING btree (id)"
+    },
+    {
+      "table_name": "usuarios",
+      "indexname": "idx_usuarios_empresa",
+      "indexdef": "CREATE INDEX idx_usuarios_empresa ON public.usuarios USING btree (empresa_id)"
+    },
+    {
+      "table_name": "usuarios",
+      "indexname": "usuarios_correo_key",
+      "indexdef": "CREATE UNIQUE INDEX usuarios_correo_key ON public.usuarios USING btree (correo)"
+    },
+    {
+      "table_name": "usuarios",
+      "indexname": "usuarios_pkey",
+      "indexdef": "CREATE UNIQUE INDEX usuarios_pkey ON public.usuarios USING btree (id)"
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "indexname": "idx_usuarios_empresas_empresa",
+      "indexdef": "CREATE INDEX idx_usuarios_empresas_empresa ON public.usuarios_empresas USING btree (empresa_id)"
+    },
+    {
+      "table_name": "usuarios_empresas",
+      "indexname": "usuarios_empresas_pkey",
+      "indexdef": "CREATE UNIQUE INDEX usuarios_empresas_pkey ON public.usuarios_empresas USING btree (usuario_id, empresa_id, tipo_usuario)"
+    }
+  ]
+}

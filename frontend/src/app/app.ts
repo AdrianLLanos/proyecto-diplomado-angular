@@ -10,9 +10,9 @@ import {Api,Module,Session,errorText} from './api';
     <mat-sidenav #nav [mode]="compact?'over':'side'" [opened]="!compact" class="sidebar">
       <a routerLink="/dashboard" class="brand"><span class="brand-mark"><mat-icon>health_and_safety</mat-icon></span><span>Clínica Dental<small>Gestión integral</small></span></a>
       <div class="nav-section"><a routerLink="/dashboard" routerLinkActive="active" class="nav-item" (click)="compact&&nav.close()"><mat-icon>space_dashboard</mat-icon>Resumen</a></div>
-      @if(api.can('radiografias')){<div class="nav-section"><a routerLink="/radiografias" routerLinkActive="active" class="nav-item"><mat-icon>medical_information</mat-icon>Radiograf?as / CERPAX</a></div>}
+      @if(api.can('radiografias')||api.can('asignaciones','manage')){<div class="nav-section"><a routerLink="/radiografias" routerLinkActive="active" class="nav-item"><mat-icon>medical_information</mat-icon>{{api.can('radiografias')?'Radiografías / CERPAX':'Asignar pacientes'}}</a></div>}
       @for(group of groups;track group){<div class="nav-section"><p>{{group}}</p>@for(m of modules();track m.key){@if(m.group===group){<a [routerLink]="['/modulos',m.key]" routerLinkActive="active" class="nav-item" (click)="compact&&nav.close()"><mat-icon>{{m.icon}}</mat-icon>{{m.label}}</a>}}</div>}
-      <div class="nav-section">@if(api.can('reportes')){<a routerLink="/reportes" routerLinkActive="active" class="nav-item"><mat-icon>bar_chart</mat-icon>Reportes financieros</a>}<a routerLink="/perfil" routerLinkActive="active" class="nav-item"><mat-icon>person</mat-icon>Mi perfil</a>@if(api.can('ajustes')){<a routerLink="/configuracion" class="nav-item"><mat-icon>settings</mat-icon>Ajustes generales</a>}@if(api.can('roles')){<a routerLink="/roles" class="nav-item"><mat-icon>admin_panel_settings</mat-icon>Roles y permisos</a>}<a routerLink="/sitio/home" class="nav-item"><mat-icon>public</mat-icon>Ver sitio público</a></div>
+      <div class="nav-section"><a routerLink="/perfil" routerLinkActive="active" class="nav-item"><mat-icon>person</mat-icon>Mi perfil</a>@if(api.can('ajustes')){<a routerLink="/configuracion" class="nav-item"><mat-icon>settings</mat-icon>Ajustes generales</a>}@if(api.can('roles')){<a routerLink="/roles" class="nav-item"><mat-icon>admin_panel_settings</mat-icon>Roles y permisos</a>}<a routerLink="/sitio/home" class="nav-item"><mat-icon>public</mat-icon>Ver sitio público</a></div>
       <div class="sidebar-foot"><span class="status-dot"></span>Espacio de la clínica</div>
     </mat-sidenav>
     <mat-sidenav-content>
@@ -23,12 +23,12 @@ import {Api,Module,Session,errorText} from './api';
 `})
 export class App {
   api=inject(Api);router=inject(Router);modules=signal<Module[]>([]);error=signal('');compact=window.innerWidth<1000;
-  groups=['Clínica','Laboratorio','Finanzas','Comunicación','Configuración'];
+  groups=['Clínica','Comunicación','Configuración'];
   companies=signal<any[]>([]);currentCompany='';
   isPublic(){return this.router.url==='/'||/^\/(sitio|login|restablecer|recuperar|carga-radiografia)/.test(this.router.url);}
   constructor(){this.router.events.subscribe(e=>{if(e instanceof NavigationEnd&&!this.isPublic()&&!this.api.session())this.initialize();});}
   switchCompany(id:string){sessionStorage.setItem('clinica-company',String(id));window.location.reload();}
-  roleLabel(){if(this.api.session()?.localAccess)return 'Acceso local';const roles=this.api.session()?.user.roles||[];if(roles.includes('Doctor'))return 'Odontólogo';if(roles.includes('Super Admin'))return 'Administrador';return roles[0]||'Usuario';}
+  roleLabel(){if(this.api.session()?.localAccess)return 'Acceso local';const roles=this.api.session()?.user.roles||[];if(roles.includes('Doctor'))return 'Odontólogo';if(roles.includes('Super Admin'))return 'Administrador';if(roles.includes('Receptionist'))return 'Recepcionista';return roles[0]||'Usuario';}
   initialize(){this.error.set('');this.api.get<Session>('/session').subscribe({next:s=>{this.api.session.set(s);this.currentCompany=String(s.companyId);this.api.get<any[]>('/companies').subscribe({next:c=>this.companies.set(c),error:e=>this.error.set(errorText(e))});this.api.catalog$.subscribe({next:m=>this.modules.set(m),error:e=>this.error.set(errorText(e))});},error:e=>{if(e.status!==401)this.error.set(errorText(e));}});}
   logout(){this.api.post('/logout',{}).subscribe({next:()=>{sessionStorage.clear();this.api.session.set(null);this.router.navigateByUrl('/login');},error:e=>this.error.set(errorText(e))});}
 }

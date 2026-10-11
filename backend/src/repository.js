@@ -6,6 +6,7 @@ import bcrypt from 'bcryptjs';
 import crypto from 'node:crypto';
 import {actor} from './context.js';
 import {validateClinical,validateSlot} from './clinical.js';
+import {visibleField} from './administrative-access.js';
 
 const clean=row=>Object.fromEntries(Object.entries(row).filter(([k])=>!isSecret(k)&&!['token_recordatorio','eliminado_en'].includes(k)));
 export async function scope(m,companyId,alias='t'){
@@ -40,9 +41,9 @@ export async function list(key,companyId,{page=0,size=15,search=''}={}){
   const m=moduleFor(key),all=await schema(),{where,params}=await scope(m,companyId);
   page=Math.max(0,Number(page)||0);size=Math.min(100,Math.max(1,Number(size)||15));
   let filter=where;
-  const searchable=all[m.table].filter(c=>/text|character/.test(c.data_type)&&!isSecret(c.column_name));
+  const searchable=all[m.table].filter(c=>/text|character/.test(c.data_type)&&!isSecret(c.column_name)&&visibleField(m,c.column_name));
   if(search&&searchable.length){params.push('%'+String(search).slice(0,150)+'%');filter+=` AND (${searchable.map(c=>`t.${q(c.column_name)} ILIKE $${params.length}`).join(' OR ')})`;}
-  const columns=all[m.table].filter(c=>!isSecret(c.column_name)&&!['token_recordatorio','eliminado_en'].includes(c.column_name)).map(c=>'t.'+q(c.column_name)).join(',');
+  const columns=all[m.table].filter(c=>!isSecret(c.column_name)&&!['token_recordatorio','eliminado_en'].includes(c.column_name)&&visibleField(m,c.column_name)).map(c=>'t.'+q(c.column_name)).join(',');
   // Count and rows share one trip to the remote database, including empty pages.
   const sql=`WITH matching AS (SELECT ${columns} FROM ${q(m.table)} t WHERE ${filter}) SELECT (SELECT count(*)::int FROM matching) AS total, COALESCE((SELECT json_agg(p) FROM (SELECT * FROM matching ORDER BY id DESC LIMIT $${params.length+1} OFFSET $${params.length+2}) p),'[]'::json) AS rows`;
   const {rows}=await pool.query(sql,[...params,size,page*size]);return rows[0];
@@ -53,7 +54,7 @@ export async function get(key,id,companyId,client=pool){
   if(!rows[0])fail('Registro no encontrado',404);const row=clean(rows[0]);
   if(key==='medicos'){const d=await client.query('SELECT * FROM detalles_medicos WHERE usuario_id=$1',[id]);if(d.rows[0]){const {id:detailId,usuario_id,...detail}=d.rows[0];Object.assign(row,detail);}}
   if(key==='facturas')row.items=(await client.query('SELECT * FROM detalles_facturas WHERE factura_id=$1 AND empresa_id=$2 ORDER BY id',[id,companyId])).rows;
-  return row;
+  return Object.fromEntries(Object.entries(row).filter(([name])=>visibleField(m,name)));
 }
 export async function insert(client,table,values){
   const columns=Object.keys(values);const {rows}=await client.query(`INSERT INTO ${q(table)} (${columns.map(q).join(',')}) VALUES (${columns.map((_,i)=>'$'+(i+1)).join(',')}) RETURNING *`,Object.values(values).map(v=>typeof v==='object'&&v!==null?JSON.stringify(v):v));return rows[0];
@@ -70,6 +71,7 @@ async function preserveAdministrator(client,id){
 }
 export async function save(key,id,input,companyId){
   const m=moduleFor(key),all=await schema(),fields=await fieldsFor(m);
+  if(Object.keys(input).some(name=>!visibleField(m,name)))fail('Recepción solo puede gestionar datos administrativos del paciente',403);
   return transaction(async client=>{
     const creating=!id;
     const existing=id?await get(key,id,companyId,client):{};
@@ -115,7 +117,11 @@ export async function save(key,id,input,companyId){
       const detail=Object.fromEntries(Object.entries(data).filter(([k])=>detailFields.includes(k)&&!['id','usuario_id'].includes(k)));
       const current=await client.query('SELECT id FROM detalles_medicos WHERE usuario_id=$1',[id]);
       if(current.rowCount)await update(client,'detalles_medicos',current.rows[0].id,detail);
-      else await insert(client,'detalles_medicos',{...detail,usuario_id:id,creado_en:new Date().toISOString()});
+      else {
+        const existingDepartment=await client.query("SELECT id FROM departamentos_hospitalarios WHERE empresa_id=$1 AND nombre='Odontología' AND eliminado_en IS NULL LIMIT 1",[companyId]);
+        const departmentId=existingDepartment.rows[0]?.id||(await client.query("INSERT INTO departamentos_hospitalarios(empresa_id,nombre,estado,creado_en) VALUES($1,'Odontología','1',now()) ON CONFLICT (nombre) DO UPDATE SET eliminado_en=NULL RETURNING id",[companyId])).rows[0].id;
+        await insert(client,'detalles_medicos',{...detail,departamento_hospitalario_id:departmentId,usuario_id:id,creado_en:new Date().toISOString()});
+      }
     }
     if(lines){await client.query('DELETE FROM detalles_facturas WHERE factura_id=$1 AND empresa_id=$2',[id,companyId]);for(const line of lines)await insert(client,'detalles_facturas',{...line,factura_id:id,empresa_id:companyId});}
     if(m.table==='empresas'&&actor()?.user){await client.query("INSERT INTO usuarios_empresas(empresa_id,usuario_id,tipo_usuario) VALUES($1,$2,'User') ON CONFLICT DO NOTHING",[id,actor().user.id]);}
@@ -139,7 +145,7 @@ export async function remove(key,id,companyId){
   });
 }
 export async function dashboard(companyId){
-  const metrics=[['pacientes','Pacientes'],['medicos','Médicos'],['citas','Citas'],['facturas','Facturas'],['recetas','Recetas'],['informes','Informes']];
+  const metrics=[['pacientes','Pacientes'],['medicos','Médicos'],['citas','Citas'],['recetas','Recetas']];
   const parts=[],params=[];
   for(const [key,label] of metrics){const m=moduleFor(key),s=await scope(m,companyId);const where=s.where.replace(/\$(\d+)/g,(_,n)=>'$'+(Number(n)+params.length));params.push(...s.params);parts.push(`SELECT '${key}' AS key,'${label}' AS label,count(*)::int AS value FROM ${q(m.table)} t WHERE ${where}`);}
   const result=await pool.query(parts.join(' UNION ALL '),params);

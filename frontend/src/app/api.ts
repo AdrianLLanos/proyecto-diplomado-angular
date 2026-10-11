@@ -9,7 +9,7 @@ export interface List {rows:Row[];total:number;}
 export interface Session {user:{id:string;nombre:string;correo:string;roles:string[];permissions:string[];bypass?:boolean};localAccess:boolean;companyId:number;}
 export const roleText=(role:string)=>({
   'Super Admin':'Administrador',Doctor:'Odontólogo',Patient:'Paciente',
-  Accountant:'Contador',Laboratorist:'Laboratorista',Receptionist:'Recepcionista'
+  Receptionist:'Recepcionista'
 }[role]||role);
 @Injectable({providedIn:'root'})
 export class Api {

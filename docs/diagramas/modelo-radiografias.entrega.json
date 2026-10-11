@@ -1,0 +1,24 @@
+﻿{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\clinica-angular\\docs\\diagramas\\modelo-radiografias.archify.json",
+  "output": "C:\\clinica-angular\\docs\\diagramas\\modelo-radiografias.html",
+  "specification": {
+    "sha256": "10a58ee56ea1536220748d07f6918d9e4bcdee3725fddc0be2c064fd048afc96",
+    "bytes": 2385
+  },
+  "artifact": {
+    "sha256": "935f975c57fda10e6547c52fba65478f8c9ac5bd2b53358ac2560f04eee29641",
+    "bytes": 800799
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

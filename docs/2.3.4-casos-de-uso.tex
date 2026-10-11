@@ -1,0 +1,97 @@
+% Insertar debajo del encabezado 2.3.4. Requiere graphicx.
+% Copiar el PDF en diagramas/casos_de_uso.pdf.
+
+
+El diagrama general presenta las responsabilidades principales de los actores del sistema web de la Clínica Odontológica San Martín. El Administrador gestiona cuentas y autorizaciones y supervisa los registros; el Odontólogo trabaja con información clínica de los pacientes asignados; y CERPAX entrega radiografías mediante un enlace temporal.
+
+El inicio de sesión corresponde a los actores internos. El paciente se considera un registro clínico y no participa directamente en los casos de uso representados. CERPAX no requiere una sesión en el panel. Las asociaciones muestran responsabilidades principales, sin representar cada operación interna ni todos los accesos adicionales del Administrador.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=\textwidth]{diagramas/casos_de_uso.pdf}
+\caption{Diagrama general de casos de uso. Fuente: Elaboración propia.}
+\label{fig:casos-uso-general}
+\end{figure}
+
+
+Se describen únicamente los casos de uso más relevantes para el Administrador, el Odontólogo y CERPAX: autenticación, administración de cuentas y permisos, gestión clínica y el proceso de solicitud, acceso temporal, entrega y consulta de radiografías. Se conservan los identificadores del diagrama general. Las operaciones se limitan a la clínica autorizada y, para el Odontólogo, a los pacientes asignados.
+
+\paragraph{CU-01. Iniciar sesión}
+\begin{description}
+
+\item[Actor.] Administrador y Odontólogo.
+\item[Precondición.] Cuenta activa con credenciales y acceso a la clínica.
+\item[Flujo principal.] El actor introduce su correo y contraseña. El sistema verifica las credenciales y habilita las funciones correspondientes a sus permisos.
+\item[Alternativas.] Si las credenciales son incorrectas o la cuenta está inactiva, se rechaza el acceso. Si la sesión vence, debe autenticarse nuevamente.
+\item[Postcondición.] Sesión iniciada y acceso al panel según el perfil.
+\end{description}
+
+\paragraph{CU-02. Administrar cuentas}
+\begin{description}
+
+\item[Actor.] Administrador.
+\item[Precondición.] Sesión de Administrador activa.
+\item[Flujo principal.] Accede a Usuarios, crea o selecciona una cuenta, registra o modifica sus datos y guarda los cambios. Puede activar o desactivar cuentas.
+\item[Alternativas.] Los datos inválidos o un correo duplicado impiden guardar. El sistema impide desactivar al último Administrador activo.
+\item[Postcondición.] Cuenta creada, actualizada o con su estado modificado. La asignación del rol se realiza mediante CU-03.
+\end{description}
+
+\paragraph{CU-03. Gestionar roles y permisos}
+\begin{description}
+
+\item[Actor.] Administrador.
+\item[Precondición.] Sesión de Administrador activa; usuario existente para asignar roles.
+\item[Flujo principal.] Consulta o crea un rol, selecciona sus permisos y guarda. Desde una cuenta, asigna los roles que correspondan al usuario.
+\item[Alternativas.] No se permite eliminar roles del sistema ni roles asignados a usuarios. No se permite retirar los permisos del rol Administrador ni dejar el sistema sin un Administrador activo.
+\item[Postcondición.] Roles y permisos configurados y asignaciones de acceso registradas.
+\end{description}
+
+\paragraph{CU-05. Gestionar información clínica}
+\begin{description}
+
+\item[Actor principal.] Odontólogo.
+\item[Precondición.] Sesión activa y paciente asignado al odontólogo.
+\item[Flujo principal.] Consulta el paciente y registra o actualiza sus antecedentes y recetas mediante los módulos clínicos autorizados.
+\item[Alternativas.] Se rechazan datos inválidos. Los registros de pacientes no asignados no están disponibles para el odontólogo.
+\item[Postcondición.] Información clínica consultada o guardada en el registro correspondiente.
+\end{description}
+
+\paragraph{CU-06. Solicitar radiografía}
+\begin{description}
+
+\item[Actor principal.] Odontólogo.
+\item[Precondición.] Sesión activa; paciente asignado y permiso para crear solicitudes radiográficas.
+\item[Flujo principal.] Selecciona al paciente, indica el tipo de estudio y las indicaciones y registra la solicitud.
+\item[Alternativas.] Se rechaza la solicitud si faltan datos válidos o no existe la asignación del paciente al odontólogo responsable.
+\item[Postcondición.] Solicitud radiográfica registrada con estado Pendiente.
+\end{description}
+
+\paragraph{CU-07. Generar enlace temporal / QR}
+\begin{description}
+
+\item[Actor principal.] Odontólogo.
+\item[Precondición.] Sesión activa, acceso autorizado a una solicitud Pendiente y permiso para generar accesos.
+\item[Flujo principal.] Selecciona la solicitud y la vigencia del acceso. El sistema genera un enlace y su código QR para la carga externa y revoca los accesos anteriores pendientes de uso.
+\item[Alternativas.] Se rechaza una vigencia fuera del intervalo permitido o una solicitud que ya no esté Pendiente.
+\item[Postcondición.] Enlace y QR temporales disponibles para compartir con CERPAX.
+\end{description}
+
+\paragraph{CU-08. Consultar radiografías}
+\begin{description}
+
+\item[Actor principal.] Odontólogo.
+\item[Precondición.] Sesión activa y acceso autorizado al paciente y a la solicitud.
+\item[Flujo principal.] Consulta las solicitudes y su estado. Cuando existe un archivo, abre o descarga la radiografía desde el acceso protegido.
+\item[Alternativas.] Si no hay archivo cargado, no se permite abrirlo. Un odontólogo sin asignación no puede consultar el estudio.
+\item[Postcondición.] Estado o radiografía consultados; la consulta o descarga del archivo se registra como evento del sistema.
+\end{description}
+
+\paragraph{CU-09. Cargar radiografía con enlace}
+\begin{description}
+
+\item[Actor.] CERPAX.
+\item[Precondición.] Enlace temporal válido, vigente, no revocado y no utilizado para una solicitud Pendiente.
+\item[Flujo principal.] Abre el enlace o escanea el QR, selecciona un archivo admitido y confirma la carga. El sistema guarda el archivo protegido y lo asocia a la solicitud.
+\item[Alternativas.] Se rechazan enlaces vencidos, revocados o ya utilizados, así como archivos que incumplen las restricciones de tipo o tamaño. Si falla la carga, no se confirma como completada.
+\item[Postcondición.] Radiografía asociada a la solicitud, estado Completada y enlace consumido. Se genera la notificación de carga correspondiente.
+\end{description}

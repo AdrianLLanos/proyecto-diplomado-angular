@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Modelo de datos · Radiografías",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1390,
+      850
+    ]
+  },
+  "components": [
+    {
+      "id": "solicitud",
+      "type": "database",
+      "label": "solicitudes_radiografias",
+      "sublabel": "PK id · FK empresa / paciente / odontólogo",
+      "pos": [
+        545,
+        340
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "acceso",
+      "type": "database",
+      "label": "accesos_radiografias",
+      "sublabel": "PK id · FK solicitud_id · UQ token_hash",
+      "pos": [
+        50,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "imagen",
+      "type": "database",
+      "label": "radiografias",
+      "sublabel": "PK id · FK y UQ solicitud_id",
+      "pos": [
+        1000,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "evento",
+      "type": "database",
+      "label": "eventos_radiografias",
+      "sublabel": "PK id · FK solicitud_id opcional",
+      "pos": [
+        50,
+        650
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "aviso",
+      "type": "database",
+      "label": "notificaciones_radiografias",
+      "sublabel": "PK id · FK solicitud_id / usuario_id",
+      "pos": [
+        1000,
+        650
+      ],
+      "size": [
+        300,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "sol-acceso",
+      "from": "solicitud",
+      "to": "acceso",
+      "label": "1 : 0..N"
+    },
+    {
+      "id": "sol-imagen",
+      "from": "solicitud",
+      "to": "imagen",
+      "label": "1 : 0..1"
+    },
+    {
+      "id": "sol-evento",
+      "from": "solicitud",
+      "to": "evento",
+      "label": "0..1 : 0..N"
+    },
+    {
+      "id": "sol-aviso",
+      "from": "solicitud",
+      "to": "aviso",
+      "label": "1 : 0..N"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "Lectura del modelo",
+      "items": [
+        "Las líneas continuas representan claves foráneas declaradas. Las referencias a usuarios y empresas se detallan en el diccionario.",
+        "El archivo se identifica mediante storage_path; Supabase Storage almacena el objeto y radiografias conserva sus metadatos."
+      ]
+    }
+  ]
+}

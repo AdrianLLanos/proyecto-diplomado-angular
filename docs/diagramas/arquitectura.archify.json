@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Arquitectura general del sistema",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1390,
+      750
+    ]
+  },
+  "components": [
+    {
+      "id": "equipo-clinico",
+      "type": "external",
+      "label": "Usuarios internos",
+      "sublabel": "Navegador web",
+      "pos": [
+        40,
+        150
+      ],
+      "size": [
+        170,
+        84
+      ]
+    },
+    {
+      "id": "interfaz-clinica",
+      "type": "frontend",
+      "label": "Angular",
+      "sublabel": "Panel de la clínica",
+      "pos": [
+        350,
+        150
+      ],
+      "size": [
+        210,
+        84
+      ],
+      "brand": "angular"
+    },
+    {
+      "id": "api-clinica",
+      "type": "backend",
+      "label": "Node.js + Express",
+      "sublabel": "API REST · /api",
+      "tag": "JWT · roles · validación",
+      "pos": [
+        720,
+        150
+      ],
+      "size": [
+        220,
+        100
+      ]
+    },
+    {
+      "id": "datos-clinicos",
+      "type": "database",
+      "label": "Supabase",
+      "pos": [
+        1105,
+        150
+      ],
+      "size": [
+        240,
+        100
+      ],
+      "brand": "supabase"
+    },
+    {
+      "id": "proveedor-cerpax",
+      "type": "external",
+      "label": "CERPAX",
+      "sublabel": "Proveedor externo",
+      "pos": [
+        40,
+        560
+      ],
+      "size": [
+        170,
+        84
+      ]
+    },
+    {
+      "id": "portal-entrega",
+      "type": "frontend",
+      "label": "Portal de entrega",
+      "sublabel": "Angular · enlace / QR temporal",
+      "pos": [
+        350,
+        560
+      ],
+      "size": [
+        240,
+        100
+      ],
+      "brand": "angular"
+    },
+    {
+      "id": "archivos-privados",
+      "type": "cloud",
+      "label": "Supabase Storage",
+      "sublabel": "Radiografías · bucket privado",
+      "pos": [
+        1105,
+        560
+      ],
+      "size": [
+        240,
+        100
+      ],
+      "brand": "supabase"
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Vercel · aplicación web",
+      "wraps": [
+        "interfaz-clinica",
+        "api-clinica",
+        "portal-entrega"
+      ],
+      "pad": 30
+    },
+    {
+      "kind": "region",
+      "label": "Base de datos",
+      "wraps": [
+        "datos-clinicos",
+        "archivos-privados"
+      ],
+      "pad": 24
+    }
+  ],
+  "connections": [
+    {
+      "id": "acceso-interno",
+      "from": "equipo-clinico",
+      "to": "interfaz-clinica",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "id": "peticiones-api",
+      "from": "interfaz-clinica",
+      "to": "api-clinica",
+      "label": "JSON + JWT",
+      "variant": "security"
+    },
+    {
+      "id": "persistencia-sql",
+      "from": "api-clinica",
+      "to": "datos-clinicos",
+      "label": "SQL · conexión TLS"
+    },
+    {
+      "id": "acceso-cerpax",
+      "from": "proveedor-cerpax",
+      "to": "portal-entrega",
+      "label": "Enlace / QR",
+      "variant": "emphasis"
+    },
+    {
+      "id": "autorizar-entrega",
+      "from": "portal-entrega",
+      "to": "api-clinica",
+      "label": "Validar y confirmar",
+      "variant": "security"
+    },
+    {
+      "id": "archivo-directo",
+      "from": "portal-entrega",
+      "to": "archivos-privados",
+      "label": "Carga directa · URL firmada",
+      "variant": "emphasis"
+    },
+    {
+      "id": "gestionar-archivos",
+      "from": "api-clinica",
+      "to": "archivos-privados",
+      "label": "SDK · URLs firmadas",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Presentación",
+      "items": [
+        "Angular separa el panel interno de la entrega externa de CERPAX."
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Aplicación y seguridad",
+      "items": [
+        "Express valida sesiones JWT, permisos y datos antes de ejecutar operaciones."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Persistencia",
+      "items": [
+        "PostgreSQL conserva registros; Storage recibe el archivo directamente con acceso firmado."
+      ]
+    }
+  ]
+}

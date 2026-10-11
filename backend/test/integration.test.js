@@ -6,11 +6,10 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
  const f=await fixture();const {createApp}=await import('../src/app.js');const app=createApp();
  const login=await request(app).post('/api/login').send({correo:'admin@example.test',contrasena:'Testing-only-123!'});assert.equal(login.status,200,JSON.stringify(login.body));const token=login.body.token;
  const auth=r=>r.set('Authorization','Bearer '+token);
- let doctor,patient,dept,invoice;
+ let doctor,patient;
  await t.test('catálogo y CRUD clínico',async()=>{
-  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,19);assert.equal(c.body.find(m=>m.key==='medicos').label,'Odontólogos');
-  const d=await auth(request(app).post('/api/records/departamentos')).send({nombre:'Odontología',estado:'1'});assert.equal(d.status,201,JSON.stringify(d.body));dept=d.body.id;
-  const m=await auth(request(app).post('/api/records/medicos')).send({nombre:'Doctora Prueba',correo:'doctor@example.test',estado:'1',departamento_hospitalario_id:dept});assert.equal(m.status,201,JSON.stringify(m.body));doctor=m.body.id;
+  const c=await auth(request(app).get('/api/catalog'));assert.equal(c.status,200);assert.equal(c.body.length,10);assert.equal(c.body.find(m=>m.key==='medicos').label,'Odontólogos');assert.equal(c.body.some(m=>['departamentos','facturas','informes'].includes(m.key)),false);
+  const m=await auth(request(app).post('/api/records/medicos')).send({nombre:'Doctora Prueba',correo:'doctor@example.test',estado:'1'});assert.equal(m.status,201,JSON.stringify(m.body));doctor=m.body.id;
   const p=await auth(request(app).post('/api/records/pacientes')).send({nombre:'Paciente Prueba',correo:'paciente@example.test',estado:'1'});assert.equal(p.status,201,JSON.stringify(p.body));patient=p.body.id;
  });
  await t.test('horarios, citas y rechazo de superposiciones',async()=>{
@@ -18,18 +17,15 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
   const body={usuario_id:patient,medico_id:doctor,fecha_cita:'2030-01-07',hora_inicio:'09:00',hora_fin:'09:30'};
   const c=await auth(request(app).post('/api/records/citas')).send(body);assert.equal(c.status,201,JSON.stringify(c.body));const duplicate=await auth(request(app).post('/api/records/citas')).send(body);assert.equal(duplicate.status,409);
  });
- await t.test('recetas, laboratorio, facturas y Excel',async()=>{
+ await t.test('recetas y Excel',async()=>{
   const recipe=await auth(request(app).post('/api/records/recetas')).send({usuario_id:patient,medico_id:doctor,fecha_receta:'2030-01-07',informacion_medicamentos:[{medicine_name:'Prueba',medicine_type:'Tableta',instruction:'Indicación de prueba',day:'1'}],informacion_diagnosticos:[{diagnosis:'Prueba',diagnosis_instruction:''}]});assert.equal(recipe.status,201,JSON.stringify(recipe.body));
-  const report=await auth(request(app).post('/api/records/informes')).send({paciente_id:patient,medico_id:doctor,fecha:'2030-01-07',informe:'Resultado de prueba'});assert.equal(report.status,201,JSON.stringify(report.body));
-  const inv=await auth(request(app).post('/api/records/facturas')).send({usuario_id:patient,fecha_factura:'2030-01-07',porcentaje_iva:13,porcentaje_descuento:10,pagado:50,items:[{nombre_cuenta:'Consulta',cantidad:2,precio:100}]});assert.equal(inv.status,201,JSON.stringify(inv.body));invoice=inv.body.id;
-  const detail=await auth(request(app).get('/api/documents/facturas/'+invoice));assert.equal(detail.body.row.total_general,203.4);
   const excel=await auth(request(app).get('/api/export/pacientes'));assert.equal(excel.status,200);assert.match(excel.headers['content-type'],/spreadsheetml/);
  });
  await t.test('perfil, empresas, ajustes y roles',async()=>{
   assert.equal((await auth(request(app).get('/api/profile'))).status,200);
   assert.equal((await auth(request(app).get('/api/companies'))).body.length,1);
   assert.equal((await auth(request(app).put('/api/settings')).send({'general.company_name':'Clínica Prueba'})).status,200);
-  const roles=await auth(request(app).get('/api/roles'));assert.equal(roles.body.roles.length,6);
+  const roles=await auth(request(app).get('/api/roles'));assert.equal(roles.body.roles.length,4);assert.equal(roles.body.roles.some(r=>['Accountant','Laboratorist'].includes(r.nombre)),false);
   const rejected=await request(app).get('/api/records/pacientes');assert.equal(rejected.status,401);
   const wrongCompany=await auth(request(app).get('/api/records/pacientes')).set('X-Company-ID','999');assert.equal(wrongCompany.status,403);
  });

@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Modelo de datos · Núcleo clínico",
+    "quality_profile": "showcase",
+    "viewBox": [
+      1390,
+      850
+    ]
+  },
+  "components": [
+    {
+      "id": "persona-clinica",
+      "type": "database",
+      "label": "usuarios",
+      "sublabel": "PK id · UQ correo",
+      "tag": "Paciente y odontólogo: registros por rol",
+      "pos": [
+        575,
+        340
+      ],
+      "size": [
+        250,
+        100
+      ]
+    },
+    {
+      "id": "perfil-profesional",
+      "type": "database",
+      "label": "detalles_medicos",
+      "sublabel": "PK id · UQ usuario_id",
+      "pos": [
+        50,
+        80
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "agenda-profesional",
+      "type": "database",
+      "label": "horarios_medicos",
+      "sublabel": "PK id · REL usuario_id",
+      "pos": [
+        575,
+        80
+      ],
+      "size": [
+        250,
+        100
+      ]
+    },
+    {
+      "id": "historia-clinica",
+      "type": "database",
+      "label": "antecedentes_pacientes",
+      "sublabel": "PK id · UQ usuario_id",
+      "pos": [
+        1000,
+        80
+      ],
+      "size": [
+        330,
+        100
+      ]
+    },
+    {
+      "id": "cita-clinica",
+      "type": "database",
+      "label": "citas_pacientes",
+      "sublabel": "PK id · REL usuario_id / medico_id",
+      "pos": [
+        50,
+        340
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "receta-clinica",
+      "type": "database",
+      "label": "recetas",
+      "sublabel": "PK id · REL usuario_id / medico_id",
+      "pos": [
+        1000,
+        340
+      ],
+      "size": [
+        300,
+        100
+      ]
+    },
+    {
+      "id": "asignacion-clinica",
+      "type": "database",
+      "label": "pacientes_odontologos",
+      "sublabel": "PK empresa_id + paciente_id + odontologo_id",
+      "pos": [
+        575,
+        650
+      ],
+      "size": [
+        350,
+        100
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "persona-perfil",
+      "from": "persona-clinica",
+      "to": "perfil-profesional",
+      "label": "1 : 0..1",
+      "variant": "dashed"
+    },
+    {
+      "id": "persona-horarios",
+      "from": "persona-clinica",
+      "to": "agenda-profesional",
+      "label": "1 : 0..N",
+      "variant": "dashed"
+    },
+    {
+      "id": "persona-historia",
+      "from": "persona-clinica",
+      "to": "historia-clinica",
+      "label": "1 : 0..1",
+      "variant": "dashed"
+    },
+    {
+      "id": "persona-citas",
+      "from": "persona-clinica",
+      "to": "cita-clinica",
+      "label": "1 : 0..N · dos roles",
+      "variant": "dashed",
+      "labelDy": 32
+    },
+    {
+      "id": "persona-recetas",
+      "from": "persona-clinica",
+      "to": "receta-clinica",
+      "label": "1 : 0..N · dos roles",
+      "variant": "dashed",
+      "labelDy": 32
+    },
+    {
+      "id": "persona-asignaciones",
+      "from": "persona-clinica",
+      "to": "asignacion-clinica",
+      "label": "1 : 0..N · dos FK",
+      "fromSide": "bottom",
+      "toSide": "top"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "violet",
+      "title": "Claves y relaciones",
+      "items": [
+        "PK: clave primaria. UQ: valor único. FK: clave foránea declarada. REL: relación lógica validada por la aplicación."
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Pacientes y odontólogos",
+      "items": [
+        "Comparten usuarios. Las columnas paciente_id, odontologo_id, usuario_id y medico_id distinguen su función en cada registro."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "pdf": {
+    "path": "modelo_datos.pdf",
+    "sha256": "c4582b819b958357a112c922662ae0dbd3e858cac7cc8e12c9d60d7321765852",
+    "bytes": 184951,
+    "pages": 3,
+    "rasterImages": 0
+  },
+  "scope": {
+    "tables": 19,
+    "fields": 151,
+    "note": "Tablas principales del sistema; excluye módulos heredados retirados."
+  },
+  "diagrams": [
+    {
+      "source": "modelo-clinico.archify.json",
+      "html": "modelo-clinico.html",
+      "type": "architecture",
+      "validation": {
+        "checksPassed": 9,
+        "checkCount": 9,
+        "compositionProfile": "showcase",
+        "compositionStatus": "pass",
+        "errors": 0,
+        "warnings": 0
+      },
+      "specification": {
+        "sha256": "ea5f4cc889a5ec97db616cff188e1618bab6692c42ae57ddadc1d5a6ed4399a6",
+        "bytes": 3641
+      },
+      "artifact": {
+        "sha256": "4099f9c0419a0faf2d46006e7289492211e0d7cafc803b1d998361fff96191fb",
+        "bytes": 805130
+      },
+      "browserEvidence": {
+        "status": "pass",
+        "receipt": "modelo-clinico.visual.json"
+      },
+      "visualReview": {
+        "status": "reviewed",
+        "light": "2048x1320",
+        "dark": "1440x900",
+        "notes": "Capturas revisadas visualmente; sin cruces ni recortes detectados."
+      }
+    },
+    {
+      "source": "modelo-radiografias.archify.json",
+      "html": "modelo-radiografias.html",
+      "type": "architecture",
+      "validation": {
+        "checksPassed": 9,
+        "checkCount": 9,
+        "compositionProfile": "showcase",
+        "compositionStatus": "pass",
+        "errors": 0,
+        "warnings": 0
+      },
+      "specification": {
+        "sha256": "10a58ee56ea1536220748d07f6918d9e4bcdee3725fddc0be2c064fd048afc96",
+        "bytes": 2385
+      },
+      "artifact": {
+        "sha256": "935f975c57fda10e6547c52fba65478f8c9ac5bd2b53358ac2560f04eee29641",
+        "bytes": 800799
+      },
+      "browserEvidence": {
+        "status": "pass",
+        "receipt": "modelo-radiografias.visual.json"
+      },
+      "visualReview": {
+        "status": "reviewed",
+        "light": "2048x1320",
+        "dark": "1440x900",
+        "notes": "Capturas revisadas visualmente; sin cruces ni recortes detectados."
+      }
+    },
+    {
+      "source": "modelo-permisos.archify.json",
+      "html": "modelo-permisos.html",
+      "type": "architecture",
+      "validation": {
+        "checksPassed": 9,
+        "checkCount": 9,
+        "compositionProfile": "showcase",
+        "compositionStatus": "pass",
+        "errors": 0,
+        "warnings": 0
+      },
+      "specification": {
+        "sha256": "b3e5ea412b15680aabf3105e1c42de328f2f17c49cdd22f955dd995b8254595d",
+        "bytes": 2848
+      },
+      "artifact": {
+        "sha256": "7fcdec9a0d53683b509b83ba5c410c865ea63d2de0f917f5d44fb026f9719244",
+        "bytes": 802500
+      },
+      "browserEvidence": {
+        "status": "pass",
+        "receipt": "modelo-permisos.visual.json"
+      },
+      "visualReview": {
+        "status": "reviewed",
+        "light": "2048x1320",
+        "dark": "1440x900",
+        "notes": "Capturas revisadas visualmente; sin cruces ni recortes detectados."
+      }
+    }
+  ],
+  "publication": "PDF compuesto con exportaciones SVG canónicas de Archify y diccionario derivado de metadatos. Estilos materializados y retícula decorativa omitida para conservar vectores. Las validaciones de Archify corresponden a las vistas interactivas."
+}

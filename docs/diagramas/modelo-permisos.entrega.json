@@ -1,0 +1,24 @@
+﻿{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\clinica-angular\\docs\\diagramas\\modelo-permisos.archify.json",
+  "output": "C:\\clinica-angular\\docs\\diagramas\\modelo-permisos.html",
+  "specification": {
+    "sha256": "b3e5ea412b15680aabf3105e1c42de328f2f17c49cdd22f955dd995b8254595d",
+    "bytes": 2848
+  },
+  "artifact": {
+    "sha256": "7fcdec9a0d53683b509b83ba5c410c865ea63d2de0f917f5d44fb026f9719244",
+    "bytes": 802500
+  },
+  "validation": {
+    "checksPassed": 9,
+    "checkCount": 9,
+    "compositionProfile": "showcase",
+    "compositionStatus": "pass",
+    "errors": 0,
+    "warnings": 0
+  }
+}

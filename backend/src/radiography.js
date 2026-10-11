@@ -4,7 +4,7 @@ import QRCode from 'qrcode';
 import {rateLimit} from 'express-rate-limit';
 import {pool,transaction} from './db.js';
 import {config} from './config.js';
-import {requireAdmin,requirePermission} from './auth.js';
+import {requirePermission,requireAdmin} from './auth.js';
 import {fail,validId} from './validation.js';
 import {get} from './repository.js';
 import {detectType} from './files.js';
@@ -148,8 +148,8 @@ export function registerRadiography(app){
   const {rows}=await pool.query('SELECT n.*,s.tipo,p.nombre AS paciente FROM notificaciones_radiografias n JOIN solicitudes_radiografias s ON s.id=n.solicitud_id JOIN usuarios p ON p.id=s.paciente_id WHERE n.usuario_id=$1 AND s.empresa_id=$2 AND ($3::boolean OR EXISTS(SELECT 1 FROM pacientes_odontologos po WHERE po.empresa_id=s.empresa_id AND po.paciente_id=s.paciente_id AND po.odontologo_id=$1)) ORDER BY n.id DESC LIMIT 50',[req.user.id,req.companyId,!!admin(req)]);res.json(rows);
  });
  app.post('/api/radiography-notifications/:id/read',read,async(req,res)=>{const result=await pool.query('UPDATE notificaciones_radiografias n SET leido_en=now() FROM solicitudes_radiografias s WHERE n.id=$1 AND n.usuario_id=$2 AND s.id=n.solicitud_id AND s.empresa_id=$3 RETURNING n.id',[validId(req.params.id),req.user.id,req.companyId]);if(!result.rowCount)fail('Notificación no encontrada',404);res.json({ok:true});});
- app.get('/api/patient-assignments',requireAdmin,async(req,res)=>{const {rows}=await pool.query('SELECT a.*,p.nombre AS paciente,o.nombre AS odontologo FROM pacientes_odontologos a JOIN usuarios p ON p.id=a.paciente_id JOIN usuarios o ON o.id=a.odontologo_id WHERE a.empresa_id=$1 ORDER BY p.nombre LIMIT 500',[req.companyId]);res.json(rows);});
- app.post('/api/patient-assignments',requireAdmin,async(req,res)=>{
+ app.get('/api/patient-assignments',requirePermission('asignaciones','manage'),async(req,res)=>{const {rows}=await pool.query('SELECT a.*,p.nombre AS paciente,o.nombre AS odontologo FROM pacientes_odontologos a JOIN usuarios p ON p.id=a.paciente_id JOIN usuarios o ON o.id=a.odontologo_id WHERE a.empresa_id=$1 ORDER BY p.nombre LIMIT 500',[req.companyId]);res.json(rows);});
+ app.post('/api/patient-assignments',requirePermission('asignaciones','manage'),async(req,res)=>{
   const patient=validId(req.body.paciente_id),doctor=validId(req.body.odontologo_id);
   await transaction(async client=>{await get('pacientes',patient,req.companyId,client);await get('medicos',doctor,req.companyId,client);await client.query('INSERT INTO pacientes_odontologos(empresa_id,paciente_id,odontologo_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING',[req.companyId,patient,doctor]);await audit(client,{empresa_id:req.companyId,paciente_id:patient},req.user,`Paciente asignado al odontólogo #${doctor}`);});res.status(201).json({ok:true});
  });
