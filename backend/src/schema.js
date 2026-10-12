@@ -23,6 +23,8 @@ export async function fieldsFor(m) {
   });
   let fields=columns.filter(c=>!internal.has(c.column_name)).map(convert);
   if(m.table==='usuarios') fields=fields.filter(f=>f.name!=='configuracion_regional');
+  // Los pacientes son registros clínicos, no cuentas de acceso al panel.
+  if(m.key==='pacientes') fields=fields.filter(f=>!f.secret);
   if(m.key==='medicos') fields.push(...all.detalles_medicos.filter(c=>!internal.has(c.column_name)&&!['usuario_id','departamento_hospitalario_id'].includes(c.column_name)).map(convert));
   if(m.key==='horarios') fields=fields.map(f=>f.name==='usuario_id'?{...f,label:'Médico',reference:'medicos'}:f);
   if(m.key.startsWith('campanas-')){
