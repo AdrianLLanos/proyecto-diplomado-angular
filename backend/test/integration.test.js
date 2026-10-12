@@ -37,9 +37,7 @@ test('instalación nueva y funciones completas sin usar Supabase',async t=>{
  await t.test('administrador activo y restricciones de pacientes',async()=>{
   assert.equal((await auth(request(app).put('/api/records/usuarios/'+f.id)).send({estado:'0'})).status,409);
   await auth(request(app).put('/api/records/pacientes/'+patient)).send({contrasena:'Patient-test-123!'});
-  const login=await request(app).post('/api/login').send({correo:'paciente@example.test',contrasena:'Patient-test-123!'});assert.equal(login.status,200);
-  const own=await request(app).get('/api/records/pacientes').set('Authorization','Bearer '+login.body.token);assert.equal(own.status,200);assert.equal(own.body.total,1);assert.equal(String(own.body.rows[0].id),String(patient));
-  const roles=await request(app).get('/api/roles').set('Authorization','Bearer '+login.body.token);assert.equal(roles.status,403);
+  const login=await request(app).post('/api/login').send({correo:'paciente@example.test',contrasena:'Patient-test-123!'});assert.equal(login.status,401);assert.equal(login.body.token,undefined);
   assert.equal((await auth(request(app).delete('/api/records/pacientes/'+patient))).status,200);
   assert.equal((await auth(request(app).get('/api/records/pacientes/'+patient))).status,404);
  });

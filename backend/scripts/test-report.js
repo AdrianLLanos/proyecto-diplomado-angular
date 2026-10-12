@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import {spawnSync} from 'node:child_process';
+const folder=new URL('../test/',import.meta.url);
+const files=fs.readdirSync(folder).filter(name=>name.endsWith('.test.js')).sort().map(name=>new URL(name,folder).pathname.replace(/^\/([A-Za-z]:)/,'$1'));
+const report=new URL('../../evidencia/reporte-pruebas-e3.txt',import.meta.url);
+fs.mkdirSync(new URL('.',report),{recursive:true});
+const started=new Date().toISOString();
+const result=spawnSync(process.execPath,['--test',...files],{encoding:'utf8',maxBuffer:20*1024*1024});
+const output=`Ejecución: ${started}\nEntorno: pruebas locales aisladas; Express + PGlite. No acredita producción.\nComando: node --test test/*.test.js\n\n${result.stdout||''}${result.stderr||''}`;
+fs.writeFileSync(report,output);
+process.stdout.write(output);if(result.error)console.error(result.error);
+process.exitCode=result.status??1;

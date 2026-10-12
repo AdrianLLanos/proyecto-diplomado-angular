@@ -1,0 +1,45 @@
+\section{Recomendaciones}
+
+A partir de los resultados obtenidos y de las limitaciones identificadas,
+se plantean las siguientes recomendaciones:
+
+\begin{enumerate}
+    \item Completar la verificación del flujo radiográfico en producción
+    después de publicar la revisión con las últimas correcciones.
+    Esta comprobación debe incluir la creación de la solicitud,
+    la generación del enlace o código QR, la entrega directa a Supabase
+    Storage y la consulta del archivo por un odontólogo autorizado.
+    Se recomienda conservar evidencias de los recorridos correctos
+    y de los rechazos por vencimiento, reutilización y falta de permisos.
+
+    \item Consolidar las funcionalidades RF-07 y RF-08, clasificadas
+    como \textit{Could have}, correspondientes a la trazabilidad
+    del proceso radiográfico y la consulta del estado de solicitudes.
+    Puesto que estas funciones ya están presentes en la versión web,
+    las mejoras posteriores pueden orientarse a reportes exportables
+    e indicadores de solicitudes pendientes y completadas, previa
+    validación de su utilidad con el personal de la clínica.
+
+    \item Delimitar el componente móvil a las necesidades de consulta
+    del odontólogo, especialmente los pacientes asignados y sus
+    radiografías. Su evaluación debe comprobar el uso de la misma API,
+    la autorización aplicada en el servidor y el cierre de sesión,
+    además de documentar la distribución y actualización del instalable.
+
+    \item Evaluar la escalabilidad mediante pruebas de carga con
+    usuarios concurrentes y un volumen representativo de registros.
+    A partir de sus resultados, revisar las consultas, los índices,
+    la paginación y el uso de conexiones a PostgreSQL. También se
+    recomienda supervisar los errores, los tiempos de respuesta
+    y el crecimiento del almacenamiento, porque las diez mediciones
+    realizadas no permiten estimar el comportamiento bajo alta demanda.
+
+    \item Realizar una adopción gradual en la Clínica Odontológica
+    San Martín, acompañada de capacitación para administradores,
+    odontólogos y recepción, así como de instrucciones de entrega
+    para CERPAX. Se recomienda definir responsables de soporte,
+    revisar periódicamente los permisos y establecer procedimientos
+    de respaldo y restauración de los registros y archivos.
+    Durante el uso piloto deben recogerse observaciones del personal
+    y métricas de operación para orientar las mejoras posteriores.
+\end{enumerate}

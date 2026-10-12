@@ -1,0 +1,152 @@
+\section{Pruebas}
+
+% Insertar bajo 2.8 Pruebas; requiere longtable,array,booktabs,graphicx,float,hyperref.
+Las pruebas verifican los cuatro requisitos prioritarios: autenticación
+(RF-01), pacientes (RF-02), solicitudes radiográficas (RF-03) y acceso
+temporal por enlace o QR (RF-04). Se utilizan caminos correctos y errores,
+con datos sintéticos, comprobando el estado HTTP y las reglas de acceso.
+
+\subsection{Entorno y ejecución}
+
+Las pruebas automatizadas ejecutan el backend real de Express y sus
+migraciones SQL sobre PostgreSQL embebido mediante PGlite. Supertest realiza
+solicitudes HTTP y Playwright verifica el acceso desde el navegador y genera
+evidencias. Este entorno está aislado de los pacientes y archivos reales.
+La prueba local de archivos utiliza la ruta multipart y contenido en la base
+de prueba; no acredita la carga directa de producción en Supabase Storage.
+
+La ejecución del 11/10/2026 a las 22:20:56 (hora de Bolivia)
+registró 31 pruebas, 31 aprobadas y 0 fallidas, sin omitidas.
+El escenario adicional de navegador se aprobó y verificó 15
+respuestas HTTP. El archivo de seguridad específico registra 22
+comprobaciones HTTP; estos conteos describen distintos niveles y no deben sumarse
+como si fueran casos independientes.
+
+Los comandos reproducibles son \texttt{npm run test:report} y
+\texttt{npm run test:e2e -w backend -- security.spec.js}.
+El reporte completo se conserva en
+\path{evidencia/reporte-pruebas-e3.txt}; las respuestas resumidas se encuentran
+en \path{evidencia/seguridad-http.json} y
+\path{evidencia/evidencias-navegador.json}. Ninguno incluye contraseñas ni JWT.
+
+\subsection{Casos ejecutados}
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.09\linewidth}>{\raggedright\arraybackslash}p{.24\linewidth}>{\raggedright\arraybackslash}p{.21\linewidth}>{\raggedright\arraybackslash}p{.27\linewidth}>{\raggedright\arraybackslash}p{.11\linewidth}@{}}
+\caption{Casos de prueba ejecutados y resultados observados}\label{tab:pruebas-reales}\\
+\toprule
+\textbf{ID}&\textbf{Escenario}&\textbf{Esperado}&\textbf{Obtenido y evidencia}&\textbf{Estado}\\\midrule
+\endfirsthead
+\toprule
+\textbf{ID}&\textbf{Escenario}&\textbf{Esperado}&\textbf{Obtenido y evidencia}&\textbf{Estado}\\\midrule
+\endhead
+\bottomrule\endlastfoot
+CP-01 & RF-01: credenciales válidas & HTTP 200 y JWT & HTTP 200; EV-01; Figura~\ref{fig:prueba-200} & Aprobado \\
+CP-02 & RF-01: contraseña incorrecta & HTTP 401, mensaje genérico & HTTP 401; EV-02 & Aprobado \\
+CP-03 & Sin JWT en pacientes & HTTP 401 & HTTP 401; EV-03; Figura~\ref{fig:prueba-401} & Aprobado \\
+CP-04 & Odontólogo consulta cuentas & HTTP 403 & HTTP 403; EV-08; Figura~\ref{fig:prueba-403} & Aprobado \\
+CP-05 & RF-02: paciente sin campos obligatorios & HTTP 422 & HTTP 422; EV-04; Figura~\ref{fig:prueba-422} & Aprobado \\
+CP-06 & RF-02: crear, consultar, actualizar y eliminar paciente & 201, 200, 200, 200; posterior 404 & Códigos coincidentes; SEG-04 a 06 y SEG-21 a 22 & Aprobado \\
+CP-07 & Paciente ajeno al odontólogo & HTTP 404 & HTTP 404; SEG-11 & Aprobado \\
+CP-08 & RF-03: crear solicitud de paciente asignado & HTTP 201 y asociación persistida & HTTP 201; EV-11; verificación SQL en radiography.test.js & Aprobado \\
+CP-09 & RF-03: solicitar estudio sin asignación & HTTP 404 & HTTP 404; EV-09 & Aprobado \\
+CP-10 & RF-04: generar enlace y QR & HTTP 201, URL y PNG del QR & HTTP 201; EV-12 y EV-13 & Aprobado \\
+CP-11 & RF-04: validar acceso vigente & HTTP 200, datos mínimos & HTTP 200; EV-15 & Aprobado \\
+CP-12 & RF-04: reutilizar enlace revocado & HTTP 410 & HTTP 410; EV-14 & Aprobado \\
+CP-13 & Enlace vencido y carga repetida & HTTP 410 en ambos casos & HTTP 410; radiography.test.js & Aprobado \\
+CP-14 & Carga multipart local y consulta protegida & HTTP 201 y 200; solicitud completada & Códigos coincidentes; radiography.test.js & Aprobado \\
+CP-15 & Archivo con contenido o extensión inválidos; exceso de tamaño & 422, 422 y 413 & Códigos coincidentes; radiography.test.js & Aprobado \\
+CP-16 & Paciente intenta ingresar con contraseña válida o JWT anterior & HTTP 401; sin token nuevo & HTTP 401; SEG-16 y SEG-17 & Aprobado \\
+CP-17 & JWT alterado, vencido o reutilizado después de logout & HTTP 401 & HTTP 401; SEG-13, SEG-18 y SEG-20 & Aprobado \\
+CP-18 & Odontólogo usa otra clínica & HTTP 403 & HTTP 403; SEG-14 & Aprobado \\
+CP-19 & Permiso directo de cuentas concedido a odontólogo & HTTP 403 también en ruta anterior & HTTP 403; SEG-15 & Aprobado \\
+CP-20 & Recepcionista intenta acceder a radiografías y datos clínicos & HTTP 403 y omisión de campos sensibles & Comprobado; receptionist.test.js & Aprobado \\
+\end{longtable}
+\noindent\textit{Fuente: elaboración propia a partir de la ejecución automatizada.}
+\endgroup
+
+Los identificadores EV corresponden al informe de navegador y los SEG al
+informe HTTP de seguridad. Los archivos de pruebas citados pertenecen a
+\path{backend/test/}. Las filas agrupan operaciones relacionadas; el número
+de filas no equivale al contador del ejecutor de Node.js.
+
+\subsection{Evidencias}
+
+Las siguientes capturas muestran respuestas reales del servidor de prueba
+registradas por Playwright. Son capturas del informe de ejecución, con las
+credenciales y los tokens omitidos, y no capturas del despliegue de Vercel.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figuras/pruebas/http-200.png}
+\caption{Inicio de sesión autorizado, CP-01. Fuente: ejecución propia en entorno local.}
+\label{fig:prueba-200}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figuras/pruebas/http-401.png}
+\caption{Acceso a pacientes sin JWT, CP-03. Fuente: ejecución propia en entorno local.}
+\label{fig:prueba-401}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figuras/pruebas/http-403.png}
+\caption{Consulta de cuentas por un odontólogo, CP-04. Fuente: ejecución propia en entorno local.}
+\label{fig:prueba-403}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{figuras/pruebas/http-422.png}
+\caption{Registro de paciente sin campos obligatorios, CP-05. Fuente: ejecución propia en entorno local.}
+\label{fig:prueba-422}
+\end{figure}
+
+El informe ampliado \path{evidencia/evidencias-seguridad.pdf} contiene las
+15 respuestas del recorrido de navegador, incluidas la creación de la
+solicitud, la generación del enlace y el rechazo del enlace revocado.
+
+\subsection{Comprobaciones en producción y rendimiento}
+
+En el despliegue de Vercel se realizaron comprobaciones de lectura:
+la salud de la API respondió 200, el acceso a pacientes sin autenticación
+respondió 401, el inicio de sesión respondió 200 y la consulta de solicitudes
+radiográficas respondió 200. El detalle se conserva en
+\path{evidencia/verificacion-despliegue.json}.
+
+Se midieron diez consultas consecutivas autenticadas al listado de pacientes,
+con página de quince registros y sin transferencias de archivos. La medición
+incluye el tiempo observado por el cliente HTTP desde este equipo, la red y
+la lectura de la respuesta JSON. No es una prueba de concurrencia ni de carga.
+
+\begin{table}[H]\centering
+\caption{Tiempos observados en consultas de pacientes en Vercel}
+\begin{tabular}{rrr}\toprule
+\textbf{Consulta}&\textbf{Estado HTTP}&\textbf{Tiempo (ms)}\\\midrule
+1&200&349\\
+2&200&214\\
+3&200&209\\
+4&200&251\\
+5&200&219\\
+6&200&222\\
+7&200&208\\
+8&200&320\\
+9&200&213\\
+10&200&217\\
+\bottomrule\end{tabular}\end{table}
+En esta muestra, 10 de 10 consultas respondieron en menos de tres
+segundos, con un rango de 208 a 349 ms.
+Se satisface el umbral de RNF-01 para esta operación y estas condiciones;
+el resultado no se generaliza a todas las operaciones ni a usuarios concurrentes.
+
+Las modificaciones de autorización y las nuevas rutas v1 documentadas en esta
+revisión se verificaron localmente. El recorrido completo de creación,
+enlace y entrega directa a Supabase Storage no se ejecutó en producción
+durante esta revisión; las comprobaciones de lectura anteriores no lo
+sustituyen. Antes de presentar la versión desplegada debe verificarse ese
+recorrido sobre la misma revisión del código.

@@ -11,18 +11,23 @@ export const roleText=(role:string)=>({
   'Super Admin':'Administrador',Doctor:'Odontólogo',Patient:'Paciente',
   Receptionist:'Recepcionista'
 }[role]||role);
+const apiPath=(path:string)=>{
+  const resources:Record<string,string>={medicos:'odontologos',usuarios:'cuentas'};
+  const route=path.replace(/^\/records\/([^/]+)/,(_,key:string)=>'/'+(resources[key]||key));
+  return '/api/v1'+route;
+};
 @Injectable({providedIn:'root'})
 export class Api {
   private http=inject(HttpClient);
   session=signal<Session|null>(null);
-  catalog$=this.http.get<Module[]>('/api/catalog').pipe(shareReplay({bufferSize:1,refCount:false}));
-  get<T>(path:string,params:Record<string,string|number>={}){return this.http.get<T>('/api'+path,{params});}
-  post<T>(path:string,body:unknown){return this.http.post<T>('/api'+path,body);}
-  put<T>(path:string,body:unknown){return this.http.put<T>('/api'+path,body);}
-  delete(path:string){return this.http.delete('/api'+path);}
-  upload(file:File,publish=false){const body=new FormData();body.append('file',file);body.append('publico',String(publish));return this.http.post<{id:string;url:string;nombre:string;tipo:string}>('/api/files',body);}
-  blob(path:string,params:Record<string,string>={}){return this.http.get('/api'+path,{params,responseType:'blob'});}
-  can(key:string,action='read'){const u=this.session()?.user;return !!u&&(!!u.bypass||u.roles.includes('Super Admin')||u.permissions?.includes(key+'.'+action));}
+  catalog$=this.http.get<Module[]>('/api/v1/catalog').pipe(shareReplay({bufferSize:1,refCount:false}));
+  get<T>(path:string,params:Record<string,string|number>={}){return this.http.get<T>(apiPath(path),{params});}
+  post<T>(path:string,body:unknown){return this.http.post<T>(apiPath(path),body);}
+  put<T>(path:string,body:unknown){return this.http.put<T>(apiPath(path),body);}
+  delete(path:string){return this.http.delete(apiPath(path));}
+  upload(file:File,publish=false){const body=new FormData();body.append('file',file);body.append('publico',String(publish));return this.http.post<{id:string;url:string;nombre:string;tipo:string}>('/api/v1/files',body);}
+  blob(path:string,params:Record<string,string>={}){return this.http.get(apiPath(path),{params,responseType:'blob'});}
+  can(key:string,action='read'){const u=this.session()?.user;return !!u&&(!!u.bypass||u.roles.includes('Super Admin')||(key!=='usuarios'&&u.permissions?.includes(key+'.'+action)));}
   list(key:string,page=0,size=15,search=''){return this.get<List>('/records/'+key,{page,size,search});}
 }
 export const authInterceptor:HttpInterceptorFn=(req,next)=>{

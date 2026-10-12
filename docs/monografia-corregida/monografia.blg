@@ -1,0 +1,14 @@
+[0] Config.pm:328> INFO - This is Biber 2.21
+[1] Config.pm:331> INFO - Logfile is 'monografia.blg'
+[933] biber-MSWIN64:342> INFO - === 
+[1379] Biber.pm:421> INFO - Reading 'monografia.bcf'
+[1865] Biber.pm:1002> INFO - Found 4 citekeys in bib section 0
+[2011] Biber.pm:4487> INFO - Processing section 0
+[2194] Biber.pm:4678> INFO - Looking for bibtex file 'bibliografia.bib' for section 0
+[2356] bibtex.pm:1713> INFO - LaTeX decoding ...
+[2431] bibtex.pm:1519> INFO - Found BibTeX data source 'bibliografia.bib'
+[2839] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[2840] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[2840] Biber.pm:4307> INFO - Sorting list 'nyt/global//global/global/global' of type 'entry' with template 'nyt' and locale 'es-ES'
+[3066] bbl.pm:676> INFO - Writing 'monografia.bbl' with encoding 'UTF-8'
+[3077] bbl.pm:779> INFO - Output to monografia.bbl

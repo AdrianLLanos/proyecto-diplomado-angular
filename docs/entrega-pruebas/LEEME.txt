@@ -1,0 +1,8 @@
+1. Copia la carpeta figuras junto a tu documento principal .tex.
+2. Pega el contenido de 2.8-pruebas.tex reemplazando el apartado 2.8 anterior.
+3. Si conservas tu encabezado existente, omite la primera l?nea: \section{Pruebas}.
+4. Alternativa: copia 2.8-pruebas.tex junto a tu documento y escribe \input{2.8-pruebas.tex} donde debe ir esta secci?n.
+5. Paquetes necesarios en el pre?mbulo (a?ade solo los que falten): longtable, array, booktabs, graphicx, float, hyperref.
+6. Compila dos veces para resolver las referencias de figuras.
+
+Las cuatro im?genes son capturas del informe de respuestas HTTP reales del servidor local de prueba. No son capturas de Postman ni del despliegue de Vercel. Los tokens y las contrase?as se omitieron. Los casos y los resultados proceden de las ejecuciones guardadas en los informes incluidos.

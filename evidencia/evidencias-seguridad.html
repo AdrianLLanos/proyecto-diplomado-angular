@@ -1,0 +1,55 @@
+<!doctype html><meta charset="utf-8"><title>Evidencias de pruebas HTTP</title><style>body{font:16px Arial;color:#17324d;background:#f1f5f9;padding:40px;max-width:1100px;margin:auto}h1{color:#006d77}article{background:white;border-left:5px solid #008b78;border-radius:10px;padding:22px;margin:20px 0;break-inside:avoid}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#edf4f8;padding:16px}b{color:#006d77}@media print{body{padding:0;background:white}article{border:1px solid #ccd8df}}</style><h1>Resultados reales de pruebas HTTP</h1><p>Fecha UTC: 2026-10-12T02:31:44.506Z. Entorno local: Express + PGlite, datos sintéticos. No corresponde a producción en Vercel. Contraseñas y tokens omitidos.</p><article><h2>EV-01 — RF-01: inicio de sesión válido</h2><p>POST /api/v1/login</p><p>Esperado: HTTP 200. Obtenido: <b>HTTP 200 · APROBADO</b></p><pre>{
+  "token": "[JWT omitido]",
+  "user": {
+    "roles": [
+      "Super Admin"
+    ]
+  }
+}</pre></article><article><h2>EV-02 — RF-01: contraseña incorrecta</h2><p>POST /api/v1/login</p><p>Esperado: HTTP 401. Obtenido: <b>HTTP 401 · APROBADO</b></p><pre>{
+  "message": "Correo o contraseña incorrectos"
+}</pre></article><article><h2>EV-03 — Sin autenticación</h2><p>GET /api/v1/pacientes</p><p>Esperado: HTTP 401. Obtenido: <b>HTTP 401 · APROBADO</b></p><pre>{
+  "message": "Inicia sesión para continuar"
+}</pre></article><article><h2>EV-04 — RF-02: campos obligatorios ausentes</h2><p>POST /api/v1/pacientes</p><p>Esperado: HTTP 422. Obtenido: <b>HTTP 422 · APROBADO</b></p><pre>{
+  "message": "Nombre es obligatorio"
+}</pre></article><article><h2>EV-05 — RF-02: crear paciente</h2><p>POST /api/v1/pacientes</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "id": 2
+}</pre></article><article><h2>EV-06 — Crear odontólogo sintético</h2><p>POST /api/v1/odontologos</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "id": 3
+}</pre></article><article><h2>EV-07 — Inicio de sesión odontólogo</h2><p>POST /api/v1/login</p><p>Esperado: HTTP 200. Obtenido: <b>HTTP 200 · APROBADO</b></p><pre>{
+  "token": "[JWT omitido]",
+  "user": {
+    "roles": [
+      "Doctor"
+    ]
+  }
+}</pre></article><article><h2>EV-08 — Odontólogo no administra cuentas</h2><p>GET /api/v1/cuentas</p><p>Esperado: HTTP 403. Obtenido: <b>HTTP 403 · APROBADO</b></p><pre>{
+  "message": "No tienes permiso para realizar esta acción"
+}</pre></article><article><h2>EV-09 — RF-03: solicitud sin asignación</h2><p>POST /api/v1/radiographs</p><p>Esperado: HTTP 404. Obtenido: <b>HTTP 404 · APROBADO</b></p><pre>{
+  "message": "Registro no encontrado"
+}</pre></article><article><h2>EV-10 — Asignar paciente al odontólogo</h2><p>POST /api/v1/patient-assignments</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "ok": true
+}</pre></article><article><h2>EV-11 — RF-03: crear solicitud asignada</h2><p>POST /api/v1/radiographs</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "id": 1,
+  "empresa_id": 1,
+  "paciente_id": 2,
+  "odontologo_id": 3,
+  "tipo": "Panorámica",
+  "indicaciones": "",
+  "estado": "Pendiente",
+  "creado_en": "2026-10-12T02:31:41.363Z",
+  "completado_en": null
+}</pre></article><article><h2>EV-12 — RF-04: generar enlace y QR</h2><p>POST /api/v1/radiographs/1/access</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "url": "[enlace temporal omitido]",
+  "qr": "[QR generado]",
+  "vence_en": "2026-10-12T03:31:41.455Z"
+}</pre></article><article><h2>EV-13 — RF-04: regenerar acceso</h2><p>POST /api/v1/radiographs/1/access</p><p>Esperado: HTTP 201. Obtenido: <b>HTTP 201 · APROBADO</b></p><pre>{
+  "url": "[enlace temporal omitido]",
+  "qr": "[QR generado]",
+  "vence_en": "2026-10-12T03:31:41.503Z"
+}</pre></article><article><h2>EV-14 — RF-04: enlace anterior revocado</h2><p>POST /api/v1/external/radiographs/access</p><p>Esperado: HTTP 410. Obtenido: <b>HTTP 410 · APROBADO</b></p><pre>{
+  "message": "El enlace venció, fue revocado o ya fue utilizado"
+}</pre></article><article><h2>EV-15 — RF-04: acceso vigente CERPAX</h2><p>POST /api/v1/external/radiographs/access</p><p>Esperado: HTTP 200. Obtenido: <b>HTTP 200 · APROBADO</b></p><pre>{
+  "id": 1,
+  "tipo": "Panorámica",
+  "vence_en": "2026-10-12T03:31:41.503Z"
+}</pre></article>

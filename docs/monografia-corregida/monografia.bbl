@@ -1,0 +1,207 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nyt/global//global/global/global}
+    \entry{acharya2017}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=b8279698e1951616787dfb7d3587a837}{%
+           family={Acharya},
+           familyi={A\bibinitperiod},
+           given={Amit},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bef5e9a51117f5dbfb7231580e38ac48}{%
+           family={Schroeder},
+           familyi={S\bibinitperiod},
+           given={Dixie},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=74f2c891e18d8647e9b514e93bcdc479}{%
+           family={Schwei},
+           familyi={S\bibinitperiod},
+           given={Kelsey},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cabdf1d800de4aec92718c2be520da21}{%
+           family={Chyou},
+           familyi={C\bibinitperiod},
+           given={Po-Huang},
+           giveni={P\bibinithyphendelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e1aaaaebf09913ccadebb1cc9990cd13}
+      \strng{fullhash}{691fc95b02be84d741888fdaf5fb07b3}
+      \strng{fullhashraw}{691fc95b02be84d741888fdaf5fb07b3}
+      \strng{bibnamehash}{691fc95b02be84d741888fdaf5fb07b3}
+      \strng{authorbibnamehash}{691fc95b02be84d741888fdaf5fb07b3}
+      \strng{authornamehash}{e1aaaaebf09913ccadebb1cc9990cd13}
+      \strng{authorfullhash}{691fc95b02be84d741888fdaf5fb07b3}
+      \strng{authorfullhashraw}{691fc95b02be84d741888fdaf5fb07b3}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Clinical Medicine \& Research}
+      \field{number}{3-4}
+      \field{title}{Update on Electronic Dental Record and Clinical Computing Adoption Among Dental Practices in the United States}
+      \field{volume}{15}
+      \field{year}{2017}
+      \field{pages}{59\bibrangedash 74}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.3121/cmr.2017.1380
+      \endverb
+    \endentry
+    \entry{farajollahi2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=8b9c3bca3b98da049ff21fdc9adf23a2}{%
+           family={Farajollahi},
+           familyi={F\bibinitperiod},
+           given={Boshra},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c0d10eab73199abd96872c121d3e9ed5}{%
+           family={Sheikhtaheri},
+           familyi={S\bibinitperiod},
+           given={Abbas},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=afff33242890e65243dfbbb4fc47c455}{%
+           family={Ahmadi},
+           familyi={A\bibinitperiod},
+           given={Maryam},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0fa3ec57bc845cfaaf715afd31ab9097}
+      \strng{fullhash}{c277b19ee37b1a459b636629b9c12ab0}
+      \strng{fullhashraw}{c277b19ee37b1a459b636629b9c12ab0}
+      \strng{bibnamehash}{c277b19ee37b1a459b636629b9c12ab0}
+      \strng{authorbibnamehash}{c277b19ee37b1a459b636629b9c12ab0}
+      \strng{authornamehash}{0fa3ec57bc845cfaaf715afd31ab9097}
+      \strng{authorfullhash}{c277b19ee37b1a459b636629b9c12ab0}
+      \strng{authorfullhashraw}{c277b19ee37b1a459b636629b9c12ab0}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{International Journal of Medical Informatics}
+      \field{title}{Barriers and facilitators for the implementation of electronic dental record systems: Perspectives from a developing country}
+      \field{volume}{192}
+      \field{year}{2024}
+      \field{pages}{105622}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.ijmedinf.2024.105622
+      \endverb
+    \endentry
+    \entry{hassan2019}{online}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d34e4c75e845ab8be2bc21c86dd64837}{%
+           family={Hassan},
+           familyi={H\bibinitperiod},
+           given={Ahmad},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{organization}{1}{%
+        {Universiti Malaysia Pahang}%
+      }
+      \strng{namehash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{fullhash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{fullhashraw}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{bibnamehash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{authorbibnamehash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{authornamehash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{authorfullhash}{d34e4c75e845ab8be2bc21c86dd64837}
+      \strng{authorfullhashraw}{d34e4c75e845ab8be2bc21c86dd64837}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Dental Clinic Management System}
+      \field{urlday}{7}
+      \field{urlmonth}{10}
+      \field{urlyear}{2026}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://umpir.ump.edu.my/id/eprint/26811/
+      \endverb
+      \verb{url}
+      \verb https://umpir.ump.edu.my/id/eprint/26811/
+      \endverb
+    \endentry
+    \entry{ho2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=6d47a08f5f19341b593bcfaf5736d4cb}{%
+           family={Ho},
+           familyi={H\bibinitperiod},
+           given={Sin-Ban},
+           giveni={S\bibinithyphendelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3af435a68822daaceda333af6fef4fac}{%
+           family={Chew},
+           familyi={C\bibinitperiod},
+           given={En-Yu},
+           giveni={E\bibinithyphendelim Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fdbf67cefc9b974ac9b5303b61bc8f51}{%
+           family={Tan},
+           familyi={T\bibinitperiod},
+           given={Chuie-Hong},
+           giveni={C\bibinithyphendelim H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{366fc514249880711fc60dd7f9c08015}
+      \strng{fullhash}{3c364c56aa613282bdb607d408c0bca0}
+      \strng{fullhashraw}{3c364c56aa613282bdb607d408c0bca0}
+      \strng{bibnamehash}{3c364c56aa613282bdb607d408c0bca0}
+      \strng{authorbibnamehash}{3c364c56aa613282bdb607d408c0bca0}
+      \strng{authornamehash}{366fc514249880711fc60dd7f9c08015}
+      \strng{authorfullhash}{3c364c56aa613282bdb607d408c0bca0}
+      \strng{authorfullhashraw}{3c364c56aa613282bdb607d408c0bca0}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Informatics and Web Engineering}
+      \field{number}{2}
+      \field{title}{Streamlining Dental Clinic Management for Effective Digitisation Productivity and Usability}
+      \field{volume}{3}
+      \field{year}{2024}
+      \field{pages}{70\bibrangedash 85}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.33093/jiwe.2023.3.2.5
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

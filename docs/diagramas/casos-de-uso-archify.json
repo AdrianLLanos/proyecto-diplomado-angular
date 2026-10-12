@@ -1,0 +1,52 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Casos de uso principales · Clínica San Martín / CERPAX",
+    "quality_profile": "showcase",
+    "viewBox": [1255, 900],
+    "views": [
+      { "id": "atencion-clinica", "label": "Atención clínica", "focus": ["login", "pacientes", "solicitud-acceso", "consulta"], "note": "El odontólogo gestiona el paciente, solicita el estudio y consulta el resultado autorizado." },
+      { "id": "entrega-externa", "label": "Entrega CERPAX", "focus": ["solicitud-acceso", "cerpax", "carga", "consulta"], "note": "CERPAX utiliza un enlace o QR temporal; no inicia sesión en el panel interno." },
+      { "id": "supervision", "label": "Supervisión", "focus": ["cuentas", "trazabilidad"], "note": "El administrador gestiona cuentas autorizadas y consulta la trazabilidad del flujo." }
+    ]
+  },
+  "lanes": [
+    { "id": "administracion", "label": "Administrador" },
+    { "id": "odontologia", "label": "Odontólogo" },
+    { "id": "cerpax-lane", "label": "CERPAX · acceso externo" }
+  ],
+  "phases": [
+    { "id": "acceso", "label": "Acceso autorizado", "fromCol": 0, "toCol": 0, "variant": "security" },
+    { "id": "gestion", "label": "Gestión clínica", "fromCol": 1, "toCol": 1, "variant": "emphasis" },
+    { "id": "solicitud", "label": "Solicitud y enlace", "fromCol": 2, "toCol": 2, "variant": "emphasis" },
+    { "id": "entrega", "label": "Entrega y consulta", "fromCol": 3, "toCol": 3, "variant": "dashed" }
+  ],
+  "groups": [
+    { "id": "gestion-admin", "label": "Gestión administrativa", "lane": "administracion", "fromCol": 0, "toCol": 3, "variant": "security" },
+    { "id": "flujo-clinico", "label": "Flujo clínico autorizado", "lane": "odontologia", "fromCol": 0, "toCol": 3, "variant": "emphasis" },
+    { "id": "entrega-limitada", "label": "Acceso temporal de un solo propósito", "lane": "cerpax-lane", "fromCol": 2, "toCol": 3, "variant": "dashed" }
+  ],
+  "mainPath": ["login", "pacientes", "solicitud-acceso", "cerpax", "carga", "consulta"],
+  "nodes": [
+    { "id": "cuentas", "lane": "administracion", "col": 1, "type": "security", "label": "Gestionar cuentas", "tag": "RF-01", "width": 160 },
+    { "id": "trazabilidad", "lane": "administracion", "col": 3, "type": "database", "label": "Consultar trazabilidad", "tag": "RF-07", "width": 160 },
+    { "id": "login", "lane": "odontologia", "col": 0, "type": "security", "label": "Iniciar sesión", "tag": "precondición", "width": 160 },
+    { "id": "pacientes", "lane": "odontologia", "col": 1, "type": "frontend", "label": "Gestionar pacientes", "tag": "RF-02", "width": 160 },
+    { "id": "solicitud-acceso", "lane": "odontologia", "col": 2, "type": "security", "label": "Solicitud + enlace / QR", "tag": "RF-03 · RF-04", "width": 160 },
+    { "id": "consulta", "lane": "odontologia", "col": 3, "type": "frontend", "label": "Consultar radiografía", "tag": "RF-06", "width": 160 },
+    { "id": "cerpax", "lane": "cerpax-lane", "col": 2, "type": "external", "label": "CERPAX", "width": 160 },
+    { "id": "carga", "lane": "cerpax-lane", "col": 3, "type": "cloud", "label": "Cargar radiografía", "tag": "RF-05", "width": 160 }
+  ],
+  "edges": [
+    { "id": "login-pacientes", "from": "login", "to": "pacientes", "label": "acceso autorizado", "variant": "emphasis", "role": "main" },
+    { "id": "pacientes-solicitud", "from": "pacientes", "to": "solicitud-acceso", "label": "paciente asignado", "variant": "default", "role": "main" },
+    { "id": "solicitud-cerpax", "from": "solicitud-acceso", "to": "cerpax", "label": "QR o enlace", "variant": "security", "role": "main" },
+    { "id": "cerpax-carga", "from": "cerpax", "to": "carga", "label": "entrega el archivo", "variant": "default", "role": "main" },
+    { "id": "carga-consulta", "from": "carga", "to": "consulta", "label": "valida y deja disponible", "variant": "security", "role": "return" }
+  ],
+  "cards": [
+    { "dot": "cyan", "title": "Actores internos", "items": ["Administrador y odontólogo inician sesión.", "El paciente no tiene cuenta ni acceso al panel."] },
+    { "dot": "amber", "title": "Acceso externo limitado", "items": ["CERPAX carga el archivo mediante enlace o QR temporal.", "El enlace no concede acceso a pacientes ni al panel interno."] }
+  ]
+}

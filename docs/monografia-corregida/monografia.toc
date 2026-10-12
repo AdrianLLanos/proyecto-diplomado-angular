@@ -1,0 +1,77 @@
+\xpg@aux {}{spanish}
+\contentsline {chapter}{Índice de tablas}{viii}{chapter*.3}%
+\contentsline {chapter}{Índice de figuras}{ix}{chapter*.3}%
+\contentsline {chapter}{Índice de anexos}{x}{chapter*.3}%
+\contentsline {chapter}{Resumen}{xi}{chapter*.4}%
+\contentsline {chapter}{\numberline {1}INTRODUCCIÓN}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Antecedentes}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Descripción del problema}{3}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Planteamiento del problema}{4}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Justificación del problema}{4}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Factibilidad técnica.}{4}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Justificación social u organizacional}{4}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Justificación económica}{5}{subsection.1.4.3}%
+\contentsline {section}{\numberline {1.5}Objetivos}{5}{section.1.5}%
+\contentsline {subsection}{\numberline {1.5.1}Objetivo general}{5}{subsection.1.5.1}%
+\contentsline {subsection}{\numberline {1.5.2}Objetivos específicos}{6}{subsection.1.5.2}%
+\contentsline {section}{\numberline {1.6}Alcance y delimitaciones}{6}{section.1.6}%
+\contentsline {chapter}{\numberline {2}MARCO TEÓRICO}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Fundamentos conceptuales y tecnológicos}{7}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Arquitectura de software}{7}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Desarrollo multiplataforma}{8}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Servicios web y API REST}{8}{subsection.2.1.3}%
+\contentsline {subsection}{\numberline {2.1.4}Persistencia de datos}{8}{subsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.1.5}Gestión de archivos clínicos}{9}{subsection.2.1.5}%
+\contentsline {section}{\numberline {2.2}Metodología de desarrollo}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Análisis de requisitos}{10}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Actores y perfiles de usuario}{10}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Requisitos funcionales}{11}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}Requisitos no funcionales}{14}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Casos de uso o modelo equivalente}{15}{subsection.2.3.4}%
+\contentsline {paragraph}{CU-01. Iniciar sesión}{15}{figure.caption.8}%
+\contentsline {paragraph}{CU-02. Administrar cuentas}{16}{figure.caption.8}%
+\contentsline {paragraph}{CU-03. Gestionar roles y permisos}{16}{figure.caption.8}%
+\contentsline {paragraph}{CU-04. Supervisar pacientes y registros}{16}{figure.caption.8}%
+\contentsline {paragraph}{CU-05. Gestionar información clínica}{17}{figure.caption.8}%
+\contentsline {paragraph}{CU-06. Solicitar radiografía}{17}{figure.caption.8}%
+\contentsline {paragraph}{CU-07. Generar enlace temporal / QR}{18}{figure.caption.8}%
+\contentsline {paragraph}{CU-08. Consultar radiografías}{18}{figure.caption.8}%
+\contentsline {paragraph}{CU-09. Cargar radiografía con enlace}{18}{figure.caption.8}%
+\contentsline {section}{\numberline {2.4}Diseño de la solución}{19}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Arquitectura del sistema}{20}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Modelo de datos}{20}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}Diseño de la interfaz}{25}{subsection.2.4.3}%
+\contentsline {subsection}{\numberline {2.4.4}Diseño de la interfaz de programación de aplicaciones}{26}{subsection.2.4.4}%
+\contentsline {section}{\numberline {2.5}Justificación del stack tecnológico}{28}{section.2.5}%
+\contentsline {section}{\numberline {2.6}Implementación}{31}{section.2.6}%
+\contentsline {subsection}{\numberline {2.6.1}Implementación de la plataforma web}{31}{subsection.2.6.1}%
+\contentsline {subsection}{\numberline {2.6.2}Implementación del backend}{32}{subsection.2.6.2}%
+\contentsline {subsection}{\numberline {2.6.3}Gestión de pacientes y odontólogos}{32}{subsection.2.6.3}%
+\contentsline {subsection}{\numberline {2.6.4}Implementación del flujo radiográfico}{33}{subsection.2.6.4}%
+\contentsline {subsection}{\numberline {2.6.5}Almacenamiento de las radiografías}{33}{subsection.2.6.5}%
+\contentsline {subsection}{\numberline {2.6.6}Control de acceso}{34}{subsection.2.6.6}%
+\contentsline {subsection}{\numberline {2.6.7}Dificultades encontradas y decisiones de implementación}{34}{subsection.2.6.7}%
+\contentsline {subsection}{\numberline {2.6.8}Control de versiones de la implementación}{35}{subsection.2.6.8}%
+\contentsline {subsection}{\numberline {2.6.9}Estructura del proyecto}{36}{subsection.2.6.9}%
+\contentsline {subsection}{\numberline {2.6.10}Fragmento de autorización del servidor}{38}{subsection.2.6.10}%
+\contentsline {section}{\numberline {2.7}Seguridad}{38}{section.2.7}%
+\contentsline {subsection}{\numberline {2.7.1}Autenticación y gestión de sesiones}{38}{subsection.2.7.1}%
+\contentsline {subsection}{\numberline {2.7.2}Autorización por roles o perfiles}{39}{subsection.2.7.2}%
+\contentsline {subsection}{\numberline {2.7.3}Validación de entradas y protección}{42}{subsection.2.7.3}%
+\contentsline {section}{\numberline {2.8}Pruebas}{44}{section.2.8}%
+\contentsline {subsection}{\numberline {2.8.1}Entorno y ejecución}{44}{subsection.2.8.1}%
+\contentsline {subsection}{\numberline {2.8.2}Casos ejecutados}{44}{subsection.2.8.2}%
+\contentsline {subsection}{\numberline {2.8.3}Evidencias}{46}{subsection.2.8.3}%
+\contentsline {subsection}{\numberline {2.8.4}Comprobaciones en producción y rendimiento}{48}{subsection.2.8.4}%
+\contentsline {section}{\numberline {2.9}Despliegue}{49}{section.2.9}%
+\contentsline {subsection}{\numberline {2.9.1}Monitoreo de disponibilidad}{50}{subsection.2.9.1}%
+\contentsline {chapter}{\numberline {3}CONCLUSIONES Y RECOMENDACIONES}{51}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Conclusiones}{51}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Recomendaciones}{52}{section.3.2}%
+\contentsline {chapter}{BIBLIOGRAFÍA CONSULTADA}{53}{chapter*.20}%
+\contentsline {chapter}{\numberline {A}MANUAL DE USUARIO}{54}{appendix.A}%
+\contentsline {chapter}{\numberline {B}MANUAL DE INSTALACIÓN Y DESPLIEGUE}{56}{appendix.B}%
+\contentsline {chapter}{\numberline {C}REPOSITORIO DE CÓDIGO}{58}{appendix.C}%
+\contentsline {chapter}{\numberline {D}DIRECCIÓN PÚBLICA DEL SISTEMA}{59}{appendix.D}%
+\contentsline {chapter}{\numberline {E}DIAGRAMAS}{60}{appendix.E}%
+\contentsline {chapter}{\numberline {F}EVIDENCIAS TÉCNICAS}{61}{appendix.F}%

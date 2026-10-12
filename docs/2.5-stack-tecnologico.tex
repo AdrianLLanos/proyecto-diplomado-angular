@@ -1,0 +1,88 @@
+% En el preámbulo: \usepackage{booktabs,longtable,array}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}
+  >{\raggedright\arraybackslash}p{0.21\linewidth}
+  >{\raggedright\arraybackslash}p{0.15\linewidth}
+  >{\raggedright\arraybackslash}p{0.23\linewidth}
+  >{\raggedright\arraybackslash}p{0.33\linewidth}@{}}
+\caption{Stack tecnológico y justificación de selección}
+\label{tab:stack-tecnologico}\\
+\toprule
+\textbf{Componente} & \textbf{Versión} & \textbf{Función} & \textbf{Criterio de selección} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable\ (continuación)}\\
+\toprule
+\textbf{Componente} & \textbf{Versión} & \textbf{Función} & \textbf{Criterio de selección} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{Continúa en la siguiente página.}\\
+\endfoot
+\bottomrule
+\endlastfoot
+Angular & 21.2.23 &
+Interfaz web de gestión clínica. &
+Permite organizar formularios, navegación y vistas mediante componentes reutilizables para la administración de pacientes y solicitudes radiográficas. \\
+TypeScript & 5.9.3 &
+Lenguaje de implementación del frontend web. &
+El tipado estático facilita detectar inconsistencias entre formularios, modelos y respuestas de la API durante el desarrollo. \\
+Angular Material & 21.2.14 &
+Componentes visuales del panel web. &
+Proporciona controles uniformes para formularios, tablas, diálogos y navegación, reduciendo el trabajo de construcción de la interfaz. \\
+Node.js / Express &
+24.16.0 / 5.2.1 &
+API HTTP, validaciones y lógica de negocio. &
+Centraliza la autenticación, los permisos y el acceso a los datos. Su API proporciona el punto de integración definido para los componentes web y móvil con las mismas reglas de autorización. \\
+PostgreSQL en Supabase & 17.6 &
+Persistencia de datos clínicos y administrativos. &
+El modelo relacional permite representar pacientes, odontólogos, asignaciones y solicitudes mediante claves, restricciones y transacciones que conservan la consistencia de los registros. \\
+Supabase Storage &
+Servicio administrado; SDK JavaScript 2.117.2 &
+Almacenamiento de archivos radiográficos. &
+Permite almacenar los archivos en un bucket privado y utilizar URL firmadas para su carga y consulta, separando los archivos de sus metadatos relacionales. \\
+jsonwebtoken / bcryptjs & 9.0.3 / 3.0.3 &
+Gestión de sesiones y verificación de contraseñas. &
+JWT identifica las sesiones en las solicitudes a la API; bcrypt permite verificar contraseñas mediante hashes. Los permisos y las asignaciones se comprueban en el backend. \\
+Flutter &
+SDK por verificar en el proyecto móvil &
+Interfaz de la APK Android complementaria. &
+Se selecciona para adaptar la aplicación móvil existente a un alcance acotado: inicio de sesión del odontólogo, consulta de pacientes asignados y visualización de sus radiografías. \\
+Dart &
+SDK por verificar junto con Flutter &
+Lenguaje de implementación de la aplicación móvil. &
+Su integración con Flutter permite implementar la interfaz y las operaciones asíncronas necesarias para consumir la API y consultar los archivos autorizados. \\
+Vercel &
+Plataforma administrada &
+Despliegue de la aplicación web y su API. &
+La configuración del proyecto permite publicar el frontend y el backend y dirigir las solicitudes de la interfaz hacia el servicio de la API. \\
+Git / GitHub &
+Git 2.44.0.windows.1; GitHub como servicio &
+Control de versiones y alojamiento del repositorio. &
+Conserva el historial de cambios del código, las migraciones y la documentación, facilitando la recuperación de versiones y la revisión del avance del proyecto. \\
+\end{longtable}
+\noindent\textit{Fuente: Elaboración propia a partir del código, el archivo de dependencias bloqueadas, el entorno local y los metadatos de la base de datos.}
+
+\medskip
+\noindent\textbf{Alcance del componente móvil.}
+La APK tiene como alcance la consulta para el odontólogo:
+inicio y cierre de sesión, consulta de pacientes asignados, consulta del
+estado de solicitudes y visualización de radiografías disponibles.
+La administración de cuentas, roles y permisos y la gestión de odontólogos,
+horarios y citas permanecerán en la aplicación web.
+El paciente será un registro clínico y no iniciará sesión en la APK;
+CERPAX continuará utilizando el enlace temporal de entrega.
+
+\medskip
+\noindent\textbf{Integración y versiones.}
+El diseño de integración del componente móvil establece la API de la
+plataforma como punto de acceso a los datos y de control de autorización.
+La entrega móvil revisada se identifica como DentalCare 1.0.0+1, dato que
+corresponde a la aplicación y no a las versiones de Flutter o Dart.
+Estas dos versiones deberán confirmarse en el proyecto móvil antes de
+cerrar la monografía. La versión de Node.js indicada corresponde al entorno
+local verificado, no a una comprobación del entorno de producción.
+\endgroup

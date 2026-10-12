@@ -16,10 +16,12 @@ import {catalog} from './schema.js';
 import * as repo from './repository.js';
 import {pool} from './db.js';
 import {fail} from './validation.js';
+import {apiV1} from './api-v1.js';
 export function createApp(){
   const app=express();app.disable('x-powered-by');
   app.use(helmet({contentSecurityPolicy:{directives:{'script-src':["'self'"],'style-src':["'self'","'unsafe-inline'"],'img-src':["'self'",'data:'],'font-src':["'self'",'data:'],'connect-src':["'self'"],upgradeInsecureRequests:config.production?[]:null}}}));
   app.use(express.json({limit:'2mb'}));
+  app.use(apiV1);
   app.use('/api',(req,res,next)=>{
     const origin=req.headers.origin;
     if(origin){let allowed=false;try{const u=new URL(origin);allowed=u.host===req.get('host')||config.allowedOrigins.includes(u.origin)||(!config.production&&['http://127.0.0.1:4200','http://localhost:4200'].includes(origin));}catch{}if(!allowed)return res.status(403).json({message:'Origen no permitido'});res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}

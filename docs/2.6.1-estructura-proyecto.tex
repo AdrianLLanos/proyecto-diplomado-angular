@@ -1,0 +1,69 @@
+% Insertar debajo del encabezado 2.6.1 Estructura del proyecto.
+
+El proyecto web se organiza en carpetas que separan la interfaz, los
+servicios del servidor, la estructura de datos y la documentación. Esta
+distribución permite identificar la responsabilidad de cada componente y
+realizar cambios sin concentrar toda la implementación en un único archivo.
+El archivo \texttt{package.json} de la raíz define los espacios de trabajo
+del frontend y del backend y los comandos de ejecución, compilación y pruebas.
+
+Las carpetas principales tienen las siguientes responsabilidades:
+
+\begin{itemize}
+  \item \texttt{frontend/}: contiene la aplicación web desarrollada con
+  Angular. En \texttt{src/app/} se encuentran las vistas de inicio de sesión,
+  pacientes, odontólogos, radiografías, perfil y configuración. El archivo
+  \texttt{api.ts} concentra el servicio de comunicación HTTP y el estado de
+  sesión; \texttt{radiography.ts} implementa la interacción del panel con
+  las solicitudes y asignaciones, y \texttt{external-radiography.ts}
+  contiene la interfaz de entrega utilizada por CERPAX.
+
+  \item \texttt{backend/src/}: reúne la API y la lógica de negocio.
+  \texttt{app.js} configura Express y registra las rutas;
+  \texttt{auth.js} verifica la autenticación y los permisos;
+  \texttt{repository.js} ejecuta operaciones sobre los registros permitidos;
+  \texttt{clinical.js} valida horarios y datos clínicos;
+  \texttt{radiography.js} administra las solicitudes, los enlaces temporales
+  y la confirmación de entrega. La conexión con PostgreSQL se concentra en
+  \texttt{db.js} y la integración con Supabase Storage en \texttt{storage.js}.
+
+  \item \texttt{backend/scripts/}: contiene utilidades de instalación y
+  mantenimiento, como la preparación de variables de entorno, la ejecución
+  de migraciones y la creación de datos de demostración. Estas utilidades
+  se ejecutan de forma explícita y se distinguen de las rutas HTTP del sistema.
+
+  \item \texttt{backend/test/}: contiene pruebas automatizadas de validación,
+  autenticación, integración, migraciones, acceso de recepción y flujo
+  radiográfico. Las pruebas permiten comprobar reglas de negocio y
+  restricciones de acceso con datos de prueba.
+
+  \item \texttt{backend/e2e/}: contiene los escenarios de prueba de extremo
+  a extremo con Playwright, orientados a comprobar la interacción con la
+  interfaz y los recorridos del sistema desde el navegador.
+
+  \item \texttt{database/}: conserva los archivos SQL numerados que definen
+  el esquema, los datos iniciales y los cambios posteriores. Incluye las
+  tablas del flujo radiográfico y los ajustes de roles y permisos, de forma
+  que las modificaciones de la base de datos puedan mantenerse versionadas.
+
+  \item \texttt{docs/}: reúne documentación técnica y fragmentos de la
+  monografía en LaTeX. La subcarpeta \texttt{diagramas/} contiene las fuentes
+  editables y las exportaciones de los diagramas de casos de uso,
+  arquitectura y modelo de datos.
+
+  \item \texttt{evidencia/}: almacena los reportes y archivos utilizados
+  como respaldo de las verificaciones del proyecto. Estos materiales
+  complementan la explicación de las pruebas y sus resultados.
+\end{itemize}
+
+Los archivos de configuración ubicados en la raíz, como
+\texttt{vercel.json}, definen aspectos del despliegue. Las variables de
+conexión y los secretos del servidor se cargan desde la configuración del
+entorno; el archivo local \texttt{backend/.env} está excluido del repositorio
+mediante \texttt{.gitignore}.
+
+Las carpetas \texttt{node\_modules/}, \texttt{frontend/dist/},
+\texttt{frontend/.angular/} y las salidas temporales de pruebas se excluyen
+de esta descripción porque contienen dependencias, archivos compilados o
+artefactos generados automáticamente. No forman parte de la organización
+del código fuente que se documenta en esta sección.

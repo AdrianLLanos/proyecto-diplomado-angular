@@ -1,0 +1,97 @@
+{
+  "executedAt": "2026-10-12T02:25:11.017Z",
+  "environment": "https://proyecto-diplomado-angular-frontend.vercel.app",
+  "scope": "Comprobaciones de lectura; no crea pacientes, solicitudes ni archivos; no acredita entrega completa RF-03/RF-04",
+  "results": [
+    {
+      "method": "GET",
+      "path": "/api/v1/salud",
+      "status": 200,
+      "milliseconds": 2089
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes",
+      "status": 401,
+      "milliseconds": 381
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/pacientes",
+      "status": 401,
+      "milliseconds": 219
+    },
+    {
+      "method": "POST",
+      "path": "/api/login",
+      "status": 200,
+      "milliseconds": 811
+    },
+    {
+      "method": "GET",
+      "path": "/api/radiographs",
+      "status": 200,
+      "milliseconds": 247
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 349
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 214
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 209
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 251
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 219
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 222
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 208
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 320
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 213
+    },
+    {
+      "method": "GET",
+      "path": "/api/records/pacientes?size=15",
+      "status": 200,
+      "milliseconds": 217
+    }
+  ]
+}

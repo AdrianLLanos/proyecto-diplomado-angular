@@ -1,4 +1,4 @@
-import {Component,inject,signal,DestroyRef} from '@angular/core';
+import {Component,inject,signal,DestroyRef,effect} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule,NgForm} from '@angular/forms';
 import {MAT_DIALOG_DATA,MatDialog} from '@angular/material/dialog';
@@ -41,7 +41,7 @@ export class AccessLinkDialog {
 export class Radiography {
  api=inject(Api);dialog=inject(MatDialog);snack=inject(MatSnackBar);destroy=inject(DestroyRef);error=signal('');message=signal('');busy=signal(false);rows=signal<any[]>([]);people=signal<any[]>([]);doctors=signal<any[]>([]);assigned=signal<any[]>([]);events=signal<any[]>([]);notices=signal<any[]>([]);accessLink=signal<any>(null);
  tab='solicitudes';page=0;state='';filterPatient='';search='';auditPatient='';from='';to='';auditPage=0;hours=24;selected:any=null;draft:any={paciente_id:'',odontologo_id:'',tipo:'',indicaciones:''};assignment:any={paciente_id:'',odontologo_id:''};
- constructor(){if(!this.api.can('radiografias')&&this.api.can('asignaciones','manage'))this.tab='asignaciones';this.load();this.patients();this.api.get<any>('/lookups/medicos').subscribe({next:r=>this.doctors.set(r.rows),error:e=>this.error.set(errorText(e))});if(this.api.can('asignaciones','manage'))this.assignments();this.notifications();const timer=setInterval(()=>this.notifications(),30000);this.destroy.onDestroy(()=>clearInterval(timer));}
+ constructor(){effect(()=>{if(!this.api.session())return;if(!this.api.can('radiografias')&&this.api.can('asignaciones','manage'))this.tab='asignaciones';this.load();this.patients();this.api.get<any>('/lookups/medicos').subscribe({next:r=>this.doctors.set(r.rows),error:e=>this.error.set(errorText(e))});if(this.api.can('asignaciones','manage'))this.assignments();this.notifications();});const timer=setInterval(()=>this.notifications(),30000);this.destroy.onDestroy(()=>clearInterval(timer));}
  refresh(){if(this.tab==='asignaciones')this.assignments();else this.load();}
  isAdmin(){const u=this.api.session()?.user;return !!u&&(u.bypass||u.roles.includes('Super Admin'));}
  unread(){return this.notices().filter(n=>!n.leido_en).length;}

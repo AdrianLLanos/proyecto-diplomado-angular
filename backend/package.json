@@ -7,7 +7,7 @@
         "dev": "node --watch src/index.js",
         "start": "node src/index.js",
         "test": "node --test test/*.test.js",
-        "test:report": "node --test test/validation.test.js > ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/http.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/integration.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/migrations.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1 && node --test test/radiography.test.js >> ../evidencia/reporte-pruebas-e3.txt 2>&1",
+        "test:report": "node scripts/test-report.js",
         "check:db": "node scripts/check-db.js",
         "worker": "node src/worker.js",
         "test:e2e": "playwright test",

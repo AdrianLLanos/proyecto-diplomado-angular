@@ -1,0 +1,66 @@
+\section{Conclusiones}
+
+Las conclusiones se presentan en el mismo orden que los seis objetivos
+específicos definidos en el Capítulo 1 y se sustentan en las evidencias
+de análisis, diseño, implementación y pruebas del sistema.
+
+\begin{enumerate}
+    \item El primer objetivo específico se cumplió mediante la
+    especificación de los requisitos funcionales y no funcionales,
+    la identificación de actores y la delimitación de las operaciones
+    prioritarias. La evidencia se encuentra en el análisis de requisitos
+    y en el diagrama general de casos de uso, que relacionan la gestión
+    de pacientes, las solicitudes radiográficas y el acceso temporal
+    utilizado por CERPAX.
+
+    \item El segundo objetivo específico se cumplió para el componente
+    web mediante el diseño de la arquitectura, el modelo de datos,
+    las interfaces y el contrato de la API. Los diagramas de arquitectura
+    y datos, el diccionario de la entidad principal y las capturas de
+    las pantallas respaldan este resultado. El cumplimiento del objetivo
+    conjunto web y móvil es parcial, porque las evidencias revisadas
+    no incluyen la verificación del componente móvil.
+
+    \item El tercer objetivo específico se cumplió para las
+    funcionalidades web priorizadas mediante la implementación de
+    operaciones de registro, consulta, actualización y eliminación de
+    pacientes, asignación a odontólogos, creación de solicitudes
+    radiográficas y generación de enlaces temporales y códigos QR.
+    Las pruebas locales también verificaron la carga multipart,
+    la asociación del archivo con la solicitud y su consulta autorizada.
+    El código fuente y los casos de prueba documentados respaldan
+    estas funcionalidades; la prueba local de archivos no acredita
+    la entrega directa a Supabase Storage en producción.
+
+    \item El cuarto objetivo específico se cumplió en los controles
+    web evaluados mediante autenticación con contraseñas protegidas
+    con bcrypt, sesiones JWT, autorización en el servidor y accesos
+    temporales vinculados a solicitudes. Las pruebas comprobaron
+    el rechazo de credenciales incorrectas, sesiones inválidas,
+    consultas administrativas realizadas por odontólogos y accesos
+    a pacientes no asignados. También confirmaron que el paciente
+    no puede iniciar sesión y que los enlaces revocados o vencidos
+    son rechazados.
+
+    \item El quinto objetivo específico se cumplió para los requisitos
+    evaluados mediante pruebas reproducibles del backend y un recorrido
+    de navegador. La ejecución final del backend registró 31 pruebas
+    aprobadas, ninguna fallida y ninguna omitida. Durante la verificación
+    se detectó y corrigió la carga anticipada de la pantalla de
+    radiografías, y el recorrido posterior fue aprobado. Asimismo,
+    las diez consultas de pacientes medidas en Vercel respondieron
+    entre 208 y 349 milisegundos, cumpliendo RNF-01 en esa muestra.
+    Los reportes y las evidencias de la Sección 2.8 respaldan estos
+    resultados, cuyo alcance corresponde a las condiciones descritas.
+
+    \item El sexto objetivo específico se cumplió parcialmente:
+    la plataforma web dispone de una dirección pública en Vercel,
+    un repositorio con control de versiones y documentación de
+    configuración y despliegue. Las comprobaciones documentadas
+    confirmaron la disponibilidad de la API, el inicio de sesión
+    y la consulta de solicitudes radiográficas. Sin embargo,
+    la revisión local que incorpora las últimas correcciones
+    requiere publicación y verificación, y la entrega completa
+    a Supabase Storage desde el entorno de producción no fue
+    validada durante esta revisión.
+\end{enumerate}

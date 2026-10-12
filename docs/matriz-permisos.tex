@@ -1,0 +1,42 @@
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{longtable}{@{}>{\raggedright\arraybackslash}p{.42\linewidth}>{\raggedright\arraybackslash}p{.11\linewidth}>{\raggedright\arraybackslash}p{.15\linewidth}>{\raggedright\arraybackslash}p{.15\linewidth}>{\raggedright\arraybackslash}p{.10\linewidth}@{}}
+\caption{Autorización de las rutas principales según el perfil}\label{tab:matriz-rutas}\\
+\toprule
+\textbf{Método y ruta} & \textbf{Admin.} & \textbf{Odontólogo} & \textbf{Recepción} & \textbf{CERPAX}\\\midrule
+\endfirsthead
+\toprule
+\textbf{Método y ruta} & \textbf{Admin.} & \textbf{Odontólogo} & \textbf{Recepción} & \textbf{CERPAX}\\\midrule
+\endhead
+\bottomrule\endlastfoot
+POST \path{/api/v1/login} & Sí & Sí & Sí & No\\
+GET/POST/PUT/DELETE \path{/api/v1/cuentas} y \path{/api/v1/cuentas/:id} & Sí & No & No & No\\
+GET/POST/PUT/DELETE \path{/api/v1/roles} y \path{/api/v1/roles/:id} & Sí & No & No & No\\
+GET/PUT \path{/api/v1/users/:id/access} & Sí & No & No & No\\
+GET/POST/PUT \path{/api/v1/pacientes} y \path{/api/v1/pacientes/:id} & Sí & Ámbito propio & Datos administrativos & No\\
+DELETE \path{/api/v1/pacientes/:id} & Sí & Asignados & No & No\\
+GET \path{/api/v1/odontologos} y \path{/api/v1/horarios} & Sí & Sí & Sí & No\\
+POST/PUT/DELETE \path{/api/v1/odontologos/:id} & Sí & No & No & No\\
+GET \path{/api/v1/citas} y \path{/api/v1/citas/:id} & Sí & Ámbito propio & Sí & No\\
+POST/PUT/DELETE \path{/api/v1/citas} y \path{/api/v1/citas/:id} & Sí & No & Sí & No\\
+GET/POST \path{/api/v1/radiographs} & Sí & Asignados & No & No\\
+POST \path{/api/v1/radiographs/:id/access} & Sí & Asignados & No & No\\
+GET \path{/api/v1/radiographs/:id/file} & Sí & Asignados & No & No\\
+GET/POST \path{/api/v1/patient-assignments} & Sí & No & Sí & No\\
+DELETE \path{/api/v1/patient-assignments/:patient/:doctor} & Sí & No & No & No\\
+GET \path{/api/v1/radiography-audit} & Sí & No & No & No\\
+POST \path{/api/v1/external/radiographs/access}, \path{/upload-url} y \path{/upload-complete} & Token temporal & Token temporal & Token temporal & Token temporal\\
+\end{longtable}
+\noindent\textit{Fuente: elaboración propia a partir del código y las migraciones.}
+\endgroup
+
+La matriz corresponde a los permisos predeterminados. Las rutas de modificación
+de cuentas, roles y asignación de roles exigen administrador, incluso si se
+concede un permiso directo de lectura de cuentas a un odontólogo. La creación
+usa la ruta de colección; la actualización y eliminación requieren el
+identificador. Las rutas externas comparten el prefijo
+\path{/api/v1/external/radiographs}; requieren un token temporal vigente,
+independientemente de que quien posea el enlace disponga de una cuenta interna.
+El paciente no puede autenticarse ni utilizar las rutas internas.

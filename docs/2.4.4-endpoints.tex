@@ -1,0 +1,68 @@
+% En el preámbulo: \usepackage{booktabs,longtable,array,url}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}
+  >{\raggedright\arraybackslash}p{0.09\linewidth}
+  >{\raggedright\arraybackslash}p{0.29\linewidth}
+  >{\raggedright\arraybackslash}p{0.39\linewidth}
+  >{\raggedright\arraybackslash}p{0.15\linewidth}@{}}
+\caption{Diseño de endpoints principales}
+\label{tab:endpoints-principales}\\
+\toprule
+\textbf{Método} & \textbf{Ruta} & \textbf{Propósito y parámetros} & \textbf{Respuestas} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{\tablename\ \thetable\ (continuación)}\\
+\toprule
+\textbf{Método} & \textbf{Ruta} & \textbf{Propósito y parámetros} & \textbf{Respuestas} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{Continúa en la siguiente página.}\\
+\endfoot
+\bottomrule
+\endlastfoot
+POST & \path{/api/v1/login} &
+Autentica mediante \texttt{correo} y \texttt{contrasena}. Devuelve un token JWT y los datos del usuario. &
+200, 400, 401, 429 \\
+GET & \path{/api/v1/pacientes} &
+Lista los pacientes autorizados. Parámetros de consulta opcionales: \texttt{page}, \texttt{size} y \texttt{search}. &
+200, 401, 403 \\
+POST & \path{/api/v1/pacientes} &
+Registra un paciente. Recibe \texttt{nombre}, \texttt{correo} y los demás campos permitidos por el catálogo y el rol. &
+201, 401, 403, 422 \\
+GET & \path{/api/v1/radiographs} &
+Consulta solicitudes autorizadas. Filtros opcionales: \texttt{paciente}, \texttt{estado} y \texttt{page}. &
+200, 401, 403, 422 \\
+POST & \path{/api/v1/radiographs} &
+Crea una solicitud con \texttt{paciente\_id}, \texttt{tipo} e \texttt{indicaciones}. El administrador también indica \texttt{odontologo\_id}. &
+201, 401, 403, 404, 422 \\
+POST & \path{/api/v1/radiographs/:id/access} &
+Genera enlace temporal y QR. Recibe el identificador de la solicitud y \texttt{horas}, entre 1 y 72; el valor predeterminado es 24. &
+201, 401, 403, 404, 409, 422 \\
+GET & \path{/api/v1/radiographs/:id/file} &
+Abre el archivo de una solicitud autorizada. El parámetro opcional \texttt{download=1} solicita la descarga. &
+200, 302, 401, 403, 404, 422, 503 \\
+POST & \path{/api/v1/external/radiographs/access} &
+Valida el \texttt{token} del enlace de CERPAX, sin iniciar sesión. Devuelve datos mínimos del estudio y su vencimiento. &
+200, 410, 429 \\
+POST & \path{/api/v1/external/radiographs/upload-url} &
+Prepara la carga mediante URL firmada. Recibe \texttt{token}, \texttt{nombre}, \texttt{tipo} MIME y \texttt{tamano} en bytes. &
+200, 410, 422, 429, 503 \\
+POST & \path{/api/v1/external/radiographs/upload-complete} &
+Confirma la carga en Supabase Storage. Recibe \texttt{token}, \texttt{path}, \texttt{nombre}, \texttt{tipo} y \texttt{tamano}. Completa la solicitud. &
+201, 409, 410, 422, 429 \\
+\end{longtable}
+\noindent\textit{Fuente: Elaboración propia a partir de las rutas implementadas en el sistema.}
+
+\medskip
+\noindent Las rutas internas protegidas requieren el encabezado
+\texttt{Authorization: Bearer <JWT>} y los permisos correspondientes.
+Las rutas externas de CERPAX utilizan un token temporal.
+Un origen no autorizado puede generar una respuesta 403; un error interno
+puede generar una respuesta 500. El código 400 corresponde, entre otros casos,
+a campos de autenticación ausentes o de tipo incorrecto; las validaciones
+de datos clínicos utilizan principalmente 422.
+\endgroup

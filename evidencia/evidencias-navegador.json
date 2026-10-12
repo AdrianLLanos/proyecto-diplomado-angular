@@ -1,0 +1,195 @@
+{
+  "executedAt": "2026-10-12T02:31:44.506Z",
+  "environment": "Local Express + PGlite",
+  "cases": [
+    {
+      "id": "EV-01",
+      "scenario": "RF-01: inicio de sesión válido",
+      "method": "POST",
+      "path": "/api/v1/login",
+      "expected": 200,
+      "obtained": 200,
+      "response": {
+        "token": "[JWT omitido]",
+        "user": {
+          "roles": [
+            "Super Admin"
+          ]
+        }
+      }
+    },
+    {
+      "id": "EV-02",
+      "scenario": "RF-01: contraseña incorrecta",
+      "method": "POST",
+      "path": "/api/v1/login",
+      "expected": 401,
+      "obtained": 401,
+      "response": {
+        "message": "Correo o contraseña incorrectos"
+      }
+    },
+    {
+      "id": "EV-03",
+      "scenario": "Sin autenticación",
+      "method": "GET",
+      "path": "/api/v1/pacientes",
+      "expected": 401,
+      "obtained": 401,
+      "response": {
+        "message": "Inicia sesión para continuar"
+      }
+    },
+    {
+      "id": "EV-04",
+      "scenario": "RF-02: campos obligatorios ausentes",
+      "method": "POST",
+      "path": "/api/v1/pacientes",
+      "expected": 422,
+      "obtained": 422,
+      "response": {
+        "message": "Nombre es obligatorio"
+      }
+    },
+    {
+      "id": "EV-05",
+      "scenario": "RF-02: crear paciente",
+      "method": "POST",
+      "path": "/api/v1/pacientes",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "id": 2
+      }
+    },
+    {
+      "id": "EV-06",
+      "scenario": "Crear odontólogo sintético",
+      "method": "POST",
+      "path": "/api/v1/odontologos",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "id": 3
+      }
+    },
+    {
+      "id": "EV-07",
+      "scenario": "Inicio de sesión odontólogo",
+      "method": "POST",
+      "path": "/api/v1/login",
+      "expected": 200,
+      "obtained": 200,
+      "response": {
+        "token": "[JWT omitido]",
+        "user": {
+          "roles": [
+            "Doctor"
+          ]
+        }
+      }
+    },
+    {
+      "id": "EV-08",
+      "scenario": "Odontólogo no administra cuentas",
+      "method": "GET",
+      "path": "/api/v1/cuentas",
+      "expected": 403,
+      "obtained": 403,
+      "response": {
+        "message": "No tienes permiso para realizar esta acción"
+      }
+    },
+    {
+      "id": "EV-09",
+      "scenario": "RF-03: solicitud sin asignación",
+      "method": "POST",
+      "path": "/api/v1/radiographs",
+      "expected": 404,
+      "obtained": 404,
+      "response": {
+        "message": "Registro no encontrado"
+      }
+    },
+    {
+      "id": "EV-10",
+      "scenario": "Asignar paciente al odontólogo",
+      "method": "POST",
+      "path": "/api/v1/patient-assignments",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "ok": true
+      }
+    },
+    {
+      "id": "EV-11",
+      "scenario": "RF-03: crear solicitud asignada",
+      "method": "POST",
+      "path": "/api/v1/radiographs",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "id": 1,
+        "empresa_id": 1,
+        "paciente_id": 2,
+        "odontologo_id": 3,
+        "tipo": "Panorámica",
+        "indicaciones": "",
+        "estado": "Pendiente",
+        "creado_en": "2026-10-12T02:31:41.363Z",
+        "completado_en": null
+      }
+    },
+    {
+      "id": "EV-12",
+      "scenario": "RF-04: generar enlace y QR",
+      "method": "POST",
+      "path": "/api/v1/radiographs/1/access",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "url": "[enlace temporal omitido]",
+        "qr": "[QR generado]",
+        "vence_en": "2026-10-12T03:31:41.455Z"
+      }
+    },
+    {
+      "id": "EV-13",
+      "scenario": "RF-04: regenerar acceso",
+      "method": "POST",
+      "path": "/api/v1/radiographs/1/access",
+      "expected": 201,
+      "obtained": 201,
+      "response": {
+        "url": "[enlace temporal omitido]",
+        "qr": "[QR generado]",
+        "vence_en": "2026-10-12T03:31:41.503Z"
+      }
+    },
+    {
+      "id": "EV-14",
+      "scenario": "RF-04: enlace anterior revocado",
+      "method": "POST",
+      "path": "/api/v1/external/radiographs/access",
+      "expected": 410,
+      "obtained": 410,
+      "response": {
+        "message": "El enlace venció, fue revocado o ya fue utilizado"
+      }
+    },
+    {
+      "id": "EV-15",
+      "scenario": "RF-04: acceso vigente CERPAX",
+      "method": "POST",
+      "path": "/api/v1/external/radiographs/access",
+      "expected": 200,
+      "obtained": 200,
+      "response": {
+        "id": 1,
+        "tipo": "Panorámica",
+        "vence_en": "2026-10-12T03:31:41.503Z"
+      }
+    }
+  ]
+}

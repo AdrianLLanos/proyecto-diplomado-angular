@@ -1,0 +1,100 @@
+\section{Despliegue}
+
+La plataforma web se encuentra publicada en Vercel y utiliza Supabase
+para la persistencia de información. La interfaz desarrollada con Angular
+y la API implementada con Node.js y Express se presentan bajo un mismo
+dominio, permitiendo acceder al sistema mediante un navegador web.
+
+\subsection{Plataforma de alojamiento}
+
+La configuración del proyecto se mantiene en el archivo
+\path{vercel.json}. Este archivo define un servicio para el frontend,
+cuya raíz es \path{frontend/}, y otro para el backend, ubicado en
+\path{backend/}, con entrada en \path{src/app.js}.
+
+Las solicitudes cuyo recorrido comienza con \path{/api} se dirigen
+al servicio del backend; las demás se dirigen al frontend. Esta
+distribución permite mantener la interfaz y los servicios HTTP bajo
+la misma dirección pública. PostgreSQL en Supabase conserva los registros
+estructurados y la integración con Supabase Storage proporciona el
+almacenamiento de archivos radiográficos.
+
+\subsection{Procedimiento de despliegue}
+
+El procedimiento para publicar una revisión del sistema comprende
+las siguientes actividades:
+
+\begin{enumerate}
+    \item Preparar la revisión del código fuente y conservarla en el
+    repositorio Git del proyecto.
+
+    \item Instalar las dependencias definidas en los espacios de trabajo
+    del frontend y del backend. Comprobar la compilación de Angular
+    mediante \texttt{npm run build} y ejecutar las pruebas correspondientes.
+
+    \item Preparar la base de datos mediante los scripts SQL y las
+    migraciones del proyecto, respetando el historial de cambios
+    y evitando repetir la instalación inicial sobre una base existente.
+
+    \item Configurar en Vercel las variables de entorno necesarias
+    para la conexión con PostgreSQL, la firma de sesiones y el acceso
+    al almacenamiento. Mantener el bucket de radiografías privado.
+
+    \item Desplegar la revisión utilizando la configuración de servicios
+    y rutas de \path{vercel.json}.
+
+    \item Verificar la dirección pública, la salud de la API, el inicio
+    de sesión y las operaciones protegidas. Para cerrar la validación
+    del flujo radiográfico, comprobar también la solicitud, el enlace
+    temporal, la entrega del archivo y su consulta autorizada.
+\end{enumerate}
+
+\subsection{Configuración de entornos}
+
+Durante el desarrollo, Angular y Express se ejecutan en procesos locales
+separados. El backend obtiene su configuración del archivo
+\path{backend/.env}, excluido del repositorio mediante
+\path{.gitignore}. La aplicación Angular utiliza un proxy para comunicar
+las solicitudes de la interfaz con la API local.
+
+La configuración de producción utiliza las variables de entorno del
+servicio desplegado. Los parámetros relevantes incluyen
+\texttt{NODE\_ENV}, \texttt{APP\_URL}, \texttt{DATABASE\_URL},
+\texttt{JWT\_SECRET}, \texttt{SUPABASE\_URL},
+\texttt{SUPABASE\_SECRET\_KEY} y
+\texttt{SUPABASE\_STORAGE\_BUCKET}.
+
+Para producción se establece \texttt{NODE\_ENV=production},
+\texttt{LOCAL\_ACCESS=false} y \texttt{ENFORCE\_ROLES=true}.
+El código deshabilita el acceso local de desarrollo cuando el entorno
+es producción y aplica las verificaciones de autenticación y autorización.
+El valor de \texttt{APP\_URL} debe corresponder al dominio publicado,
+porque se utiliza al construir los enlaces temporales de entrega.
+
+Las contraseñas, la clave de firma del JWT y las claves secretas de
+Supabase permanecen en el backend. Sus valores no se incorporan al
+código de Angular ni a esta monografía.
+
+\subsection{Dirección pública y verificación}
+
+\textbf{Dirección pública del sistema:}
+
+\url{https://proyecto-diplomado-angular-frontend.vercel.app}
+
+\textbf{Ruta de salud de la API:}
+
+\url{https://proyecto-diplomado-angular-frontend.vercel.app/api/v1/salud}
+
+La ruta de salud ejecuta una consulta a la base de datos antes de
+responder. Durante la verificación documentada en la sección de pruebas,
+esta ruta devolvió HTTP 200. También se comprobaron el inicio de sesión,
+el rechazo del acceso sin autenticación y la consulta de solicitudes
+radiográficas. Las evidencias se conservan en
+\path{evidencia/verificacion-despliegue.json}.
+
+Estas comprobaciones corresponden a la versión desplegada en el momento
+de la medición. Los cambios de autorización y las rutas específicas
+incorporados durante esta revisión se verificaron localmente y requieren
+su publicación y comprobación sobre la misma revisión del código.
+La entrega completa mediante carga directa a Supabase Storage desde
+Vercel no se presenta como validada en esta revisión.

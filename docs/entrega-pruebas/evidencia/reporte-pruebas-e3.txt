@@ -1,0 +1,46 @@
+Ejecución: 2026-10-12T02:20:56.471Z
+Entorno: pruebas locales aisladas; Express + PGlite. No acredita producción.
+Comando: node --test test/*.test.js
+
+✔ health consulta la base sin exponer información de conexión (291.3395ms)
+✔ salud v1 responde sin credenciales (12.1487ms)
+✔ bloquea peticiones desde otros sitios antes de consultar datos (106.6152ms)
+✔ no permite login sin credenciales (98.6732ms)
+▶ instalación nueva y funciones completas sin usar Supabase
+  ✔ catálogo y CRUD clínico (2166.7806ms)
+  ✔ horarios, citas y rechazo de superposiciones (355.3826ms)
+  ✔ recetas y Excel (210.4019ms)
+  ✔ perfil, empresas, ajustes y roles (99.3163ms)
+  ✔ sitio público, contacto y reserva (956.7081ms)
+  ✔ administrador activo y restricciones de pacientes (1846.7221ms)
+✔ instalación nueva y funciones completas sin usar Supabase (127388.1955ms)
+✔ migraciones: instalación, repetición, checksum y rollback (14276.9178ms)
+▶ CERPAX: ciclo completo, autorización, expiración y trazabilidad
+  ✔ el odontólogo registra y desactiva sus propios pacientes (1032.0011ms)
+  ✔ pacientes ocultos hasta asignación y control entre empresas (176.5274ms)
+  ✔ creación de solicitud y bloqueo de acceso por otro odontólogo (253.1179ms)
+  ✔ enlaces vencidos, revocados y sin exposición de datos del paciente (635.4215ms)
+  ✔ carga única, confirmación y archivo protegido (162.3574ms)
+  ✔ auditoría inmutable y revocación de acceso al expediente (119.1921ms)
+✔ CERPAX: ciclo completo, autorización, expiración y trazabilidad (128780.8449ms)
+✔ recepción asigna pacientes sin permisos de administración ni radiografías (126903.0603ms)
+▶ seguridad: contrato v1, cuentas, sesiones y pacientes
+  ✔ RF-01: credenciales válidas e incorrectas (837.6787ms)
+  ✔ RF-02: CRUD y validación de paciente (1235.4102ms)
+  ✔ odontólogo: acceso denegado a administración y paciente ajeno (1957.0084ms)
+  ✔ paciente sin acceso incluso con contraseña o JWT anterior (916.1892ms)
+  ✔ expiración, cierre de sesión e invalidación (87.7908ms)
+✔ seguridad: contrato v1, cuentas, sesiones y pacientes (125875.8626ms)
+✔ facturas: descuento antes de IVA y redondeo monetario (5.4785ms)
+✔ rechaza facturas sin conceptos, cantidades inválidas y sobrepagos (1.663ms)
+✔ rechaza inyección en identificadores y conserva solo campos permitidos (4.8029ms)
+✔ secretos vacíos conservan su valor y nulos no sobrescriben defaults (0.6954ms)
+✔ valida correo, opciones, horarios y JSON (2.4133ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 129861.5254

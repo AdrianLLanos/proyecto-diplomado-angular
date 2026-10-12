@@ -1,0 +1,19 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Diagrama general de casos de uso. \textit {Fuente: elaboración propia.} }}{15}{figure.caption.8}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Arquitectura general del sistema. \textit {Fuente: elaboración propia.} }}{20}{figure.caption.9}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Módulo login en vista de escritorio. \textit {Fuente: elaboración propia.} }}{25}{figure.caption.11}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Módulo de gestión de pacientes en vista de escritorio. \textit {Fuente: elaboración propia.} }}{25}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Portal externo de entrega CERPAX. \textit {Fuente: elaboración propia.} }}{26}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Gestión de solicitudes radiográficas. \textit {Fuente: elaboración propia.} }}{26}{figure.caption.14}%
+\contentsline {figure}{\numberline {2.7}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Inicio de sesión autorizado, CP-01. Fuente: ejecución propia en entorno local.}}{47}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.8}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Acceso a pacientes sin JWT, CP-03. Fuente: ejecución propia en entorno local.}}{47}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.9}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Consulta de cuentas por un odontólogo, CP-04. Fuente: ejecución propia en entorno local.}}{47}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.10}{\ignorespaces \xpg@aux {}{spanish}\ignorespaces Registro de paciente sin campos obligatorios, CP-05. Fuente: ejecución propia en entorno local.}}{48}{figure.caption.18}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

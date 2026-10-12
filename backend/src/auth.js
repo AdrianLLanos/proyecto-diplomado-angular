@@ -11,7 +11,9 @@ export async function userById(id){
  ARRAY(SELECT empresa_id::text FROM usuarios_empresas WHERE usuario_id=u.id AND tipo_usuario='User') AS companies
  FROM usuarios u WHERE u.id=$1 AND u.eliminado_en IS NULL`,[id]);return rows[0];
 }
-export const can=(user,key,action)=>!!user&&(user.bypass||user.roles.includes('Super Admin')||user.permissions.includes(`${key}.${action}`));
+// Patient identifica un registro clínico, no una cuenta de acceso al panel.
+const internalAccount=user=>user?.roles?.some(role=>role!=='Patient');
+export const can=(user,key,action)=>!!user&&(user.bypass||user.roles.includes('Super Admin')||(key!=='usuarios'&&user.permissions.includes(`${key}.${action}`)));
 export function requirePermission(key,action){return(req,res,next)=>{try{if(!can(req.user,key,action))fail('No tienes permiso para realizar esta acción',403);next();}catch(e){next(e);}};}
 export function requireAdmin(req,res,next){if(!req.user?.bypass&&!req.user?.roles.includes('Super Admin'))return next(Object.assign(new Error('Esta acción requiere administrador'),{status:403}));next();}
 export async function authenticate(req,res,next){
@@ -29,6 +31,7 @@ export async function authenticate(req,res,next){
    if(!req.user||req.user.version_sesion!==payload.version)fail('La sesión ya no es válida',401);
   }
   if(!req.user||req.user.estado!=='1')fail('Usuario inactivo o no encontrado',401);
+  if(!internalAccount(req.user))fail('La cuenta no tiene acceso al panel',401);
   req.user.bypass=!!req.localAccess&&!config.enforceRoles;
   req.companyId=String(req.headers['x-company-id']||req.user.companies[0]||config.companyId);
   if(!req.user.companies.includes(req.companyId))fail('No tienes acceso a esta empresa',403);
@@ -41,5 +44,6 @@ export async function login(req,res){
  const hash=rows[0]?.contrasena?.replace(/^\$2y\$/,'$2b$');
  if(!hash||!await bcrypt.compare(contrasena,hash))fail('Correo o contraseña incorrectos',401);
  const user=await userById(rows[0].id);
+ if(!internalAccount(user))fail('Correo o contraseña incorrectos',401);
  res.json({token:jwt.sign({version:user.version_sesion},config.jwtSecret,{subject:String(user.id),expiresIn:'8h',algorithm:'HS256'}),user});
 }

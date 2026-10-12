@@ -1,0 +1,204 @@
+{
+  "executedAt": "2026-10-12T14:40:13.147Z",
+  "environment": "Express local + PostgreSQL embebido PGlite; datos sintéticos; sin Supabase ni Vercel",
+  "results": [
+    {
+      "id": "SEG-01",
+      "scenario": "Inicio de sesión válido",
+      "expected": 200,
+      "obtained": 200,
+      "method": "POST",
+      "path": "/api/v1/login",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-02",
+      "scenario": "Contraseña incorrecta",
+      "expected": 401,
+      "obtained": 401,
+      "method": "POST",
+      "path": "/api/v1/login",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-03",
+      "scenario": "Credenciales omitidas",
+      "expected": 400,
+      "obtained": 400,
+      "method": "POST",
+      "path": "/api/v1/login",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-04",
+      "scenario": "Crear paciente",
+      "expected": 201,
+      "obtained": 201,
+      "method": "POST",
+      "path": "/api/v1/pacientes",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-05",
+      "scenario": "Consultar paciente creado",
+      "expected": 200,
+      "obtained": 200,
+      "method": "GET",
+      "path": "/api/v1/pacientes/2",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-06",
+      "scenario": "Actualizar paciente",
+      "expected": 200,
+      "obtained": 200,
+      "method": "PUT",
+      "path": "/api/v1/pacientes/2",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-07",
+      "scenario": "Paciente sin nombre ni correo",
+      "expected": 422,
+      "obtained": 422,
+      "method": "POST",
+      "path": "/api/v1/pacientes",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-08",
+      "scenario": "Ruta genérica ausente del contrato v1",
+      "expected": 404,
+      "obtained": 404,
+      "method": "GET",
+      "path": "/api/v1/records/pacientes",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-09",
+      "scenario": "Odontólogo consulta cuentas",
+      "expected": 403,
+      "obtained": 403,
+      "method": "GET",
+      "path": "/api/v1/cuentas",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-10",
+      "scenario": "Odontólogo consulta roles",
+      "expected": 403,
+      "obtained": 403,
+      "method": "GET",
+      "path": "/api/v1/roles",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-11",
+      "scenario": "Odontólogo consulta paciente no asignado",
+      "expected": 404,
+      "obtained": 404,
+      "method": "GET",
+      "path": "/api/v1/pacientes/2",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-12",
+      "scenario": "Petición sin JWT",
+      "expected": 401,
+      "obtained": 401,
+      "method": "GET",
+      "path": "/api/v1/pacientes",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-13",
+      "scenario": "JWT alterado",
+      "expected": 401,
+      "obtained": 401,
+      "method": "GET",
+      "path": "/api/v1/session",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-14",
+      "scenario": "Clínica no autorizada",
+      "expected": 403,
+      "obtained": 403,
+      "method": "GET",
+      "path": "/api/v1/pacientes",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-15",
+      "scenario": "Permiso directo no habilita administrar cuentas",
+      "expected": 403,
+      "obtained": 403,
+      "method": "GET",
+      "path": "/api/records/usuarios",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-16",
+      "scenario": "Paciente con contraseña válida",
+      "expected": 401,
+      "obtained": 401,
+      "method": "POST",
+      "path": "/api/v1/login",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-17",
+      "scenario": "JWT anterior de un paciente",
+      "expected": 401,
+      "obtained": 401,
+      "method": "GET",
+      "path": "/api/v1/session",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-18",
+      "scenario": "JWT vencido",
+      "expected": 401,
+      "obtained": 401,
+      "method": "GET",
+      "path": "/api/v1/session",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-19",
+      "scenario": "Cerrar sesión",
+      "expected": 200,
+      "obtained": 200,
+      "method": "POST",
+      "path": "/api/v1/logout",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-20",
+      "scenario": "Reutilizar JWT después del cierre",
+      "expected": 401,
+      "obtained": 401,
+      "method": "GET",
+      "path": "/api/v1/session",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-21",
+      "scenario": "Eliminar paciente sintético",
+      "expected": 200,
+      "obtained": 200,
+      "method": "DELETE",
+      "path": "/api/v1/pacientes/2",
+      "status": "Aprobado"
+    },
+    {
+      "id": "SEG-22",
+      "scenario": "Consultar paciente eliminado",
+      "expected": 404,
+      "obtained": 404,
+      "method": "GET",
+      "path": "/api/v1/pacientes/2",
+      "status": "Aprobado"
+    }
+  ]
+}
