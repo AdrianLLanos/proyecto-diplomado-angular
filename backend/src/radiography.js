@@ -134,6 +134,7 @@ export function registerRadiography(app){
   if(file.storage_path){
    const {data,error}=await radiographyStorage().createSignedUrl(file.storage_path,60,{download:req.query.download==='1'?file.nombre:false});
    if(error)fail('No se pudo abrir el archivo almacenado',503);
+   if(req.query.delivery==='json')return res.set('Cache-Control','no-store').json({signedUrl:data.signedUrl});
    return res.set('Cache-Control','no-store').redirect(data.signedUrl);
   }
   res.type(file.tipo).set('Content-Disposition',`${req.query.download==='1'?'attachment':'inline'}; filename*=UTF-8''${encodeURIComponent(file.nombre)}`).set('Cache-Control','no-store').send(Buffer.from(file.contenido));
