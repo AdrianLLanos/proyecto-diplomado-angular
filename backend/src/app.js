@@ -25,7 +25,11 @@ export function createApp(){
   app.use('/api',(req,res,next)=>{
     const origin=req.headers.origin;
     if(origin){let allowed=false;try{const u=new URL(origin);allowed=u.host===req.get('host')||config.allowedOrigins.includes(u.origin)||(!config.production&&['http://127.0.0.1:4200','http://localhost:4200'].includes(origin));}catch{}if(!allowed)return res.status(403).json({message:'Origen no permitido'});res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');}
-    res.setHeader('Cache-Control','no-store');next();
+    res.setHeader('Cache-Control','no-store');
+    res.setHeader('Access-Control-Allow-Methods','GET,HEAD,POST,PUT,PATCH,DELETE,OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization,X-Company-ID');
+    if(req.method==='OPTIONS')return res.sendStatus(204);
+    next();
   });
   // La salud representa la disponibilidad de la aplicación y su dependencia principal.
   // Si PostgreSQL no responde, Express deriva el error al manejador y devuelve 500.
